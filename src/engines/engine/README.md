@@ -10,12 +10,13 @@ Package engine は、各翻訳エンジンの基本となる構造体とその�
 
 ## Index
 
+- [Constants](<#constants>)
 - [type AccountInfo](<#type-accountinfo>)
 - [type Properties](<#type-properties>)
   - [func New(cacheID ...string) *Properties](<#func-new>)
   - [func (p *Properties) GetAPIKey() string](<#func-properties-getapikey>)
   - [func (p *Properties) GetQuotaLeft() (int, error)](<#func-properties-getquotaleft>)
-  - [func (p *Properties) SetAPIKey(apikey string) func()](<#func-properties-setapikey>)
+  - [func (p *Properties) SetAPIKey(apiKey string) func()](<#func-properties-setapikey>)
   - [func (p *Properties) SetDefault()](<#func-properties-setdefault>)
   - [func (p *Properties) SetFuncGetInfoAPI(getInfoFunc func(properties *Properties) (AccountInfo, error))](<#func-properties-setfuncgetinfoapi>)
   - [func (p *Properties) SetFuncTrans(transFunc func(
@@ -27,6 +28,14 @@ Package engine は、各翻訳エンジンの基本となる構造体とその�
   - [func (p *Properties) Translate(inTxt string, langFrom string, langTo string) (outText string, isCache bool, err error)](<#func-properties-translate>)
   - [func (p *Properties) UniformLang(lang string) string](<#func-properties-uniformlang>)
 
+
+## Constants
+
+NameVarEnvAPIKeyDefault は環境変数の変数名で、翻訳 API のアクセストークンを設定するための変数名です\.
+
+```go
+const NameVarEnvAPIKeyDefault = "QIITRANS_API_KEY"
+```
 
 ## type [AccountInfo](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/AccountInfo.go#L4-L6>)
 
@@ -96,13 +105,21 @@ func (p *Properties) GetQuotaLeft() (int, error)
 
 GetQuotaLeft は API のリクエスト残量（翻訳可能文字数）を返します。有料アカウントなど、制限がない場合は \-1 を返します\.
 
-### func \(\*Properties\) [SetAPIKey](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetAPIKey.go#L12>)
+### func \(\*Properties\) [SetAPIKey](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetAPIKey.go#L19>)
 
 ```go
-func (p *Properties) SetAPIKey(apikey string) func()
+func (p *Properties) SetAPIKey(apiKey string) func()
 ```
 
-SetAPIKey はコマンド引数から取得したアクセス・トークン "apikey" を翻訳エンジンが使えるようにセットします\.
+SetAPIKey はコマンド引数から取得したアクセストークン／認証キー（"apiKey"）を翻訳エンジンが使えるようにセットします\.
+
+このメソッドは呼び出し元の defer 用に関数を返します。各々の翻訳エンジンが参照する環境変数に apiKey の値をセットするため、 既存の値があった場合は処理後 defer で元に戻せるようにするための関数です\.
+
+```
+myEngine := deepleng.New("myCacheID")
+myAPIKey := "foobar"
+defer myEngine.SetAPIKey(myAPIKey)
+```
 
 ### func \(\*Properties\) [SetDefault](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetDefault.go#L4>)
 

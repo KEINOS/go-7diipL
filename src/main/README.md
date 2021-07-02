@@ -25,6 +25,7 @@ import "github.com/Qithub-BOT/QiiTrans/src/main"
 
 ```go
 const (
+    // VersionAppDefault はアプリのバイナリをビルドする際にバージョン指定がない場合のアプリのバージョンです.
     VersionAppDefault = "dev"
 
     // MsgHelp はヘルプの表示内容です.

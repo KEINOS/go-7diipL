@@ -1,40 +1,50 @@
-name: Tests before merge
+name: All Tests
 
 on:
   workflow_dispatch:
   pull_request:
 
 jobs:
-  merge_tests:
+  coverage:
+    name: Unit test and coverage
+    environment: TOKENS_BY_KEINOS
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout the code
+      - name: Checkout repo
         uses: actions/checkout@v2
 
-      - uses: actions/setup-go@v2
+      - name: Install Golang
+        uses: actions/setup-go@v2
         with:
-          go-version: 1.15.x
-
-      - name: Use Cache
-        uses: actions/cache@v2
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+          go-version: 1.16
 
       - name: Download Modules
-        if: steps.cache.outputs.cache-hit != 'true'
         run: go mod download
 
-      - name: Run shellcheck (pre-installed)
+      - name: Install ShellCheck
         run: |
-          find . -name '*.sh' -type f -print0 | xargs -0 shellcheck
+          url_download="https://github.com/koalaman/shellcheck/releases/download/latest/shellcheck-latest.linux.$(uname -m).tar.xz"
+          timestamp="$(date +%Y%m%d%H%M%S)"
+          path_tmp_dir=$(mktemp "/tmp/${NameRepo}-${timestamp}.tmp.XXXXXX")
+          echo "TEMP PATH: ${path_tmp_dir}"
+          wget -P "${path_tmp_dir}/" "$url_download"
+          tar xvf "${path_tmp_dir}"/shellcheck* -C "${path_tmp_dir}/"
+          sudo cp "${path_tmp_dir}/shellcheck-latest/shellcheck" "$(dirname $(which tar))/shellcheck"
+          shellcheck --version
 
-      - name: Install and run shfmt
+      - name: Install shfmt
         run: |
           GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
-          find . -name '*.sh' -type f -print0 | xargs -0 shfmt -d
+
+      - name: Install go-carpet
+        run: |
+          GO111MODULE=on go get github.com/msoap/go-carpet
+
+      - name: Install gomarkdoc
+        run: |
+          GO111MODULE=on go get github.com/princjef/gomarkdoc/cmd/gomarkdoc
 
       - name: Run gofmt
         uses: Jerome1337/gofmt-action@v1.0.4
@@ -42,15 +52,15 @@ jobs:
           gofmt-path: '.'
           gofmt-flags: '-d -e' # display diffs and report all errors
 
-      - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: latest
-          args: --config ./.github/golangci.yml
-          skip-go-installation: true # use pre-installed Go
-
-      - name: Run requirement check
+      - name: Install golangci-lint
         run: |
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
-          ./.github/check-requirements.sh
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)/bin"
+          golangci-lint --version
+
+      - name: Run coverage (Linux)
+        env:
+          DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
+        if: runner.os != 'Windows'
+        run: |
+          go mod tidy
           ./.github/run-tests-merge.sh

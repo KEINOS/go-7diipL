@@ -1,3 +1,8 @@
+[![All Tests](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yaml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yaml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Qithub-BOT/QiiTrans)](https://goreportcard.com/report/github.com/Qithub-BOT/QiiTrans)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Qithub-BOT/QiiTrans.svg)](https://pkg.go.dev/github.com/Qithub-BOT/QiiTrans)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Qithub-BOT/QiiTrans/blob/main/LICENSE)
+
 # `QiiTrans`
 
 `qiitrans`コマンドは、文書作成支援ツールです。
@@ -96,15 +101,15 @@ Options:
 
 1. コマンド・オプションの `--apikey` で指定されたトークン。
 2. 環境変数に、使用している翻訳エンジン専用の変数がセットされている場合は、その値。
-    - `DEEPL_APIKEY` ... `--engine=deepl` （デフォルトの翻訳エンジン）
-3. `QIITRANS_APIKEY` がセットされている場合は、その値。
+    - `DEEPL_API_KEY` ... `--engine=deepl` （デフォルトの翻訳エンジン）
+3. `QIITRANS_API_KEY` がセットされている場合は、その値。
 
 ## その他の環境変数
 
 `QiiTrans` は、以下の環境変数がセットされていた場合は、デフォルト値として利用します。
 
 - `QIITRANS_ENGINE`: 翻訳に使うエンジンです。現在は "`deepl`" のみが指定可能です。
-- `QIITRANS_APIKEY`: 翻訳に使うエンジンの APIキー（アクセストークン）です。
+- `QIITRANS_API_KEY`: 翻訳に使うエンジンの APIキー（アクセストークン）です。
 
 ## コントリビュート
 

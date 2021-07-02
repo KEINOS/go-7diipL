@@ -8,24 +8,37 @@ import (
 	"golang.org/x/xerrors"
 )
 
-// SetAPIKey はコマンド引数から取得したアクセス・トークン "apikey" を翻訳エンジンが使えるようにセットします.
-func (p *Properties) SetAPIKey(apikey string) func() {
+// SetAPIKey はコマンド引数から取得したアクセストークン／認証キー（"apiKey"）を翻訳エンジンが使えるようにセットします.
+//
+// このメソッドは呼び出し元の defer 用に関数を返します。各々の翻訳エンジンが参照する環境変数に apiKey の値をセットするため、
+// 既存の値があった場合は処理後 defer で元に戻せるようにするための関数です.
+//
+//   myEngine := deepleng.New("myCacheID")
+//   myAPIKey := "foobar"
+//   defer myEngine.SetAPIKey(myAPIKey)
+func (p *Properties) SetAPIKey(apiKey string) func() {
 	if p.NameVarEnvAPIKey == "" {
 		msg := "翻訳エンジンが参照する API キー/アクセス・トークンの環境変数名が指定されていません"
 		fmt.Fprintln(os.Stderr, xerrors.New(msg))
 	}
 
-	p.apiKey = apikey
-
-	deferFunc := func() {}
-
-	if p.apiKey == "" {
-		return deferFunc
+	// 引数から API が指定されていない（空の）場合は、アプリのデフォルトの環境変数の値をセット
+	if apiKey == "" {
+		apiKey = os.Getenv(NameVarEnvAPIKeyDefault)
 	}
 
-	// 既存の同名の環境変数がないかチェック
+	// アプリのデフォルトの環境変数に値が設定されていない（空の）場合は、翻訳 API の環境変数の値をセット
+	if apiKey == "" {
+		apiKey = os.Getenv(p.NameVarEnvAPIKey)
+	}
+
+	// エンジンのフィールドにアクセストークン（認証キー）をセット
+	p.apiKey = apiKey
+
+	// 翻訳 API の環境変数にセットするため、既存の環境変数の値をバックアップ
 	oldKey := os.Getenv(p.NameVarEnvAPIKey)
 
+	// 翻訳 API の環境変数にアクセストークン（認証キー）をセット
 	err := os.Setenv(p.NameVarEnvAPIKey, p.apiKey)
 	utils.ExitOnErr(err)
 

@@ -35,10 +35,11 @@ import "github.com/Qithub-BOT/QiiTrans/src/utils"
 
 ```go
 const (
-    SUCCESS  int    = 0
-    FAILURE  int    = 1
-    TERMINAL string = "terminal"
-    PIPE     string = "pipe"
+    // SUCCESS は成功時の終了ステータスです.
+    SUCCESS int = 0
+
+    // FAILURE 失敗時の終了ステータスです.
+    FAILURE int = 1
 )
 ```
 

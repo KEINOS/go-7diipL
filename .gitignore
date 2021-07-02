@@ -5,7 +5,6 @@ man
 .vagrant
 
 coverage.out
-go.sum
 go-carpet-*
 
 .DS_Store

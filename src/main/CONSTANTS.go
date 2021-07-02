@@ -1,6 +1,7 @@
 package main
 
 const (
+	// VersionAppDefault はアプリのバイナリをビルドする際にバージョン指定がない場合のアプリのバージョンです.
 	VersionAppDefault = "dev"
 
 	// MsgHelp はヘルプの表示内容です.

@@ -1,4 +1,5 @@
-/* Package issues は Issue Fix のテスト専用パッケージです
+/*
+Package issues は Issue Fix のテスト専用パッケージです
 
 このディレクトリには Issue を再現して PASS したテストが置かれています.
 

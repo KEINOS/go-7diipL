@@ -1,5 +1,15 @@
 # Workflow/Actions to Automate
 
-- [coverage-tests.yaml](coverage-tests.yaml): Runs unit test and static analysis of Go.
-- [merte-tests.yaml](merge-tests.yaml): Runs tests for requirements to merge including shell scripts.
-- [update-on-release.yaml](update-on-release.yaml): Updates the package in [pkg.go.dev](https://pkg.go.dev/github.com/KEINOS/Hello-Cobra) when new version was released.
+- [merte-tests.yaml](merge-tests.yaml): マージ前に必要なテストを実行します。
+
+## Fork 時の注意
+
+Fork 先のリポジトリの設定で、翻訳 API のアクセストークン（認証キー）を設定・登録する必要があります。
+
+### Repository secrets の設定
+
+Fork 先のリポジトリの [Settings] -> [Secrets] -> "Actions secrets" の "New repository secrets" ボタンから以下の設定でトークンを設定します.
+
+- DeepL PRO API （[認証キー確認先](https://www.deepl.com/pro-account/plan)）
+  - Name: `DEEPL_API_KEY`
+  - Value: DEEPL で発行した認証キー

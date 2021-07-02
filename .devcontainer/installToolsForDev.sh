@@ -9,7 +9,8 @@ GoVersionRequireMin=16
 
 NameRepo="QiiTrans"
 
-echo "Current Go version is: ${GoVersion} (Minosr ver is: ${GoVersionMinor})"
+echo "Current Go version is: ${GoVersion} (Minor ver is: ${GoVersionMinor})"
+echo "Go path: $(which go)"
 
 if [ "$GoVersionMinor" -lt "$GoVersionRequireMin" ]; then
     echo >&2 "Minimum Go version does not satisfy. Required minimum Go version: 1.${GoVersionRequireMin}"
@@ -87,13 +88,10 @@ go install "github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest"
 go install "github.com/nicksnyder/go-i18n/v2/goi18n@latest"
 go install "mvdan.cc/gofumpt@latest"
 go install "golang.org/x/tools/gopls@latest"
-go install "github.com/spf13/cobra/cobra@latest"
-go install "github.com/golang/mock/mockgen@latest"
 go install "github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest"
 go install "github.com/ramya-rao-a/go-outline@latest"
 go install "github.com/go-delve/delve/cmd/dlv@latest"
 go install "honnef.co/go/tools/cmd/staticcheck@latest"
-go install "github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest"
 
 echo
 echo '* Installing shellcheck'

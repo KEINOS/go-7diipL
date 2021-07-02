@@ -5,6 +5,9 @@ import (
 	"github.com/dgraph-io/badger/v3"
 )
 
+// OpenDB はキャッシュ用の DB をオープンします. キャッシュ・ディレクトリが存在しない場合は、テンポラリディレクトリに新規に作成します.
+//
+// このメソッドは、Get() Set() でも呼び出されるため、利用時に OpenDB() CloseDB() を行う必要はありません.
 func (c *TCache) OpenDB() (err error) {
 	// キャッシュ用の DB をオープン。存在しない場合は新規作成してオープン
 	pathDirCache := c.GetPathDirCache()

@@ -24,6 +24,8 @@ Package deepleng は DeepL の翻訳 API を使った翻訳エンジンです\.
 
 ## Constants
 
+NameVarEnvAPIKey は環境変数の変数名で、DeepL の認証キー（アクセストークン）用の変数名です\.
+
 ```go
 const NameVarEnvAPIKey = "DEEPL_API_KEY"
 ```
@@ -36,11 +38,13 @@ func GetInfoAPI(p *engine.Properties) (engine.AccountInfo, error)
 
 GetInfoAPI はアクセス・トークンのアカウント情報のうち、engine\.AccountInfo に必要なものだけセットして返します\.
 
-## func [GetURLBaseAPI](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/deepleng/GetURLBaseAPI.go#L5>)
+## func [GetURLBaseAPI](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/deepleng/GetURLBaseAPI.go#L7>)
 
 ```go
 func GetURLBaseAPI(p *engine.Properties) string
 ```
+
+GetURLBaseAPI は DeepL の翻訳 API のエンドポイントのドメインを返します\. 無料・有料アカウントでドメインは異なるため、アクセス・トークン（認証キー）から自動検知して返します\.
 
 ## func [IsAPIKeyFree](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/deepleng/IsAPIKeyFree.go#L6>)
 
@@ -50,7 +54,7 @@ func IsAPIKeyFree(apikey string) bool
 
 IsAPIKeyFree は apikey が無料枠のアクセストークンか返します\.
 
-## func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/deepleng/New.go#L8>)
+## func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/deepleng/New.go#L9>)
 
 ```go
 func New(cacheID ...string) *engine.Properties

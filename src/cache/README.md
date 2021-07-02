@@ -39,13 +39,17 @@ ClearAll() ... キャッシュ・ディレクトリを削除します。
 
 ## Constants
 
+NameDirCacheDefault はキャッシュ時のデフォルトのディレクトリ名もしくはプレフィックス（接頭辞）です\.
+
+テンポラリ・ディレクトリの、この名前の付いたディレクトリは削除可能です\.
+
 ```go
-const (
-    NameDirCacheDefault = "QiiTrans"
-)
+const NameDirCacheDefault = "QiiTrans"
 ```
 
-## type [TCache](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.go#L9-L13>)
+## type [TCache](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.go#L11-L15>)
+
+TCache はキャッシュ DB の構造体です\. \[badger\]\(https://github.com/dgraph-io/badger\) のラッパーです\.
 
 ```go
 type TCache struct {
@@ -111,11 +115,15 @@ func (c *TCache) ClearAll()
 
 ClearAll はキャッシュ・データを削除します\.
 
-### func \(\*TCache\) [CloseDB](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.CloseDB.go#L7>)
+### func \(\*TCache\) [CloseDB](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.CloseDB.go#L11>)
 
 ```go
 func (c *TCache) CloseDB()
 ```
+
+CloseDB はキャッシュの DB をクローズします\. DB がオープンされていない場合は何もしません\. クローズに失敗した場合はパニックを起こします\.
+
+このメソッドは、Get\(\) Set\(\) でも呼び出されるため、利用時に OpenDB\(\) CloseDB\(\) を行う必要はありません\.
 
 ### func \(\*TCache\) [Get](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.Get.go#L5>)
 
@@ -141,11 +149,15 @@ func (c *TCache) GetValueInByte(keyHashed []byte) ([]byte, error)
 
 GetValueInByte はバイトデータにハッシュ化された keyHashed キーを使ってキャッシュを探索しバイトデータで返します\.
 
-### func \(\*TCache\) [OpenDB](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.OpenDB.go#L8>)
+### func \(\*TCache\) [OpenDB](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.OpenDB.go#L11>)
 
 ```go
 func (c *TCache) OpenDB() (err error)
 ```
+
+OpenDB はキャッシュ用の DB をオープンします\. キャッシュ・ディレクトリが存在しない場合は、テンポラリディレクトリに新規に作成します\.
+
+このメソッドは、Get\(\) Set\(\) でも呼び出されるため、利用時に OpenDB\(\) CloseDB\(\) を行う必要はありません\.
 
 ### func \(\*TCache\) [Set](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.Set.go#L11>)
 
