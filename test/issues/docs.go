@@ -1,12 +1,10 @@
-/* Package issue_test
+/* Package issues は Issue Fix のテスト専用パッケージです
 
-# Issue Fix テスト
+このディレクトリには Issue を再現して PASS したテストが置かれています.
 
-このディレクトリには Issue を再現して PASS したテストが置かれています。
+ファイル・フォーマット
 
-## ファイル・フォーマット
-
-- `issueNNN_test.go`: `NNN` は 3 桁の Issue #
+  `issueNNN_test.go`: `NNN` は 3 桁の Issue #
 
 */
-package issue
+package issues

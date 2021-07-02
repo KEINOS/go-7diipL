@@ -6,6 +6,10 @@ import "strings"
 // 自動生成されるため GetListLang() か IsValidLang() を利用してください.
 var listLang map[string]string
 
+// GetListLang は、翻訳に使える言語の一覧をマップで返します.
+//
+// "map[検索]: 指定フォーマット" の形で返ってくるので、バリデーションに使います.
+// "japanese" でキーを検索すると "ja"、"JA" でキーを検索しても "ja" が取得できます.
 func GetListLang() map[string]string {
 	if len(listLang) != 0 {
 		return listLang

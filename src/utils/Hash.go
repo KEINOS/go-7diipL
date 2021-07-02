@@ -12,7 +12,7 @@ import (
 	"lukechampine.com/blake3"
 )
 
-// Hash returns the hashed value using the algorithm of algo.
+// Hash は指定されたアルゴリズムを使って value をハッシュ化し、文字列と byte で結果を返します.
 //
 // Supported hash
 //

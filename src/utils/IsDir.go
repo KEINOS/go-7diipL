@@ -2,15 +2,16 @@ package utils
 
 import "os"
 
-// IsDir returns true if directory exists in the given path and not a file.
+// IsDir は pathFile のパスが存在し、ディレクトリの場合に true を返します.
 //
-// It will exit with an error if the path is malformed (can't be cleaned).
+// パスの構文解析に失敗した場合はエラーで終了（OsExit）します.
 func IsDir(pathFile string) bool {
 	if !PathExists(pathFile) {
 		return false
 	}
 
-	fileInfo, _ := os.Stat(pathFile)
+	fileInfo, err := os.Stat(pathFile)
+	ExitOnErr(err)
 
 	return fileInfo.IsDir()
 }

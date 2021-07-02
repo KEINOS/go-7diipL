@@ -16,6 +16,7 @@ func SliceSentences(inputText string) []string {
 	return SliceToSentenceChore(inputText)
 }
 
+// SliceToSentenceChore は英語以外の文字列として文の区切りごとにスライスするのに使われます.
 func SliceToSentenceChore(inputText string) []string {
 	var (
 		result     = []string{}
@@ -60,6 +61,7 @@ func SliceToSentenceChore(inputText string) []string {
 	return result
 }
 
+// SliceToSentenceEng は英語の文字列として文の区切りごとにスライスするのに使われます.
 func SliceToSentenceEng(inputTextEn string) []string {
 	result := []string{}
 
