@@ -1,5 +1,6 @@
 [![All Tests](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yaml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yaml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Qithub-BOT/QiiTrans)](https://goreportcard.com/report/github.com/Qithub-BOT/QiiTrans)
+[![CodeQL](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Qithub-BOT/QiiTrans.svg)](https://pkg.go.dev/github.com/Qithub-BOT/QiiTrans)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Qithub-BOT/QiiTrans/blob/main/LICENSE)
 
