@@ -2,19 +2,40 @@ pull_request_rules:
     - name: automatic merge on CI success and 2 approved reviews
       conditions:
         - "#approved-reviews-by>=2"
-        - "check-success=merge_tests"
+        - "#review-requested=0"
+        - "#changes-requested-reviews-by=0"
+        - "check-success=Unit test and coverage"
         - base=main
         - -draft
       actions:
         merge:
           method: squash
           strict: smart+fasttrack
-    - name: automatic merge on CI success if only markdown and/or Golang files were changed
+    - name: automatic merge on CI success if only markdown and JSON files were changed
       conditions:
-        - "check-success=merge_tests"
-        - files~=.\.(?i)(md|go)$
+        - "check-success=Unit test and coverage"
+        - files~=.\.(?i)(md|json)$
         - base=main
         - -draft
+      actions:
+        merge:
+          method: squash
+          strict: smart+fasttrack
+    - name: automatic merge on go.mod update only
+      conditions:
+        - "check-success=Unit test and coverage"
+        - files~=go.mod
+        - "#files=1"
+        - base=main
+        - -draft
+      actions:
+        merge:
+          method: squash
+          strict: smart+fasttrack
+    - name: automatic merge for Dependabot pull requests
+      conditions:
+        - author~=^dependabot(|-preview)\[bot\]$
+        - "check-success=Unit test and coverage"
       actions:
         merge:
           method: squash
