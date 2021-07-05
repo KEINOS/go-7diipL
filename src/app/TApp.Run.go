@@ -1,7 +1,6 @@
 package app
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
@@ -26,24 +25,14 @@ func (a *TApp) Run() int {
 	return cli.Run(tmpFlag, a.run)
 }
 
-func (a *TApp) SetArgValue(ctx *cli.Context) error {
-	// フラグやオプション引数を取得
-	argv, ok := ctx.Argv().(*TFlagOptions)
-	if !ok {
-		return errors.New("コマンド引数の読み込みに失敗しました")
+func (a *TApp) run(ctx *cli.Context) error {
+	// フラグ・オプションの値をセット
+	if err := a.SetArgValue(ctx); err != nil {
+		return err
 	}
 
-	// 取得したフラグやオプションを割り当て
-	a.Argv = argv
-
-	// ヘルプの再設定
-	a.Argv.SetHelpMsg()
-
-	return nil
-}
-
-func (a *TApp) run(ctx *cli.Context) error {
-	if err := a.SetArgValue(ctx); err != nil {
+	// フラグ・オプションに対する事前処理（デバッグ・モード設定など）
+	if err := a.PreRun(); err != nil {
 		return err
 	}
 
@@ -54,20 +43,8 @@ func (a *TApp) run(ctx *cli.Context) error {
 		return nil
 	}
 
-	if err := a.PreRun(); err != nil {
-		return err
-	}
-
 	// 翻訳する言語のリストを取得（フラグやオプション以外の引数）
 	orderLang := ctx.Args()
-
-	// 翻訳エンジン取得
-	if err := a.SetEngine(a.Argv.NameEngine); err != nil {
-		return err
-	}
-
-	// キャッシュを行うか
-	a.Engine.Update = a.Argv.IsNoCache
 
 	// APIキー/アクセス・トークンが引数で渡された場合、環境変数にセットする.
 	// 既存の環境変数があった場合に備えて、リカバリ用の関数を取得する.
@@ -96,6 +73,16 @@ func (a *TApp) run(ctx *cli.Context) error {
 
 	// 最終結果出力
 	ctx.String("%s", result)
+
+	// API 情報の表示
+	if a.Argv.ShowInfo {
+		quotaLeft, err := a.Engine.GetQuotaLeft()
+		if err != nil {
+			return err
+		}
+
+		utils.EchoSTDERR("\n[INFO]: 残り文字数: %v\n", utils.DelimitComma(quotaLeft))
+	}
 
 	return nil
 }

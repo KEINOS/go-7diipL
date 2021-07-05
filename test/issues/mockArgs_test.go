@@ -20,7 +20,7 @@ func mockArgs(t *testing.T, argsDummy []string) func() {
 	}
 
 	// 引数のモック
-	os.Args = argsDummy
+	os.Args = append([]string{os.Args[0]}, argsDummy...)
 
 	return funcDefer
 }
