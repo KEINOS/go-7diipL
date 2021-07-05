@@ -1,13 +1,11 @@
-package main
+package app
 
 import (
 	"strings"
-
-	"github.com/Qithub-BOT/QiiTrans/src/engines/engine"
 )
 
-// Translate は e の翻訳エンジンを使って orderLang で指定された言語の順に inputText を翻訳し、結果を返します.
-func Translate(e *engine.Properties, orderLang []string, inputText string) (string, error) {
+// Translate は、orderLang の順に inputText を翻訳した結果を返します.
+func (a *TApp) Translate(orderLang []string, inputText string) (string, error) {
 	var err error
 
 	transText := ""
@@ -29,7 +27,7 @@ func Translate(e *engine.Properties, orderLang []string, inputText string) (stri
 		langTo = nameLang
 
 		// from -> to へ翻訳
-		transText, _, err = e.Translate(transText, langFrom, langTo)
+		transText, _, err = a.Engine.Translate(transText, langFrom, langTo)
 		if err != nil {
 			return "", err
 		}

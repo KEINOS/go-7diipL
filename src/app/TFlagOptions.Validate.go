@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"errors"
@@ -7,8 +7,10 @@ import (
 	"github.com/mkideal/cli"
 )
 
-// Validate メソッドは、コマンド引数のバリデーションを行い、cli.Run() の内容が実行される前に呼び出されます.
-func (argv *TFlag) Validate(ctx *cli.Context) error {
+// Validate メソッドは、cli.Validator インターフェースの実装です.
+//
+// コマンドのフラグ、オプションや引数のバリデーションを行います. cli.Run() で指定された関数が実行される前に呼び出されます.
+func (argv *TFlagOptions) Validate(ctx *cli.Context) error {
 	// オプションやグラグ以外の引数を取得
 	inputArgs := ctx.Args()
 

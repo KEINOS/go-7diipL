@@ -1,4 +1,4 @@
-package utils_test
+package issues_test
 
 import (
 	"io/ioutil"
@@ -8,24 +8,17 @@ import (
 
 // mockSTDIN は標準入力のテスト用のヘルパー関数です.
 //
-// モック（模擬）したい標準入力の値を渡すと、ダミーのファイル・ポインタと defer 用の関数が返ってきます.
+// モック（模擬）したい標準入力の値を渡すと、標準入力 defer 用の関数が返ってきます.
 //
 // 使用例
 //
 //   input := "sample input"
-//   tmpFile, funcDefer := mockSTDIN(t, input)
+//   uncDefer := mockSTDIN(t, input)
 //
-//   defer funcDefer() // clean up
-//
-//   oldStdin := os.Stdin
-//
-//   defer func() { os.Stdin = oldStdin }() // Restore original Stdin
-//
-//   // Mock stdin
-//   os.Stdin = tmpFile
+//   defer funcDefer() // recover
 //
 //   result := funcSTDINSample() // os.Stdin を使った関数
-func mockSTDIN(t *testing.T, inputDummy string) (*os.File, func()) {
+func mockSTDIN(t *testing.T, inputDummy string) func() {
 	t.Helper()
 
 	/* stdin のダミー用ファイルの作成 */
@@ -44,10 +37,21 @@ func mockSTDIN(t *testing.T, inputDummy string) (*os.File, func()) {
 		t.Fatal("failed to set the offset for the next Read during test")
 	}
 
+	// 既存標準入力のファイルポインタのバックアップとリストア
+	oldStdin := os.Stdin
+
+	// stdin のモック
+	os.Stdin = tmpFile
+
 	// Defer 用の関数
 	funcDefer := func() {
-		os.Remove(tmpFile.Name())
+		err := os.Remove(tmpFile.Name())
+		if err != nil {
+			t.Fatalf("failed to remove temp file for io during test")
+		}
+
+		os.Stdin = oldStdin
 	}
 
-	return tmpFile, funcDefer
+	return funcDefer
 }
