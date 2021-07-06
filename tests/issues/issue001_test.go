@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/Qithub-BOT/QiiTrans/src/app"
+	"github.com/Qithub-BOT/QiiTrans/src/helperfunc"
 	"github.com/kami-zh/go-capturer"
 	"github.com/stretchr/testify/assert"
 )
@@ -14,22 +15,19 @@ func TestIssue001(t *testing.T) {
 	userInput := "今日はいい天気ですね"
 
 	// stdin/パイプ からの入力のモックとリカバリ用関数取得
-	funcDeferSTDIN := mockSTDIN(t, userInput)
+	funcDeferSTDIN := helperfunc.MockSTDIN(t, userInput)
 	defer funcDeferSTDIN() // モックのリカバリ
 
 	// オプション、フラグなどの引数のモックとリカバリ用関数取得
-	funcDeferArgs := mockArgs(t, []string{
+	funcDeferArgs := helperfunc.MockArgs(t, []string{
 		"--info",
 		"ja",
 		"en",
 	})
 	defer funcDeferArgs() // モックのリカバリ
 
-	appTest := app.New() // 新規アプリ作成
+	appTest := app.New(t.Name()) // 新規アプリ作成。キャッシュ ID はテスト名.
 
-	if err := appTest.SetEngine("deepl", t.Name()); err != nil {
-		t.Fatalf("failed to set translation engine during test.\nErr Msg: %s", err)
-	}
 	defer func() {
 		appTest.Engine.Cache.ClearAll() // 終了後にキャッシュ削除
 	}()

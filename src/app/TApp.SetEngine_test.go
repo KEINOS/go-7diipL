@@ -10,9 +10,9 @@ import (
 func TestSetEngine(t *testing.T) {
 	nameEngine := "deepl"
 
-	appTest := app.New()
+	appTest := app.New(t.Name())
 
-	err := appTest.SetEngine(nameEngine, t.Name())
+	err := appTest.SetEngine(nameEngine)
 
 	assert.NoError(t, err)
 

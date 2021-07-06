@@ -1,16 +1,16 @@
 package utils_test
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
 	"github.com/stretchr/testify/assert"
-	"golang.org/x/xerrors"
 )
 
 func TestPanicOnErr(t *testing.T) {
 	msg := "foobar"
-	err := xerrors.New(msg)
+	err := errors.New(msg)
 
 	assert.PanicsWithError(t, msg, func() {
 		utils.PanicOnErr(err)

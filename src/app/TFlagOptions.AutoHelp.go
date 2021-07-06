@@ -6,11 +6,10 @@ import (
 
 // AutoHelp は cli.AutoHelper インターフェースの実装です.
 //
-// cli.Run() から呼び出され、AutoHelp() が true を返した場合は、cli.Run() は argv のオプションのヘルプを表示します.
+// この関数は cli.Run() から呼び出され、AutoHelp() が true を返した場合は cli.Run() は argv のオプションのヘルプを表示します.
 func (argv *TFlagOptions) AutoHelp() bool {
 	// ヘルプのオプションフラグが true の場合、アプリの usage を表示
 	if argv.Help {
-		fmt.Println("ここにヘルプ本文")
 		fmt.Println(argv.UsageApp)
 	}
 

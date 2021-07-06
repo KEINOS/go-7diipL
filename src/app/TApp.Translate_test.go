@@ -10,9 +10,9 @@ import (
 )
 
 func TestTranslate(t *testing.T) {
-	appTest := app.New()
+	appTest := app.New(t.Name())
 
-	err := appTest.SetEngine("deepl", t.Name())
+	err := appTest.SetEngine("deepl")
 	assert.NoError(t, err)
 
 	defer func() {
@@ -28,14 +28,16 @@ func TestTranslate(t *testing.T) {
 
 	// 通常テスト
 	{
-		out, err := appTest.Translate(orderLang, "私は、賛成の反対に同意なのだ")
+		// タイミングによって異なるため複数パターンをチェック
+		expect := []string{
+			"今日はとてもいい天気です。",
+			"今日はとてもいい天気だ。",
+		}
+
+		actual, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")
 
 		assert.NoError(t, err)
-
-		expect := "同意しないことに同意します。"
-		actual := out
-
-		assert.Equal(t, expect, actual)
+		assert.Contains(t, expect, actual)
 	}
 
 	// キャッシュテスト
@@ -47,17 +49,19 @@ func TestTranslate(t *testing.T) {
 		}()
 
 		out := capturer.CaptureOutput(func() {
-			out, err := appTest.Translate(orderLang, "私は、賛成の反対に同意なのだ")
+			// タイミングによって異なるため複数パターンをチェック
+			expect := []string{
+				"今日はとてもいい天気です。",
+				"今日はとてもいい天気だ。",
+			}
+
+			actual, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")
 
 			assert.NoError(t, err)
-
-			expect := "同意しないことに同意します。"
-			actual := out
-
-			assert.Equal(t, expect, actual)
+			assert.Contains(t, expect, actual)
 		})
 
-		assert.Contains(t, out, "EN -> JA: キャッシュ: 同意しないことに同意します。",
+		assert.Contains(t, out, "EN -> JA: キャッシュ:",
 			"it should output cached translation on debug mode")
 	}
 }

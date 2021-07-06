@@ -4,12 +4,16 @@ import (
 	"strings"
 )
 
-// GetMsgHelpUsage はヘルプ（使い方）のテンプレートから nameApp と nameCmd を置換した結果を返します.
+// GetMsgHelpUsage はヘルプ（使い方）のテンプレートから name_app と name_cmd を置換した結果を返します.
 func GetMsgHelpUsage(nameApp string, nameCmd string) string {
+	if nameApp == "" {
+		nameApp = NameDefault
+	}
+
 	usage := templateUsage
 
-	usage = strings.ReplaceAll(usage, "%%nameapp%%", nameApp)
-	usage = strings.ReplaceAll(usage, "%%namecmd%%", nameCmd)
+	usage = strings.ReplaceAll(usage, "%%name_app%%", nameApp)
+	usage = strings.ReplaceAll(usage, "%%name_cmd%%", nameCmd)
 
 	return usage
 }
@@ -18,28 +22,28 @@ func GetMsgHelpUsage(nameApp string, nameCmd string) string {
 //
 // メッセージ中の以下のタグは自動置換されます
 //
-//   "%%nameapp%%" ... アプリの公式名称
-//   "%%namecmd%%" ... 実行バイナリ名（パスと拡張子除く）
+//   "%%name_app%%" ... アプリの公式名称
+//   "%%name_cmd%%" ... 実行バイナリ名（パスと拡張子除く）
 //
 // 注意: ヘルプはスペース・インデントです。タブ・インデントでレイアウト崩れが起きないように注意してください.
-const templateUsage string = `%%nameapp%%
-  %%namecmd%% コマンドは文書作成支援ツールです。
+const templateUsage string = `%%name_app%%
+  %%name_cmd%% コマンドは文書作成支援ツールです。
   標準入力のテキストを、引数の言語から言語へ自動翻訳した結果を返します。
 
 Usage:
-  %%namecmd%% [Options] LangFrom LangTo [LangTo ...]
+  %%name_cmd%% [Options] LangFrom LangTo [LangTo ...]
 
 Example:
   $ # 日本語 → 英語に翻訳
-  $ echo '私は、賛成の反対に同意なのだ' | %%namecmd%% ja en
+  $ echo '私は、賛成の反対に同意なのだ' | %%name_cmd%% ja en
   I agree to disagree.
 
   $ # 日本語 → 英語 → 日本語に翻訳
-  $ echo '私は、賛成の反対に同意なのだ' | %%namecmd%% ja en ja
+  $ echo '私は、賛成の反対に同意なのだ' | %%name_cmd%% ja en ja
   同意しないことに同意します。
 
   $ # 日本語 → 英語 → スペイン語 → 中国語 → 日本語の順に翻訳
-  $ echo '同意しないことに同意します。' | %%namecmd%% ja en es zh ja
+  $ echo '同意しないことに同意します。' | %%name_cmd%% ja en es zh ja
   同意しないことに同意します。
 
 LangFrom:

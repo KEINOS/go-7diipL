@@ -8,7 +8,7 @@ import (
 )
 
 func TestGetVersion(t *testing.T) {
-	appTest := app.New()
+	appTest := app.New(t.Name())
 
 	{
 		expect := "QiiTrans dev version"

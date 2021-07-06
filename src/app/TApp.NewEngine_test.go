@@ -13,7 +13,7 @@ func TestNewEngine(t *testing.T) {
 
 	defer expect.Cache.ClearAll() // 終了後に削除
 
-	appTest := app.New()
+	appTest := app.New(t.Name())
 	actual, err := appTest.NewEngine("deepl", t.Name())
 	assert.NoError(t, err)
 

@@ -10,9 +10,9 @@ import (
 )
 
 func TestMain_exits_status1_on_fail(t *testing.T) {
-	app.ForceFail = true
+	app.ForceFailRun = true
 	defer func() {
-		app.ForceFail = false
+		app.ForceFailRun = false
 	}()
 
 	// モックのリカバリ

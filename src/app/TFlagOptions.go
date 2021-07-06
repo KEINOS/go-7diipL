@@ -5,7 +5,6 @@ package app
 type TFlagOptions struct {
 	APIKey         string `cli:"a,apikey" usage:"翻訳に使うエンジンのアクセス・トークンを指定します" dft:""`
 	CacheID        string `cli:"cache-id" usage:"キャッシュの DB 名。異なる DB にキャッシュを保存したい場合に指定します" dft:""`
-	NameApp        string // アプリの名称
 	NameEngine     string `cli:"e,engine" usage:"翻訳に使うエンジンを指定します" dft:"deepl"`
 	UsageApp       string // アプリのヘルプ表示で使われる本文メッセージ
 	ClearBeforeRun bool   `cli:"clear" usage:"実行前にキャッシュを完全に削除します。（API の利用枠を消費します）"`
