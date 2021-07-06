@@ -3,7 +3,7 @@
 # issues
 
 ```go
-import "github.com/Qithub-BOT/QiiTrans/test/issues"
+import "github.com/Qithub-BOT/QiiTrans/tests/issues"
 ```
 
 ### Package issues は Issue Fix のテスト専用パッケージです
