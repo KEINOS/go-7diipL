@@ -47,7 +47,7 @@ type AccountInfo struct {
 }
 ```
 
-## type [Properties](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.go#L9-L35>)
+## type [Properties](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.go#L9-L38>)
 
 Properties は各翻訳エンジンの基本となる構造体です\. 翻訳エンジンが API を呼び出すのに必要な基本情報と、翻訳に使われるメソッド（クラス関数）を持った構造体です\.
 
@@ -63,6 +63,9 @@ type Properties struct {
     // getInfoAPI メソッドは、翻訳エンジンがインスタンス作成時に割り当てた関数です.
     // アクセス・トークンのアカウント情報のうち、AccountInfo 型の情報だけ返します.
     getInfoAPI func(properties *Properties) (AccountInfo, error)
+
+    // NameEngine は利用している翻訳エンジン名です.
+    NameEngine string
 
     // 環境変数からアクセス・トークンを取得する際の環境変数名
     NameVarEnvAPIKey string

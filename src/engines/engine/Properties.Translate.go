@@ -22,6 +22,7 @@ func (p *Properties) Translate(inTxt string, langFrom string, langTo string) (ou
 	if err == nil || !p.Update {
 		if strings.TrimSpace(result) != "" {
 			utils.LogDebug("%s -> %s: キャッシュ: %s", langFrom, langTo, result)
+			utils.LogDebug("Dir path: %s", p.Cache.PathDirTemp)
 
 			isCache = true
 

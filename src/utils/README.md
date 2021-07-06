@@ -10,6 +10,8 @@ import "github.com/Qithub-BOT/QiiTrans/src/utils"
 
 - [Constants](<#constants>)
 - [Variables](<#variables>)
+- [func DelimitComma(i int) string](<#func-delimitcomma>)
+- [func EchoSTDERR(format string, a ...interface{})](<#func-echostderr>)
 - [func ExitOnErr(err error)](<#func-exitonerr>)
 - [func GetListLang() map[string]string](<#func-getlistlang>)
 - [func GetNameExe() string](<#func-getnameexe>)
@@ -45,6 +47,20 @@ const (
 
 ## Variables
 
+```go
+var (
+    // ValSTDINDummy は GetSTDIN() の挙動を mock するための値です.
+    //
+    // この値が空ではない場合、そのセットされた値を返します.
+    ValSTDINDummy string = ""
+
+    // ForceErrorGetSTDIN はテスト用の変数です。true の場合、GetSTDIN は強制的にエラーを返します.
+    //
+    // この設定はテストで強制的にエラーを発生したい場合に利用されます.
+    ForceErrorGetSTDIN bool = false
+)
+```
+
 IsTerminalDummy はテスト時に標準入力からの受け取りをモックするために使われる値です\. 値を true に設定すると IsTerminal\(\) は強制的に true を返します。false に設定した場合は、自動検知が働きます\.
 
 ```go
@@ -57,14 +73,6 @@ OsExit は os\.Exit のエイリアスです\. テストで os\.Exit の終了�
 var OsExit = os.Exit
 ```
 
-ValSTDINDummy は GetSTDIN\(\) の挙動を mock するための値です\.
-
-この値が空でない場合、GetSTDIN\(\) はセットされた値を返します\.
-
-```go
-var ValSTDINDummy string = ""
-```
-
 ```go
 var isModeDebug bool = false
 ```
@@ -74,6 +82,20 @@ listLang は利用可能な言語のマップです\. 自動生成されるた�
 ```go
 var listLang map[string]string
 ```
+
+## func [DelimitComma](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/DelimitComma.go#L5>)
+
+```go
+func DelimitComma(i int) string
+```
+
+## func [EchoSTDERR](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/EchoSTDERR.go#L9>)
+
+```go
+func EchoSTDERR(format string, a ...interface{})
+```
+
+EchoSTDERR は fmt\.Fprintf のラッパー関数で、標準エラー出力に出力します\.
 
 ## func [ExitOnErr](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/ExitOnErr.go#L9>)
 
@@ -99,9 +121,9 @@ GetListLang は、翻訳に使える言語の一覧をマップで返します\.
 func GetNameExe() string
 ```
 
-GetNameExe は、現在の実行ファイル名から拡張子を除いたファイル名を返します\.
+GetNameExe は、コマンド名（現在の実行ファイル名からパスと拡張子を除いたファイル名）を返します\.
 
-## func [GetSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/GetSTDIN.go#L16>)
+## func [GetSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/GetSTDIN.go#L25>)
 
 ```go
 func GetSTDIN() (stdin string, err error)

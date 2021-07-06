@@ -18,6 +18,9 @@ type Properties struct {
 	// アクセス・トークンのアカウント情報のうち、AccountInfo 型の情報だけ返します.
 	getInfoAPI func(properties *Properties) (AccountInfo, error)
 
+	// NameEngine は利用している翻訳エンジン名です.
+	NameEngine string
+
 	// 環境変数からアクセス・トークンを取得する際の環境変数名
 	NameVarEnvAPIKey string
 
