@@ -163,11 +163,13 @@ func (a *TApp) CliRun(ctx *cli.Context) error
 
 CliRun は app\.Run\(\) の本体で、cli\.Run で呼び出されるメソッドです\.
 
-### func \(\*TApp\) [GetUniformedInfo](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetUniformedInfo.go#L15>)
+### func \(\*TApp\) [GetUniformedInfo](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetUniformedInfo.go#L16>)
 
 ```go
 func (a *TApp) GetUniformedInfo() (string, error)
 ```
+
+GetUniformedInfo は API 情報を読みやすいように整えた状態で返します\.
 
 ### func \(\*TApp\) [GetVersion](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetVersion.go#L12>)
 
@@ -207,11 +209,13 @@ Run メソッドはアプリを実行します\. 実行に成功した場合は 
 
 テスト目的で強制的に失敗させる場合は ForceFail を true に設定します\.
 
-### func \(\*TApp\) [SetArgValue](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SetArgValue.go#L8>)
+### func \(\*TApp\) [SetArgValue](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SetArgValue.go#L9>)
 
 ```go
 func (a *TApp) SetArgValue(ctx *cli.Context) error
 ```
+
+SetArgValue は cli\.Run 内で渡されるコンテキストからフラグやオプションの値をセットします\.
 
 ### func \(\*TApp\) [SetEngine](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SetEngine.go#L4>)
 

@@ -9,6 +9,11 @@ import (
 // Translate は翻訳エンジンから割り当てられた翻訳関数を実行し、inText を langFrom から langTo に翻訳した結果を返します.
 // この値はキャッシュされます。キャッシュを更新したい場合は Update フィールド（プロパティ）を true にセットしてください.
 func (p *Properties) Translate(inTxt string, langFrom string, langTo string) (outText string, isCache bool, err error) {
+	// fix issue #8
+	if strings.TrimSpace(inTxt) == "" {
+		return inTxt, false, nil
+	}
+
 	var (
 		result string
 		key    string
