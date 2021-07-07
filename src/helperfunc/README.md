@@ -79,12 +79,14 @@ dummyArgs := []string{"--debug", "ja", "en"}
 
 ```go
 var (
-    IsErrorDummy bool // FatalOnErr 自身のテストのため、動作をモックするためのフラグです.
-    failNow      func(format string, args ...interface{})
+    // IsErrorDummy が true の場合、FatalOnErr() は t.FailNow せずに標準エラー出力します.
+    IsErrorDummy bool
+
+    failNow func(format string, args ...interface{})
 )
 ```
 
-## func [FatalOnErr](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/helperfunc/FatalOnErr.go#L19>)
+## func [FatalOnErr](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/helperfunc/FatalOnErr.go#L21>)
 
 ```go
 func FatalOnErr(t *testing.T, err error, comment ...string)
@@ -100,7 +102,7 @@ FatalOnErr は err が nil ではない場合に t\.FailNow でテストを終�
 func MockArgs(t *testing.T, argsDummy []string) func()
 ```
 
-mockArgs は、テストでユーザのコマンド引数（オプションやフラグ含む入力）をモックするヘルパー関数です\. この関数は、モックの変更をリカバリーする defer 用の関数を返します\.
+MockArgs は、テストでユーザのコマンド引数（オプションやフラグ含む入力）をモックするヘルパー関数です\. この関数は、モックの変更をリカバリーする defer 用の関数を返します\.
 
 ```
 dummyArgs := []string{"--debug", "ja", "en"}
@@ -115,7 +117,7 @@ defer funcDefer()
 func MockSTDIN(t *testing.T, inputDummy string) func()
 ```
 
-mockSTDIN は、テストでユーザからの標準入力をモックするヘルパー関数です\. この関数は、モックの変更をリカバリーする defer 用の関数を返します\.
+MockSTDIN は、テストでユーザからの標準入力をモックするヘルパー関数です\. この関数は、モックの変更をリカバリーする defer 用の関数を返します\.
 
 ```
 // 以下は echo "foo bar" | qiitrans と同等の状態

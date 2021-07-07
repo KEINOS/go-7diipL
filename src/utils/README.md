@@ -83,11 +83,13 @@ listLang は利用可能な言語のマップです\. 自動生成されるた�
 var listLang map[string]string
 ```
 
-## func [DelimitComma](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/DelimitComma.go#L5>)
+## func [DelimitComma](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/DelimitComma.go#L6>)
 
 ```go
 func DelimitComma(i int) string
 ```
+
+DelimitComma は int の値を 3 桁ごとにカンマを入れます（1000 \-\> 1\,000）\.
 
 ## func [EchoSTDERR](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/EchoSTDERR.go#L9>)
 
