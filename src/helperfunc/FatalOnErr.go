@@ -11,7 +11,6 @@ var (
 	// IsErrorDummy が true の場合、FatalOnErr() は t.FailNow せずに標準エラー出力します.
 	IsErrorDummy bool
 
-	// failNow は FatalOnErr 用の関数代入のための変数です。テスト中に関数を置き換えてモック化するためのものです.
 	failNow func(format string, args ...interface{})
 )
 
