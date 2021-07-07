@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	IsErrorDummy bool // FatalOnErr 自身のテストのため、動作をモックするためのフラグです.
+	IsErrorDummy bool // IsErrorDummy が true の場合、FatalOnErr は t.FailNow せずに標準エラー出力します.
 	failNow      func(format string, args ...interface{})
 )
 
@@ -19,15 +19,21 @@ var (
 func FatalOnErr(t *testing.T, err error, comment ...string) {
 	t.Helper()
 
-	failNow = t.Fatalf
+	if err == nil {
+		return
+	}
 
 	msgAdditional := strings.TrimSpace(strings.Join(comment, "\n"))
 
+	// msgAdditional が空ではない場合、頭に改行を追加（err 自体が改行で終わらないため可読性のため）
 	if msgAdditional != "" {
 		msgAdditional = "\n" + msgAdditional
 	}
 
-	// IsErrorDummy が true にセットされていた場合は標準エラー出力にエラー内容を出力します.
+	// 処理内容を変更可能にするため関数を変数に代入
+	failNow = t.Fatalf
+
+	// IsErrorDummy が true にセットされていた場合は標準エラー出力にエラー内容を出力する
 	if IsErrorDummy {
 		failNow = func(format string, args ...interface{}) {
 			fmt.Fprintf(os.Stderr, format, args...)
@@ -37,7 +43,5 @@ func FatalOnErr(t *testing.T, err error, comment ...string) {
 		IsErrorDummy = false
 	}
 
-	if err != nil {
-		failNow("fatal error during test.\nErrMsg: %v%v", err, msgAdditional)
-	}
+	failNow("fatal error during test.\nErrMsg: %v%v", err, msgAdditional)
 }

@@ -12,6 +12,7 @@ import (
 // テスト時に強制的にエラーを返す必要がある場合のみ利用します.
 var ForceErrorGetUniformedInfo = false
 
+// GetUniformedInfo は API 情報を読みやすいように整えた状態で返します.
 func (a *TApp) GetUniformedInfo() (string, error) {
 	if ForceErrorGetUniformedInfo {
 		return "", xerrors.New("forced to return error")

@@ -5,6 +5,7 @@ import (
 	"golang.org/x/xerrors"
 )
 
+// SetArgValue は cli.Run 内で渡されるコンテキストからフラグやオプションの値をセットします.
 func (a *TApp) SetArgValue(ctx *cli.Context) error {
 	// フラグやオプション引数を取得
 	argv, ok := ctx.Argv().(*TFlagOptions)

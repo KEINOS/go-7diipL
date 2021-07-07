@@ -52,3 +52,16 @@ func TestFatalOnErr_additional_comment(t *testing.T) {
 
 	assert.Equal(t, expect, actual)
 }
+
+func TestFatalOnErr_no_error(t *testing.T) {
+	helperfunc.IsErrorDummy = true
+	defer func() {
+		helperfunc.IsErrorDummy = false
+	}()
+
+	out := capturer.CaptureStderr(func() {
+		helperfunc.FatalOnErr(t, nil)
+	})
+
+	assert.Empty(t, out, "if err is nil then it should do nothing")
+}
