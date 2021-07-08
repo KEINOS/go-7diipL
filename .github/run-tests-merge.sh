@@ -111,9 +111,9 @@ cd "$PATH_DIR_PARENT"
 #tree | indentStdIn
 
 # Run tests
-runShfmt
-runShellCheck
-runGofmt
+runShfmt && \
+runShellCheck && \
+runGofmt && \
+runGolangCiLint && \
+runDocCheck && \
 runGoUnitTests
-runGolangCiLint
-runDocCheck
