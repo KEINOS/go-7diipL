@@ -11,21 +11,23 @@ pull_request_rules:
         merge:
           method: squash
           strict: smart+fasttrack
-    - name: automatic merge on CI success if only markdown and JSON files were changed
+    - name: automatic merge on CI success only if markdown files in repo root were changed
       conditions:
         - "check-success=Unit test and coverage"
-        - files~=.\.(?i)(md|json)$
+        - files~=(^|^\/|\.\/)\w+\.md$
+        - -files~=\.(go|sh|json|yaml)$
         - base=main
         - -draft
       actions:
         merge:
           method: squash
           strict: smart+fasttrack
-    - name: automatic merge on go.mod update only
+    - name: automatic merge on go.mod/go.sum update only
       conditions:
         - "check-success=Unit test and coverage"
-        - files~=go.mod
-        - "#files=1"
+        - files~=(^|^\/|\.\/)go\.mod$
+        - files~=(^|^\/|\.\/)go\.sum$
+        - "#files=2"
         - base=main
         - -draft
       actions:
