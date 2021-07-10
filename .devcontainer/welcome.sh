@@ -21,4 +21,12 @@ echo "  - To build binary                : $ build-app --help"
 echo "  - To display this message again  : $ welcome"
 echo "  - To search a string in a file   : $ rg foobar ."
 echo "  - To run the app before build    : $ go run ./main list"
+
+if [ "$CODESPACES" == "true" ]; then
+    echo "* Codespaces Tips:"
+    echo "  - To set an API key in the env variable:"
+    echo "    Go to GitHub user settings and from 'Codespaces' you can set 'Codespaces secrets'."
+    echo "    See: https://docs.github.com/en/codespaces/managing-your-codespaces/managing-encrypted-secrets-for-your-codespaces#adding-a-secret"
+fi
+
 echo "========================================================================="
