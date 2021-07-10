@@ -3,6 +3,7 @@
 [![CodeQL](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Qithub-BOT/QiiTrans.svg)](https://pkg.go.dev/github.com/Qithub-BOT/QiiTrans)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Qithub-BOT/QiiTrans/blob/main/LICENSE)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/Qithub-BOT/QiiTrans "VSCode 1.18 以降の Remote-Repotitories もしくは Remote-Containers でリポジトリを開きます。")
 
 # `QiiTrans`
 
@@ -35,7 +36,7 @@ I agree to disagree.
 
 ## インストール
 
-Windows10, macOS, Linux (Intel/AMD 32bit/64bit, ARM v5,6,7 アーキテクチャ)用のバイナリを用意しています。
+Windows10, macOS, Linux 用のバイナリを用意しています。(Intel/AMD 32bit/64bit, ARM v5,6,7 アーキテクチャ)
 
 リリース・ページからダウンロードしたバイナリをパスの通ったディレクトリに設置後、実行権限を設定してください。
 
