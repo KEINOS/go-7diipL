@@ -2,22 +2,22 @@ package cache
 
 import "github.com/dgraph-io/badger/v3"
 
-// Set は value の値を key に割り当ててキャッシュします.
+// Set は key に value の値を割り当ててキャッシュします.
+// この関数は、主に翻訳前の文を key、翻訳後の文を value としてキャッシュに使われます.
 //
-// 引数 key は、内部で 64 バイトの固定長にハッシュ化されるため、長さに依存しません.
-// この関数は、主に翻訳前の文と、翻訳後の文のキャッシュに使われます.
+// 引数 key は長さに依存しません（内部で 64 バイトの固定長にハッシュ化されるため）.
 // 呼び出しごとにキャッシュ DB を open/close するため、大量の連続呼び出しには向きません.
 // 大量に登録する場合は SetList() 関数を利用してください.
 func (c *TCache) Set(key string, value string) (err error) {
 	if err = c.OpenDB(); err == nil {
 		defer c.CloseDB()
 
-		// original から DB の key となるハッシュ値を取得
-		key := c.hash64(key)
+		// key からハッシュ値を取得し DB のキー名として利用
+		keyHashed := c.hash64(key)
 
 		// 読み書きトランザクション
 		err = c.cacheDB.Update(func(txn *badger.Txn) error {
-			return txn.SetEntry(badger.NewEntry(key, []byte(value)))
+			return txn.SetEntry(badger.NewEntry(keyHashed, []byte(value)))
 		})
 	}
 

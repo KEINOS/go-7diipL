@@ -1,7 +1,6 @@
 package helperfunc
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 )
@@ -20,7 +19,7 @@ func MockSTDIN(t *testing.T, inputDummy string) func() {
 	/* stdin のダミー用ファイルの作成 */
 	content := []byte(inputDummy)
 
-	tmpFile, err := ioutil.TempFile("", "example")
+	tmpFile, err := os.CreateTemp("", "example")
 	FatalOnErr(t, err, "failed to create temporary file for I/O")
 
 	_, err = tmpFile.Write(content)
