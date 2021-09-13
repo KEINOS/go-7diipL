@@ -1,65 +1,43 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.194.0/containers/go
 {
-  "name": "Go",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-      // Go version: 1, 1.16, 1.15, 1.14
-      "VARIANT": "1.16"
-    }
-  },
-  "runArgs": [
-    "--cap-add=SYS_PTRACE",
-    "--security-opt",
-    "seccomp=unconfined",
-    "--env-file",
-    "./.devcontainer/devcontainer.env"
-  ],
-  // Set VSCode settings
-  "settings": {
-    "go.gopath": "/go",
-    "go.goroot": "/usr/local/go",
-    "go.lintFlags": [
-      "--enable-all",
-      "--new"
-    ],
-    "go.toolsGopath": "/go/bin",
-    "go.toolsManagement.checkForUpdates": "proxy",
-    "go.useLanguageServer": true,
-    "shellformat.path": "/go/bin/shfmt",
-    "terminal.integrated.profiles.windows": {
-      "PowerShell -NoProfile": {
-        "source": "PowerShell",
-        "args": [
-          "-NoProfile"
-        ]
-      }
-    },
-    "terminal.integrated.profiles.linux": {
-      "zsh (login)": {
-        "path": "/bin/bash",
-        "args": []
-      }
-    },
-    "notebook.experimental.useMarkdownRenderer": true,
-    "shellformat.useEditorConfig": true
-  },
-  // VSCode extension ID to be installed
-  "extensions": [
-    "davidanson.vscode-markdownlint",
-    "editorconfig.editorconfig",
-    "foxundermoon.shell-format",
-    "github.github-vscode-theme",
-    "github.vscode-pull-request-github",
-    "golang.Go",
-    "ms-ceintl.vscode-language-pack-ja",
-    "ms-ceintl.vscode-language-pack-es",
-    "ms-azuretools.vscode-docker",
-    "ms-vsonline.vsonline",
-    "tamasfe.even-better-toml",
-    "znck.grammarly"
-  ],
-  // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "/bin/bash /postCreateCommand.sh;",
-  // Comment in or out to connect as a root or non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-  //"remoteUser": "vscode"
+	"name": "Go Dev",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			// [Choice] https://github.com/KEINOS/VSCode-Dev-Container-Go/pkgs/container/vscode-dev-container-go
+			"VARIANT": "latest"
+		}
+	},
+	"runArgs": [
+		"--rm",
+		"--cap-add=SYS_PTRACE",
+		"--security-opt",
+		"seccomp=unconfined",
+		// Use host's ENV var, so not to hard-code the accesstoken to the repo
+		"--env=DEEPL_API_KEY",
+		"--env=QIITRANS_API_KEY"
+	],
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"go.toolsManagement.checkForUpdates": "local",
+		"go.useLanguageServer": true,
+		"go.gopath": "/go",
+		"go.goroot": "/usr/local/go"
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"golang.Go"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "go mod download",
+
+	// Comment out connect as root to debug container.
+	//"remoteUser": "root"
 }
