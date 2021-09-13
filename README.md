@@ -3,30 +3,36 @@
 [![CodeQL](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Qithub-BOT/QiiTrans.svg)](https://pkg.go.dev/github.com/Qithub-BOT/QiiTrans)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Qithub-BOT/QiiTrans/blob/main/LICENSE)
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/Qithub-BOT/QiiTrans "VSCode 1.18 以降の Remote-Repotitories もしくは Remote-Containers でリポジトリを開きます。")
+[![](https://shields.io/badge/GitHub-Codespaces%20%E5%AF%BE%E5%BF%9C-blue?logo=github&style=flat)](https://docs.github.com/en/codespaces "このリポジトリは GitHub Codespaces に対応しています")
 
 # `QiiTrans`
 
-`qiitrans`コマンドは、文書作成支援ツールです。
+`qiitrans` コマンドは文書作成の支援ツールです。
 
-`qiitrans`の機能は、標準入力から受け取ったテキストを翻訳して返すだけです。しかし、使い方を工夫すれば、機械翻訳で読まれても理解しやすい文章を作ることができます。
+`qiitrans` の機能は、標準入力から受け取ったテキストを翻訳して返すだけです。
 
 ```shellsession
-$ # 日本語 -> 英語に翻訳
+$ # 日本語 → English に翻訳
 $ echo 'おはよう。今日はいい天気ですね。' | qiitrans ja en
 Good morning. It's a beautiful day.
+```
 
-$ # 英語 -> 日本語に翻訳
+```shellsession
+$ # English → 日本語に翻訳
 $ echo 'Good morning. It\'s a beautiful day.' | qiitrans en ja
 おはようございます。今日はとてもいい天気ですね。
 ```
 
+しかし、使い方を工夫すれば、機械翻訳で読まれても理解しやすい文章を作ることができます。
+
 ```shellsession
-$ # 日本語 -> 英語 -> 日本語
+$ # 日本語 → English → 日本語
 $ echo '私は、賛成の反対に同意なのだ' | qiitrans ja en ja
 同意しないことに同意します。
+```
 
-$ # 日本語 -> 英語 -> スペイン語 -> 中国語 -> 日本語
+```shellsession
+$ # 日本語 → Español → English → Español → 中文 → 日本語
 $ echo '同意しないことに同意します。' | qiitrans ja es en es zh ja
 同意しないことに同意します。
 
@@ -36,10 +42,11 @@ I agree to disagree.
 
 ## インストール
 
-Windows10, macOS, Linux 用のバイナリを用意しています。(Intel/AMD 32bit/64bit, ARM v5,6,7 アーキテクチャ)
+Windows10, macOS, Linux 用の単体バイナリを用意しています。
 
-リリース・ページからダウンロードしたバイナリをパスの通ったディレクトリに設置後、実行権限を設定してください。
+リリース・ページから OS と CPU に対応したバイナリをダウンロードし、パスの通ったディレクトリに実行権限付けて設置してください。
 
+- 対応アーキテクチャ: Intel/AMD 32bit/64bit, ARM64, ARM v5,6,7)
 - [Releases](https://github.com/Qithub-BOT/QiiTrans/releases) | QiiTrans | Qithub @ GitHub
 
 ## コマンドの構文
@@ -99,22 +106,33 @@ Options:
 
 ## アクセス・トークン
 
-`QiiTrans` は、翻訳 API のアクセス・トークンを必要とします。以下のいずれかで指定し、最初に該当したアクセス・トークンを利用します。
+`QiiTrans` は、翻訳 API の<ruby>アクセストークン<rt>認証キー</rt></ruby>を必要とします。環境変数もしくはコマンドの引数で指定してください。
 
-1. コマンド・オプションの `--apikey` で指定されたトークン。
-2. 環境変数に、使用している翻訳エンジン専用の変数がセットされている場合は、その値。
-    - `DEEPL_API_KEY` ... `--engine=deepl` （デフォルトの翻訳エンジン）
-3. `QIITRANS_API_KEY` がセットされている場合は、その値。
+- 現在は [DeepL API](https://www.deepl.com/docs-api/) のみ対応しています。[DeepL のアカウント](https://www.deepl.com/pro-account/summary)から認証キーを発行してください。
 
-## その他の環境変数
+```shellsession
+$ env | sort | grep DEEPL_API_KEY
+DEEPL_API_KEY=12345678-ffff-ffff-ffff-123456789abc:fx
 
-`QiiTrans` は、以下の環境変数がセットされていた場合は、デフォルト値として利用します。
+$ echo '私は、賛成の反対に同意なのだ' | qiitrans ja en
+...
+```
 
-- `QIITRANS_ENGINE`: 翻訳に使うエンジンです。現在は "`deepl`" のみが指定可能です。
-- `QIITRANS_API_KEY`: 翻訳に使うエンジンの APIキー（アクセストークン）です。
+```shellsession
+$ export DEEPL_API_KEY=12345678-ffff-ffff-ffff-123456789abc:fx
+
+$ echo '私は、賛成の反対に同意なのだ' | qiitrans ja en
+...
+```
+
+```shellsession
+$ echo '私は、賛成の反対に同意なのだ' | qiitrans --apikey "12345678-ffff-ffff-ffff-123456789abc:fx" ja en
+...
+```
 
 ## コントリビュート
 
+- テストの実行にもアクセストークンが必要です。
 - [質問・要望・改善案・提案](https://github.com/Qithub-BOT/QiiTrans/discussions) @ Discussions
 - [不具合報告（要再現テストあり）](https://github.com/Qithub-BOT/QiiTrans/issues) @ Issues
 - [TODO](https://github.com/Qithub-BOT/QiiTrans/issues) @ Issues
