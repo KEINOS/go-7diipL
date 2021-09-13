@@ -18,7 +18,7 @@ func genDummyDirAndFile(t *testing.T, pathDirTemp string) {
 	nameDir := "dir"
 	pathDir := filepath.Join(pathDirTemp, nameDir)
 
-	if err := os.MkdirAll(pathDir, 0o600); err != nil {
+	if err := os.MkdirAll(pathDir, 0o777); err != nil {
 		t.Fatalf("Failed to create dir.\nMsg Error: %v", err)
 	}
 
