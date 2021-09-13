@@ -111,7 +111,7 @@ Options:
 - 現在は [DeepL API](https://www.deepl.com/docs-api/) のみ対応しています。[DeepL のアカウント](https://www.deepl.com/pro-account/summary)から認証キーを発行してください。
 
 ```shellsession
-$ env | sort | grep DEEPL_API_KEY
+$ env | grep DEEPL_API_KEY
 DEEPL_API_KEY=12345678-ffff-ffff-ffff-123456789abc:fx
 
 $ echo '私は、賛成の反対に同意なのだ' | qiitrans ja en
