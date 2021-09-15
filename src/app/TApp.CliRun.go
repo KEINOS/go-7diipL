@@ -1,13 +1,10 @@
 package app
 
 import (
-	"fmt"
-
-	"github.com/Qithub-BOT/QiiTrans/src/utils"
 	"github.com/mkideal/cli"
 )
 
-// CliRun は app.Run() の本体で、cli.Run で呼び出されるメソッドです.
+// CliRun は app.Run() の本体です。cli.Run に登録して呼び出されるメソッドです.
 func (a *TApp) CliRun(ctx *cli.Context) error {
 	// フラグ・オプションの値をセット
 	if err := a.SetArgValue(ctx); err != nil {
@@ -21,7 +18,7 @@ func (a *TApp) CliRun(ctx *cli.Context) error {
 
 	// バージョン情報表示
 	if a.Argv.Version {
-		fmt.Println(a.GetVersion())
+		ctx.String("%s", a.GetVersion())
 
 		return nil
 	}
@@ -32,8 +29,12 @@ func (a *TApp) CliRun(ctx *cli.Context) error {
 	// APIキー/アクセス・トークンが引数で渡された場合、環境変数にセットする.
 	// 既存の環境変数があった場合に備えて、リカバリ用の関数を取得する.
 	deferFunc := a.Engine.SetAPIKey(a.Argv.APIKey)
-
 	defer deferFunc() // 既存の環境変数にリカバリ
+
+	// API 情報のみの表示
+	if a.Argv.ShowInfoOnly {
+		return a.PrintInfo(ctx)
+	}
 
 	// 実行前のキャッシュ削除
 	if a.Argv.ClearBeforeRun {
@@ -42,14 +43,11 @@ func (a *TApp) CliRun(ctx *cli.Context) error {
 		a.Argv.IsNoCache = true
 	}
 
-	// 標準入力から翻訳元のデータを取得
-	input, err := utils.GetSTDIN()
-	if err != nil {
-		return err
+	if !a.Argv.IsPiped {
+		return a.InteractiveTranslation(orderLang)
 	}
 
-	// 翻訳の実行
-	result, err := a.Translate(orderLang, input)
+	result, err := a.SingleShotTranslation(orderLang)
 	if err != nil {
 		return err
 	}
@@ -57,14 +55,9 @@ func (a *TApp) CliRun(ctx *cli.Context) error {
 	// 最終結果出力
 	ctx.String("%s", result)
 
-	// API 情報の表示
+	// API 情報の出力
 	if a.Argv.ShowInfo {
-		info, err := a.GetUniformedInfo()
-		if err != nil {
-			return err
-		}
-
-		utils.EchoSTDERR(info)
+		return a.PrintInfo(ctx)
 	}
 
 	return nil

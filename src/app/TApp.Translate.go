@@ -2,11 +2,21 @@ package app
 
 import (
 	"strings"
+
+	"golang.org/x/xerrors"
 )
 
 // Translate は、orderLang の順に inputText を翻訳した結果を返します.
 func (a *TApp) Translate(orderLang []string, inputText string) (string, error) {
 	var err error
+
+	if a.Force["NoTrans"] {
+		return inputText, nil
+	}
+
+	if a.Force["TransError"] {
+		return "", xerrors.New("forced error for translation")
+	}
 
 	transText := ""
 	langFrom := ""

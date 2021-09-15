@@ -20,5 +20,6 @@ func (a *TApp) Run() int {
 	tmpFlag := new(TFlagOptions)
 	tmpFlag.SetHelpMsg()
 
+	// アプリ本体のメソッド TApp.CliRun を cli.Run に割り当て
 	return cli.Run(tmpFlag, a.CliRun)
 }

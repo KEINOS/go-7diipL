@@ -7,7 +7,7 @@
 
 ## マージ・ルール
 
-- `squash` `merge` マージ
+- `squash & merge` マージ
 
 テストおよびレビューをパスした PR は、コミットを 1 つにまとめてマージします。そのため、**コミット・ログの綺麗さは気にする必要はありません**。どんどん試行錯誤してください。
 
@@ -24,7 +24,7 @@ PR もしくは [Draft PR](https://github.blog/jp/2019-02-19-introducing-draft-p
         - `gofmt` ........... Golang の構文チェック
         - `golangci-lint` ... Golang の静的解析チェック
 2. ユニット・テスト
-    - `go test ./src/...` によるユニット・テストが行われます。`./.github/run-tests-coverage.sh` でもテストできます。
+    - `go test ./...` によるユニット・テストが行われます。`./.github/run-tests-coverage.sh` でもテストできます。
 3. カバレッジ・テスト
     - 各々のパッケージ（ディレクトリ）にテストが 1 つでも設置されていた場合、カバレッジが 100% にならないとパスしません。
     - 未カバーの箇所を確認したい場合は ``./.github/run-tests-coverage.sh --verbose` で確認できます。

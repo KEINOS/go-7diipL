@@ -30,6 +30,26 @@ func TestValidate_flag_is_version(t *testing.T) {
 	defer appTest.Engine.Cache.ClearAll()
 }
 
+func TestValidate_flag_is_info_only(t *testing.T) {
+	funcDefer := helperfunc.MockArgs(t, []string{
+		"--info",
+	})
+	defer funcDefer()
+
+	appTest := app.New(t.Name())
+
+	out := capturer.CaptureOutput(func() {
+		status := appTest.Run()
+
+		assert.Equal(t, utils.SUCCESS, status, "when no failure it should return zero(SUCCESS)")
+	})
+
+	assert.Contains(t, out, "[INFO]: 残り文字数:")
+
+	// Clean Up
+	defer appTest.Engine.Cache.ClearAll()
+}
+
 func TestValidate_all_args_missing(t *testing.T) {
 	dummySTDIN := "Hello, world"
 	missingAllArgs := []string{}

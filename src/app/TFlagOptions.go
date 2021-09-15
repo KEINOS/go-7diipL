@@ -11,6 +11,8 @@ type TFlagOptions struct {
 	Help           bool   `cli:"h,help" usage:"ヘルプを表示します"`
 	IsModeDebug    bool   `cli:"debug" usage:"デバッグ情報を標準エラー出力に出力します"`
 	IsNoCache      bool   `cli:"no-cache" usage:"キャッシュを利用せずに翻訳 API から再取得します。（API の利用枠を消費します）"`
-	ShowInfo       bool   `cli:"info" usage:"API のリクエスト可能な残数など、API 情報を最後に出力します"`
+	IsPiped        bool   // パイプ渡しで値を受け取っているか
+	ShowInfo       bool   `cli:"info" usage:"API のリクエスト可能な残数など、API 情報を出力します"`
+	ShowInfoOnly   bool   // 他の引数がない場合は true になり API 情報のみの出力になります
 	Version        bool   `cli:"v,version" usage:"アプリのバージョン情報を表示します"`
 }
