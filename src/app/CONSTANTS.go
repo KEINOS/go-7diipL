@@ -7,6 +7,12 @@ const (
 	// VersionDefault はアプリのバイナリをビルドする際にバージョン指定がない場合のアプリのバージョンです.
 	VersionDefault = "dev"
 
+	// PrefixDefault は対話モードで翻訳済みメッセージに付ける接頭辞です.
+	PrefixDefault = "再翻訳:"
+
+	// StopWordDefault は対話モードで、終了扱いにするワードです.
+	StopWordDefault = "q"
+
 	// アプリのヘルプ表示用テンプレートです.
 	//
 	// メッセージ中の以下のタグは自動置換されます

@@ -7,14 +7,14 @@ package app
 func New(cacheID ...string) *TApp {
 	appTmp := new(TApp)
 
-	appTmp.Name = NameDefault
-	appTmp.Version = VersionDefault
 	appTmp.Argv = new(TFlagOptions)
 	appTmp.cacheID = cacheID
-	appTmp.Prefix = "再翻訳:"
-	appTmp.StopWord = "q"
+	appTmp.Name = NameDefault
+	appTmp.Prefix = PrefixDefault
+	appTmp.StopWord = StopWordDefault
+	appTmp.Version = VersionDefault
 
-	// テスト用のフラグ. テスト時に強制的に戻り値を変える際に利用します.
+	// テスト用のフラグ. テスト時に強制的に戻り値を変える場合に利用します.
 	appTmp.Force = map[string]bool{
 		"FailPreRun": false, // True にすると PreRun が error を返します
 		"IsNotPiped": false, // True にすると PreRun 内の IsPiped が false になります

@@ -6,13 +6,13 @@ type TFlagOptions struct {
 	APIKey         string `cli:"a,apikey" usage:"翻訳に使うエンジンのアクセス・トークンを指定します" dft:""`
 	CacheID        string `cli:"cache-id" usage:"キャッシュの DB 名。異なる DB にキャッシュを保存したい場合に指定します" dft:""`
 	NameEngine     string `cli:"e,engine" usage:"翻訳に使うエンジンを指定します" dft:"deepl"`
-	UsageApp       string // アプリのヘルプ表示で使われる本文メッセージ
+	UsageApp       string `cli:"-"` // アプリのヘルプ表示で使われる本文メッセージ
 	ClearBeforeRun bool   `cli:"clear" usage:"実行前にキャッシュを完全に削除します。（API の利用枠を消費します）"`
 	Help           bool   `cli:"h,help" usage:"ヘルプを表示します"`
 	IsModeDebug    bool   `cli:"debug" usage:"デバッグ情報を標準エラー出力に出力します"`
 	IsNoCache      bool   `cli:"no-cache" usage:"キャッシュを利用せずに翻訳 API から再取得します。（API の利用枠を消費します）"`
-	IsPiped        bool   // パイプ渡しで値を受け取っているか
+	IsPiped        bool   `cli:"-"` // パイプ渡しで値を受け取っているか
 	ShowInfo       bool   `cli:"info" usage:"API のリクエスト可能な残数など、API 情報を出力します"`
-	ShowInfoOnly   bool   // 他の引数がない場合は true になり API 情報のみの出力になります
+	ShowInfoOnly   bool   `cli:"-"` // 他の引数がない場合は true になり API 情報のみの出力になります
 	Version        bool   `cli:"v,version" usage:"アプリのバージョン情報を表示します"`
 }
