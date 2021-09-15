@@ -17,6 +17,10 @@ func (argv *TFlagOptions) Validate(ctx *cli.Context) error {
 	switch {
 	case argv.Version:
 		return nil
+	case argv.ShowInfo && (len(inputArgs) == 0):
+		argv.ShowInfoOnly = true
+
+		return nil
 	}
 
 	// 必須引数の個数

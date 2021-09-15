@@ -36,8 +36,7 @@ func TestCliRun_fail_prerun(t *testing.T) {
 
 	appTest := app.New(t.Name())
 
-	app.ForceFailPreRun = true
-	defer func() { app.ForceFailPreRun = false }()
+	appTest.Force["FailPreRun"] = true
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
@@ -46,4 +45,27 @@ func TestCliRun_fail_prerun(t *testing.T) {
 	})
 
 	assert.Contains(t, out, "PreRun was forced to fail")
+}
+
+func TestCliRun_fail_prerun_not_piped(t *testing.T) {
+	dummySTDIN := "Hello, world!"
+	dummyArgs := []string{
+		"en",
+		"ja",
+		"es",
+	}
+
+	funcDeferSTDIN := helperfunc.MockSTDIN(t, dummySTDIN)
+	defer funcDeferSTDIN()
+
+	funcDeferArgs := helperfunc.MockArgs(t, dummyArgs)
+	defer funcDeferArgs()
+
+	appTest := app.New(t.Name())
+
+	appTest.Force["IsNotPiped"] = true
+
+	status := appTest.Run()
+
+	assert.Equal(t, utils.FAILURE, status, "it should be a non-zero on pre-run fail")
 }

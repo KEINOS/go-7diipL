@@ -46,7 +46,7 @@ dummyArgs := []string{"--debug", "ja", "en"}
 
 	// 標準入力のテスト
 	{
-		value, err := ioutil.ReadAll(os.Stdin)
+		value, err := io.ReadAll(os.Stdin)
 		if err != nil {
 			t.Fatalf("failed to read stdin during test")
 		}
@@ -111,7 +111,7 @@ defer funcDefer()
 /* DO SOMETHING WITH ARGS HERE */
 ```
 
-## func [MockSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/helperfunc/MockSTDIN.go#L17>)
+## func [MockSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/helperfunc/MockSTDIN.go#L16>)
 
 ```go
 func MockSTDIN(t *testing.T, inputDummy string) func()

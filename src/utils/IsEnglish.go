@@ -7,6 +7,8 @@ import (
 )
 
 // IsEnglish は input が英文であると予測した場合に true を返します.
+//
+// この関数は、文書を文に分けて翻訳＆キャッシュをする際に使われます.
 func IsEnglish(input string) bool {
 	listItem := strings.Split(input, "\n")
 	isEng := true

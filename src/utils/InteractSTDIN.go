@@ -12,7 +12,7 @@ import (
 //
 // 標準入力から stopWord が入力されるまで、funcUser() に標準入力の値を入れた結果を表示し続けます.
 // 単発の標準入力が欲しい場合は GetSTDIN() を利用してください.
-func InteractSTDIN(funcUser func(string) (string, error), stopWord string) (err error) {
+func InteractSTDIN(funcUser func(string) error, stopWord string) (err error) {
 	if !IsTerminal() {
 		return xerrors.New("対話モードエラー:ターミナル/コマンドラインからの実行ではありません.")
 	}
@@ -21,7 +21,6 @@ func InteractSTDIN(funcUser func(string) (string, error), stopWord string) (err 
 
 	scanner := bufio.NewScanner(os.Stdin)
 	input := ""
-	output := ""
 
 	for scanner.Scan() {
 		input = scanner.Text()
@@ -32,13 +31,11 @@ func InteractSTDIN(funcUser func(string) (string, error), stopWord string) (err 
 			break
 		}
 
-		output, err = funcUser(input)
+		err = funcUser(input)
 
 		if err != nil {
 			return err
 		}
-
-		fmt.Println(output)
 	}
 
 	return nil

@@ -15,8 +15,8 @@ func TestInteractSTDIN_not_terminal(t *testing.T) {
 	stopWord := "stop"
 
 	// utils.InteractSTDIN 内で利用するユーザ関数
-	funcUser := func(input string) (string, error) {
-		return "out:" + input, nil
+	funcUser := func(input string) error {
+		return nil
 	}
 
 	err := utils.InteractSTDIN(funcUser, stopWord)
@@ -28,8 +28,10 @@ func TestInteractSTDIN(t *testing.T) {
 	userInput := "foo bar\nhoge fuga\n" + stopWord + "\n"
 
 	// utils.InteractSTDIN 内で利用するユーザ関数
-	funcUser := func(input string) (string, error) {
-		return "out:" + input, nil
+	funcUser := func(input string) error {
+		fmt.Println("out:" + input)
+
+		return nil
 	}
 
 	// 標準入力をモック
@@ -57,12 +59,14 @@ func TestInteractSTDIN_user_func_error(t *testing.T) {
 	userInput := "foo bar\nhoge fuga\n" + stopWord + "\n"
 
 	// utils.InteractSTDIN 内で利用するユーザ関数
-	funcUser := func(input string) (string, error) {
+	funcUser := func(input string) error {
 		if input == "hoge fuga" {
-			return "", errors.New(expectError)
+			return errors.New(expectError)
 		}
 
-		return "out:" + input, nil
+		fmt.Println("out:" + input)
+
+		return nil
 	}
 
 	// 標準入力のモック

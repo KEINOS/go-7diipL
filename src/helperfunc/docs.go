@@ -32,7 +32,7 @@ Package helperfunc はテストをしやすくするためのヘルパー関数�
 
 		// 標準入力のテスト
 		{
-			value, err := ioutil.ReadAll(os.Stdin)
+			value, err := io.ReadAll(os.Stdin)
 			if err != nil {
 				t.Fatalf("failed to read stdin during test")
 			}

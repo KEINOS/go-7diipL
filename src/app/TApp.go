@@ -4,9 +4,12 @@ import "github.com/Qithub-BOT/QiiTrans/src/engines/engine"
 
 // TApp はアプリの構造体です.
 type TApp struct {
-	Argv    *TFlagOptions      // 現在保持しているフラグやオプションの値
-	Engine  *engine.Properties // 翻訳に使うエンジン
-	Name    string             // アプリの公式名称（ヘルプの表示で使われます）
-	Version string             // アプリのバージョン
-	cacheID []string           // キャッシュの DB 名
+	Argv     *TFlagOptions
+	Engine   *engine.Properties
+	Force    map[string]bool
+	Name     string
+	Prefix   string // 対話モード時に翻訳結果の前につける接頭辞
+	StopWord string // 対話モード時に終了を伝える単語（デフォルト: q）
+	Version  string
+	cacheID  []string
 }

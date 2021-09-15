@@ -40,6 +40,19 @@ $ echo '同意しないことに同意します。' | qiitrans ja en
 I agree to disagree.
 ```
 
+標準入力がない場合は対話モードになります。ストップワードが入力されるまで翻訳を続けます。
+
+```shellsession
+$ # 日本語 → Español → English → Español → 中文 → 日本語
+$ qiitrans ja es en es zh ja
+- ストップワード: q
+私は、賛成の反対に同意なのだ
+再翻訳: 同意しないことに同意します。
+同意しないことに同意します。
+再翻訳: 同意しないことに同意します。
+q
+```
+
 ## インストール
 
 Windows10, macOS, Linux 用の単体バイナリを用意しています。
@@ -106,7 +119,7 @@ Options:
 
 ## アクセス・トークン
 
-`QiiTrans` は、翻訳 API の<ruby>アクセストークン<rt>認証キー</rt></ruby>を必要とします。環境変数もしくはコマンドの引数で指定してください。
+`QiiTrans` は、翻訳 API のアクセストークン／認証キーを必要とします。環境変数もしくはコマンドの引数で指定してください。
 
 - 現在は [DeepL API](https://www.deepl.com/docs-api/) のみ対応しています。[DeepL のアカウント](https://www.deepl.com/pro-account/summary)から認証キーを発行してください。
 

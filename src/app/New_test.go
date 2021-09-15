@@ -218,7 +218,6 @@ func TestNew_show_info(t *testing.T) {
 		assert.Equal(t, status, utils.SUCCESS, "it should end with status zero (SUCCESS)")
 	})
 
-	assert.Contains(t, out, "¡Hola, mundo!")
 	assert.Contains(t, out, "[INFO]: 残り文字数:")
 
 	// Clean Up

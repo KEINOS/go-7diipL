@@ -20,11 +20,14 @@ QiiTrans の本体でもありますが、main ではアプリのインスタン
   - [func (a *TApp) CliRun(ctx *cli.Context) error](<#func-tapp-clirun>)
   - [func (a *TApp) GetUniformedInfo() (string, error)](<#func-tapp-getuniformedinfo>)
   - [func (a *TApp) GetVersion() string](<#func-tapp-getversion>)
+  - [func (a *TApp) InteractiveTranslation(orderLang []string) error](<#func-tapp-interactivetranslation>)
   - [func (a *TApp) NewEngine(nameEngine string, cacheID ...string) (*engine.Properties, error)](<#func-tapp-newengine>)
   - [func (a *TApp) PreRun() error](<#func-tapp-prerun>)
+  - [func (a *TApp) PrintInfo(ctx *cli.Context) error](<#func-tapp-printinfo>)
   - [func (a *TApp) Run() int](<#func-tapp-run>)
   - [func (a *TApp) SetArgValue(ctx *cli.Context) error](<#func-tapp-setargvalue>)
   - [func (a *TApp) SetEngine(nameEngine string) (err error)](<#func-tapp-setengine>)
+  - [func (a *TApp) SingleShotTranslation(orderLang []string) (string, error)](<#func-tapp-singleshottranslation>)
   - [func (a *TApp) Translate(orderLang []string, inputText string) (string, error)](<#func-tapp-translate>)
 - [type TFlagOptions](<#type-tflagoptions>)
   - [func (argv *TFlagOptions) AutoHelp() bool](<#func-tflagoptions-autohelp>)
@@ -41,24 +44,24 @@ const (
 
     // VersionDefault はアプリのバイナリをビルドする際にバージョン指定がない場合のアプリのバージョンです.
     VersionDefault = "dev"
-)
-```
 
-MsgHelpUsage はアプリのヘルプ表示用のテンプレートです\.
+    // PrefixDefault は対話モードで翻訳済みメッセージに付ける接頭辞です.
+    PrefixDefault = "再翻訳:"
 
-メッセージ中の以下のタグは自動置換されます
+    // StopWordDefault は対話モードで、終了扱いにするワードです.
+    StopWordDefault = "q"
 
-```
-"%%name_app%%" ... アプリの公式名称
-"%%name_cmd%%" ... 実行バイナリ名（パスと拡張子除く）
-```
-
-注意: ヘルプはスペース・インデントです。タブ・インデントでレイアウト崩れが起きないように注意してください\.
-
-```go
-const templateUsage string = `%%name_app%%
+    // アプリのヘルプ表示用テンプレートです.
+    //
+    // メッセージ中の以下のタグは自動置換されます
+    //
+    //   "%%name_app%%" ... アプリの公式名称
+    //   "%%name_cmd%%" ... 実行バイナリ名（パスと拡張子除く）
+    //
+    // 注意: ヘルプはスペース・インデントです。タブ・インデントでレイアウト崩れが起きないように注意してください.
+    templateUsage string = `%%name_app%%
   %%name_cmd%% コマンドは文書作成支援ツールです。
-  標準入力のテキストを、引数の言語から言語へ自動翻訳した結果を返します。
+  標準入力のテキストを、引数の言語から言語へ自動翻訳した結果を返します。標準入力がない場合は、対話モードになります。
 
 Usage:
   %%name_cmd%% [Options] LangFrom LangTo [LangTo ...]
@@ -83,7 +86,7 @@ LangTo:
   翻訳先の言語を指定します。
   LangTo は複数指定可能で、1 つ前の言語から翻訳します。
 
-翻訳エンジンについて
+翻訳エンジンについて:
   --engine オプションで翻訳 API を指定することができます。現在は以下の翻訳 API に対応しています。
 
     deepl ... DeepL Pro API を使ったエンジン（デフォルトの翻訳エンジン）
@@ -91,7 +94,7 @@ LangTo:
               認証キー確認先: https://www.deepl.com/pro-account/plan
               API情報: https://www.deepl.com/docs-api/
 
-  注意: 利用するには、無料もしくは有料アカウントの登録とアクセストークン／認証キーの発行が必要です。
+注意: 利用するには、無料もしくは有料アカウントの登録とアクセストークン／認証キーの発行が必要です。
 
 翻訳エンジンとアクセストークンの設定について:
   --apikey オプションでアクセストークン／認証キーが指定されていない場合、以下の環境変数から読み取ります。
@@ -99,6 +102,7 @@ LangTo:
   QIITRANS_API_KEY ... デフォルトで使うアクセストークンです。
   DEEPL_API_KEY ... DeepL 専用のアクセストークンです。セットされている場合は、QIITRANS_API_KEY より優先されます。
 `
+)
 ```
 
 ## Variables
@@ -109,12 +113,6 @@ ForceErrorGetUniformedInfo が true の場合、GetUniformedInfo はエラーを
 
 ```go
 var ForceErrorGetUniformedInfo = false
-```
-
-ForceFailPreRun は PreRun メソッドを強制的に失敗させる（1 を返す）ためのフラグです\. 主にテスト目的で使われます\.
-
-```go
-var ForceFailPreRun = false
 ```
 
 ForceFailRun は Run メソッドを強制的に失敗させる（1 を返す）ためのフラグです\. 主にテスト目的で使われます\.
@@ -129,19 +127,22 @@ var ForceFailRun bool = false
 func GetMsgHelpUsage(nameApp string, nameCmd string) string
 ```
 
-GetMsgHelpUsage はヘルプ（使い方）のテンプレートから name\_app と name\_cmd を置換した結果を返します\.
+GetMsgHelpUsage はヘルプ（使い方）のテンプレートの定数 templateUsage から、name\_app と name\_cmd を置換した結果を返します\.
 
-## type [TApp](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.go#L6-L12>)
+## type [TApp](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.go#L6-L15>)
 
 TApp はアプリの構造体です\.
 
 ```go
 type TApp struct {
-    Argv    *TFlagOptions      // 現在保持しているフラグやオプションの値
-    Engine  *engine.Properties // 翻訳に使うエンジン
-    Name    string             // アプリの公式名称（ヘルプの表示で使われます）
-    Version string             // アプリのバージョン
-    cacheID []string           // キャッシュの DB 名
+    Argv     *TFlagOptions
+    Engine   *engine.Properties
+    Force    map[string]bool
+    Name     string
+    Prefix   string // 対話モード時に翻訳結果の前につける接頭辞
+    StopWord string // 対話モード時に終了を伝える単語（デフォルト: q）
+    Version  string
+    cacheID  []string
 }
 ```
 
@@ -155,13 +156,13 @@ New はアプリの新規オプジェクトのポインタを返します\.
 
 コマンド・オプションの \-\-cache\-id でも指定できるため、通常 cacheID は指定する必要はありません\. テスト中、キャッシュがテスト間でバッティングしないようにキャッシュ ID を指定したい場合に利用します\.
 
-### func \(\*TApp\) [CliRun](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.CliRun.go#L11>)
+### func \(\*TApp\) [CliRun](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.CliRun.go#L8>)
 
 ```go
 func (a *TApp) CliRun(ctx *cli.Context) error
 ```
 
-CliRun は app\.Run\(\) の本体で、cli\.Run で呼び出されるメソッドです\.
+CliRun は app\.Run\(\) の本体です。cli\.Run に登録して呼び出されるメソッドです\.
 
 ### func \(\*TApp\) [GetUniformedInfo](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetUniformedInfo.go#L16>)
 
@@ -181,6 +182,12 @@ GetVersion メソッドはアプリ名を含めたバージョン情報を返し
 
 Version フィールドの値が "v" で始まらない場合は、頭に付け加えます\. Version フィールドの値が、空もしくは "dev" の場合は "dev version" になります\.
 
+### func \(\*TApp\) [InteractiveTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.InteractiveTranslation.go#L10>)
+
+```go
+func (a *TApp) InteractiveTranslation(orderLang []string) error
+```
+
 ### func \(\*TApp\) [NewEngine](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.NewEngine.go#L10>)
 
 ```go
@@ -189,7 +196,7 @@ func (a *TApp) NewEngine(nameEngine string, cacheID ...string) (*engine.Properti
 
 NewEngine メソッドは nameEngine で指定された翻訳エンジンの新規オブジェクト・ポインタを返します\.
 
-### func \(\*TApp\) [PreRun](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.PreRun.go#L15>)
+### func \(\*TApp\) [PreRun](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.PreRun.go#L11>)
 
 ```go
 func (a *TApp) PreRun() error
@@ -197,7 +204,13 @@ func (a *TApp) PreRun() error
 
 PreRun は Run の本体処理を行う前にフラグ、オプションなどの引数のセットなどを行います\.
 
-テスト目的で強制的に失敗させる場合は ForceFailPreRun を true に設定します\.
+### func \(\*TApp\) [PrintInfo](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.PrintInfo.go#L9>)
+
+```go
+func (a *TApp) PrintInfo(ctx *cli.Context) error
+```
+
+PrintInfo は ctx に API 情報を書き込みます\.
 
 ### func \(\*TApp\) [Run](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.Run.go#L15>)
 
@@ -225,7 +238,13 @@ func (a *TApp) SetEngine(nameEngine string) (err error)
 
 SetEngine メソッドは Engine フィールドに翻訳エンジンの新規インスタンスのポインタをセットします\.
 
-### func \(\*TApp\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.Translate.go#L8>)
+### func \(\*TApp\) [SingleShotTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SingleShotTranslation.go#L5>)
+
+```go
+func (a *TApp) SingleShotTranslation(orderLang []string) (string, error)
+```
+
+### func \(\*TApp\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.Translate.go#L10>)
 
 ```go
 func (a *TApp) Translate(orderLang []string, inputText string) (string, error)
@@ -233,7 +252,7 @@ func (a *TApp) Translate(orderLang []string, inputText string) (string, error)
 
 Translate は、orderLang の順に inputText を翻訳した結果を返します\.
 
-## type [TFlagOptions](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TFlagOptions.go#L5-L16>)
+## type [TFlagOptions](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TFlagOptions.go#L5-L18>)
 
 TFlagOptions はアプリ（コマンド）のフラグやオプションの設定やその設定値およびヘルプの表示内容を定義した構造体です\. アプリの bool オプション（フラグ）や string オプションなどは、ここで定義します\.
 
@@ -242,12 +261,14 @@ type TFlagOptions struct {
     APIKey         string `cli:"a,apikey" usage:"翻訳に使うエンジンのアクセス・トークンを指定します" dft:""`
     CacheID        string `cli:"cache-id" usage:"キャッシュの DB 名。異なる DB にキャッシュを保存したい場合に指定します" dft:""`
     NameEngine     string `cli:"e,engine" usage:"翻訳に使うエンジンを指定します" dft:"deepl"`
-    UsageApp       string // アプリのヘルプ表示で使われる本文メッセージ
+    UsageApp       string `cli:"-"` // アプリのヘルプ表示で使われる本文メッセージ
     ClearBeforeRun bool   `cli:"clear" usage:"実行前にキャッシュを完全に削除します。（API の利用枠を消費します）"`
     Help           bool   `cli:"h,help" usage:"ヘルプを表示します"`
     IsModeDebug    bool   `cli:"debug" usage:"デバッグ情報を標準エラー出力に出力します"`
     IsNoCache      bool   `cli:"no-cache" usage:"キャッシュを利用せずに翻訳 API から再取得します。（API の利用枠を消費します）"`
-    ShowInfo       bool   `cli:"info" usage:"API のリクエスト可能な残数など、API 情報を最後に出力します"`
+    IsPiped        bool   `cli:"-"` // パイプ渡しで値を受け取っているか
+    ShowInfo       bool   `cli:"info" usage:"API のリクエスト可能な残数など、API 情報を出力します"`
+    ShowInfoOnly   bool   `cli:"-"` // 他の引数がない場合は true になり API 情報のみの出力になります
     Version        bool   `cli:"v,version" usage:"アプリのバージョン情報を表示します"`
 }
 ```

@@ -17,7 +17,7 @@ import "github.com/Qithub-BOT/QiiTrans/src/utils"
 - [func GetNameExe() string](<#func-getnameexe>)
 - [func GetSTDIN() (stdin string, err error)](<#func-getstdin>)
 - [func Hash(algo string, value string) (string, []byte, error)](<#func-hash>)
-- [func InteractSTDIN(funcUser func(string) (string, error), stopWord string) (err error)](<#func-interactstdin>)
+- [func InteractSTDIN(funcUser func(string) error, stopWord string) (err error)](<#func-interactstdin>)
 - [func IsDir(pathFile string) bool](<#func-isdir>)
 - [func IsEnglish(input string) bool](<#func-isenglish>)
 - [func IsFile(pathFile string) bool](<#func-isfile>)
@@ -160,7 +160,7 @@ blake3_512 (experimental, 64 byte, 64 char length)
 ## func [InteractSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/InteractSTDIN.go#L15>)
 
 ```go
-func InteractSTDIN(funcUser func(string) (string, error), stopWord string) (err error)
+func InteractSTDIN(funcUser func(string) error, stopWord string) (err error)
 ```
 
 InteractSTDIN は対話モードで標準入力を処理します\.
@@ -177,13 +177,15 @@ IsDir は pathFile のパスが存在し、ディレクトリの場合に true �
 
 パスの構文解析に失敗した場合はエラーで終了（OsExit）します\.
 
-## func [IsEnglish](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/IsEnglish.go#L10>)
+## func [IsEnglish](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/IsEnglish.go#L12>)
 
 ```go
 func IsEnglish(input string) bool
 ```
 
 IsEnglish は input が英文であると予測した場合に true を返します\.
+
+この関数は、文書を文に分けて翻訳＆キャッシュをする際に使われます\.
 
 ## func [IsFile](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/IsFile.go#L10>)
 

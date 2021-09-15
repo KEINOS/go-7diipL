@@ -53,10 +53,25 @@ func TestPreRun_force_fail(t *testing.T) {
 	argv.NameEngine = "deepl"
 	appTest.Argv = argv
 
-	app.ForceFailPreRun = true
-	defer func() { app.ForceFailPreRun = false }()
+	appTest.Force["FailPreRun"] = true
 
 	// Execute pre-run
 	err := appTest.PreRun()
 	assert.Error(t, err)
+}
+
+func TestPreRun_force_fail_not_piped(t *testing.T) {
+	appTest := app.New(t.Name())
+	argv := new(app.TFlagOptions)
+
+	argv.NameEngine = "deepl"
+	appTest.Argv = argv
+
+	appTest.Force["IsNotPiped"] = true
+
+	// Execute pre-run
+	err := appTest.PreRun()
+
+	assert.NoError(t, err)
+	assert.False(t, appTest.Argv.IsPiped)
 }

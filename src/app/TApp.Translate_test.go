@@ -7,6 +7,7 @@ import (
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
 	"github.com/kami-zh/go-capturer"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestTranslate(t *testing.T) {
@@ -64,4 +65,29 @@ func TestTranslate(t *testing.T) {
 		assert.Contains(t, out, "EN -> JA: キャッシュ:",
 			"it should output cached translation on debug mode")
 	}
+}
+
+func TestTranslate_force_not_translate(t *testing.T) {
+	appTest := app.New(t.Name())
+	orderLang := []string{"ja", "en", "ja"}
+
+	appTest.Force["NoTrans"] = true
+
+	expect := "今日はとてもいい天気です。"
+	actual, err := appTest.Translate(orderLang, expect)
+
+	require.NoError(t, err)
+	assert.Equal(t, expect, actual)
+}
+
+func TestTranslate_force_translate_error(t *testing.T) {
+	appTest := app.New(t.Name())
+	orderLang := []string{"ja", "en", "ja"}
+
+	appTest.Force["TransError"] = true
+
+	input := "今日はとてもいい天気です。"
+	_, err := appTest.Translate(orderLang, input)
+
+	require.Error(t, err)
 }

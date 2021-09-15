@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"io/ioutil"
+	"io"
 	"os"
 
 	"golang.org/x/xerrors"
@@ -31,7 +31,7 @@ func GetSTDIN() (stdin string, err error) {
 		return ValSTDINDummy, nil
 	}
 
-	value, err := ioutil.ReadAll(os.Stdin)
+	value, err := io.ReadAll(os.Stdin)
 
 	return string(value), err
 }

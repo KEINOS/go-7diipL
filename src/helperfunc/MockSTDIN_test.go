@@ -1,7 +1,7 @@
 package helperfunc_test
 
 import (
-	"io/ioutil"
+	"io"
 	"os"
 	"testing"
 
@@ -16,7 +16,7 @@ func TestMockSTDIN(t *testing.T) {
 	funcDeferSTDIN := helperfunc.MockSTDIN(t, userInput)
 	defer funcDeferSTDIN() // モックのリカバリ
 
-	value, err := ioutil.ReadAll(os.Stdin)
+	value, err := io.ReadAll(os.Stdin)
 	if err != nil {
 		t.Fatalf("failed to read stdin during test")
 	}
