@@ -54,7 +54,7 @@ func IsAPIKeyFree(apikey string) bool
 
 IsAPIKeyFree は apikey が無料枠のアクセストークンか返します\.
 
-## func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/deepleng/New.go#L9>)
+## func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/deepleng/New.go#L10>)
 
 ```go
 func New(cacheID ...string) *engine.Properties
