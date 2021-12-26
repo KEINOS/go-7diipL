@@ -1,6 +1,11 @@
 # =============================================================================
-#  Multi-Stage Builder
+#  Docker Image Builder for QiiTrans
 # =============================================================================
+#  この Dockerfile は、コンパイルされた `qiitrans` バイナリだけを含んだ Alpine
+#  ベースのシンプルなコンテナのイメージを作成します。
+#  アクセストークンは含まれていないため、利用時にコンテナの環境変数で DEEPL_API_KEY
+#  に DeepL のアクセストークンを渡す必要があります。
+
 # Default Language
 ARG LC_ALL_DEFAULT='ja_JP.utf8'
 ARG LANG_DEFAULT='ja_JP.utf8'
