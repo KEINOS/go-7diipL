@@ -57,7 +57,7 @@ q
 
 ### Homebrew
 
-Linux, macOS の場合は Homebrew でインストールできます。
+Linux, macOS の場合は [Homebrew](https://brew.sh/) でインストールできます。
 
 ```bash
 brew install qithub-bot/apps/qiitrans
@@ -155,7 +155,8 @@ $ echo '私は、賛成の反対に同意なのだ' | qiitrans --apikey "1234567
 
 ## コントリビュート
 
-- テストの実行にもアクセストークンが必要です。
+- テストの実行にも DeepL のアクセストークンを環境設定にセットする必要があります。
+- GitHub 上で `.`（ドット）キーを押すと Web エディターが起動します。
 - [質問・要望・改善案・提案](https://github.com/Qithub-BOT/QiiTrans/discussions) @ Discussions
 - [不具合報告（要再現テストあり）](https://github.com/Qithub-BOT/QiiTrans/issues) @ Issues
 - [TODO](https://github.com/Qithub-BOT/QiiTrans/issues) @ Issues
