@@ -19,12 +19,7 @@ Package engine は、各翻訳エンジンの基本となる構造体とその�
   - [func (p *Properties) SetAPIKey(apiKey string) func()](<#func-properties-setapikey>)
   - [func (p *Properties) SetDefault()](<#func-properties-setdefault>)
   - [func (p *Properties) SetFuncGetInfoAPI(getInfoFunc func(properties *Properties) (AccountInfo, error))](<#func-properties-setfuncgetinfoapi>)
-  - [func (p *Properties) SetFuncTrans(transFunc func(
-    properties *Properties,
-    inputText string,
-    langFrom string,
-    langTo string,
-) (string, error))](<#func-properties-setfunctrans>)
+  - [func (p *Properties) SetFuncTrans(transFunc func(properties *Properties, inputText string, langFrom string, langTo string) (string, error))](<#func-properties-setfunctrans>)
   - [func (p *Properties) Translate(inTxt string, langFrom string, langTo string) (outText string, isCache bool, err error)](<#func-properties-translate>)
   - [func (p *Properties) UniformLang(lang string) string](<#func-properties-uniformlang>)
 
@@ -143,12 +138,7 @@ SetFuncGetInfoAPI メソッドは翻訳用の関数を割り当てます\.
 ### func \(\*Properties\) [SetFuncTrans](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetFuncTrans.go#L4-L9>)
 
 ```go
-func (p *Properties) SetFuncTrans(transFunc func(
-    properties *Properties,
-    inputText string,
-    langFrom string,
-    langTo string,
-) (string, error))
+func (p *Properties) SetFuncTrans(transFunc func(properties *Properties, inputText string, langFrom string, langTo string) (string, error))
 ```
 
 SetFuncTrans メソッドは翻訳用の関数を割り当てます\.
