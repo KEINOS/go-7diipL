@@ -1,4 +1,4 @@
-[![All Tests](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yaml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yaml)
+[![All Tests](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Qithub-BOT/QiiTrans)](https://goreportcard.com/report/github.com/Qithub-BOT/QiiTrans)
 [![CodeQL](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Qithub-BOT/QiiTrans.svg)](https://pkg.go.dev/github.com/Qithub-BOT/QiiTrans)
@@ -54,6 +54,16 @@ q
 ```
 
 ## インストール
+
+### Homebrew
+
+Linux, macOS の場合は Homebrew でインストールできます。
+
+```bash
+brew install qithub-bot/apps/qiitrans
+```
+
+### 手動インストール
 
 Windows10, macOS, Linux 用の単体バイナリを用意しています。
 
