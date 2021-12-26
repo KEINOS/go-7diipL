@@ -2,7 +2,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/Qithub-BOT/QiiTrans)](https://goreportcard.com/report/github.com/Qithub-BOT/QiiTrans)
 [![CodeQL](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Qithub-BOT/QiiTrans.svg)](https://pkg.go.dev/github.com/Qithub-BOT/QiiTrans)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Qithub-BOT/QiiTrans/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Qithub-BOT/QiiTrans/blob/main/LICENSE.md)
 [![](https://shields.io/badge/GitHub-Codespaces%20%E5%AF%BE%E5%BF%9C-blue?logo=github&style=flat)](https://docs.github.com/en/codespaces "このリポジトリは GitHub Codespaces に対応しています")
 
 # `QiiTrans`
