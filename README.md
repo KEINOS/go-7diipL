@@ -12,12 +12,14 @@
 `qiitrans` の機能は、標準入力から受け取ったテキストを翻訳して返すだけです。
 
 ```shellsession
+$ # 要 DeepL のトークン
+$ env | grep DEEPL_API_KEY
+DEEPL_API_KEY=12345678-ffff-ffff-ffff-123456789abc:fx
+
 $ # 日本語 → English に翻訳
 $ echo 'おはよう。今日はいい天気ですね。' | qiitrans ja en
 Good morning. It's a beautiful day.
-```
 
-```shellsession
 $ # English → 日本語に翻訳
 $ echo 'Good morning. It\'s a beautiful day.' | qiitrans en ja
 おはようございます。今日はとてもいい天気ですね。
