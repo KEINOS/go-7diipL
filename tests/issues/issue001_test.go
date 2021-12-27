@@ -26,7 +26,7 @@ func TestIssue001(t *testing.T) {
 	})
 	defer funcDeferArgs() // モックのリカバリ
 
-	appTest := app.New(t.Name()) // 新規アプリ作成。キャッシュ ID はテスト名.
+	appTest := app.New("", t.Name()) // 新規アプリ作成。キャッシュ ID はテスト名.
 
 	defer func() {
 		appTest.Engine.Cache.ClearAll() // 終了後にキャッシュ削除

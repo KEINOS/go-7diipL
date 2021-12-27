@@ -25,7 +25,7 @@ func TestNew(t *testing.T) {
 	funcDeferArgs := helperfunc.MockArgs(t, dummyArgs)
 	defer funcDeferArgs()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
@@ -53,7 +53,7 @@ func TestNew_clear_cache(t *testing.T) {
 	funcDeferArgs := helperfunc.MockArgs(t, dummyArgs)
 	defer funcDeferArgs()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
@@ -70,7 +70,7 @@ func TestNew_clear_cache(t *testing.T) {
 }
 
 func TestNew_default_settings(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	// Check default name
 	assert.Equal(t, app.NameDefault, appTest.Name, "it should be the default app name")
@@ -97,7 +97,7 @@ func TestNew_fail_get_info(t *testing.T) {
 	app.ForceErrorGetUniformedInfo = true
 	defer func() { app.ForceErrorGetUniformedInfo = false }()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
@@ -128,7 +128,7 @@ func TestNew_fail_read_stdin(t *testing.T) {
 	utils.ForceErrorGetSTDIN = true
 	defer func() { utils.ForceErrorGetSTDIN = false }()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
@@ -143,8 +143,8 @@ func TestNew_fail_read_stdin(t *testing.T) {
 }
 
 func TestNew_instantiation(t *testing.T) {
-	appTest1 := app.New()
-	appTest2 := app.New()
+	appTest1 := app.New("")
+	appTest2 := app.New("")
 
 	assert.IsType(t, appTest1, appTest2, "it should create the same type")
 	assert.NotSame(t, appTest1, appTest2, "pointers should not reference the same object")
@@ -175,7 +175,7 @@ func TestNew_no_apikey_set(t *testing.T) {
 		}
 	}()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	// アクセストークンの環境変数を一時的に変更
 	if err := os.Setenv(nameKeyEnv, ""); err != nil {
@@ -210,7 +210,7 @@ func TestNew_show_info(t *testing.T) {
 	funcDeferArgs := helperfunc.MockArgs(t, dummyArgs)
 	defer funcDeferArgs()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()

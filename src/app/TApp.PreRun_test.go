@@ -16,7 +16,7 @@ func TestPreRun(t *testing.T) {
 
 	defer func() { utils.SetModeDebug(false) }()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 	appTest.Argv = argv
 
 	// Execute pre-run
@@ -37,7 +37,7 @@ func TestPreRun_bad_engine_name(t *testing.T) {
 
 	argv.NameEngine = "unknown"
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 	appTest.Argv = argv
 
 	// Execute pre-run
@@ -47,7 +47,7 @@ func TestPreRun_bad_engine_name(t *testing.T) {
 }
 
 func TestPreRun_force_fail(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 	argv := new(app.TFlagOptions)
 
 	argv.NameEngine = "deepl"
@@ -61,7 +61,7 @@ func TestPreRun_force_fail(t *testing.T) {
 }
 
 func TestPreRun_force_fail_not_piped(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 	argv := new(app.TFlagOptions)
 
 	argv.NameEngine = "deepl"

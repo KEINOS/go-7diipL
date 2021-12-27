@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"runtime/debug"
 	"strings"
 )
 
@@ -13,12 +14,18 @@ func (a *TApp) GetVersion() string {
 	nameApp := strings.TrimSpace(a.Name)
 	verApp := strings.TrimSpace(a.Version)
 
+	if verApp == "" {
+		if buildInfo, ok := debug.ReadBuildInfo(); ok {
+			verApp = buildInfo.Main.Version
+		}
+	}
+
 	// dev version
 	if verApp == "" || verApp == VersionDefault {
 		return fmt.Sprintf("%s %s version", nameApp, VersionDefault)
 	}
 
-	// missing "v"
+	// Prepend missing "v"
 	if !strings.HasPrefix(verApp, "v") {
 		verApp = "v" + verApp
 	}

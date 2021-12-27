@@ -1,10 +1,13 @@
 package app
 
-// New はアプリの新規オプジェクトのポインタを返します.
+// New はアプリの新規オプジェクトのポインタを返します。
 //
-// コマンド・オプションの --cache-id でも指定できるため、通常 cacheID は指定する必要はありません.
-// テスト中、キャッシュがテスト間でバッティングしないようにキャッシュ ID を指定したい場合に利用します.
-func New(cacheID ...string) *TApp {
+// 第 2 引数の cacheID は、コマンド・オプションの --cache-id でも指定できるため、
+// 通常 cacheID は指定する必要はありません。
+// この ID は、API から受け取った翻訳済みのテキストを保存する際に使われます。テ
+// スト中、キャッシュがテスト間でバッティングしないようにキャッシュ ID を指定し
+// たい場合に利用します。
+func New(versionApp string, cacheID ...string) *TApp {
 	appTmp := new(TApp)
 
 	appTmp.Argv = new(TFlagOptions)
@@ -12,7 +15,10 @@ func New(cacheID ...string) *TApp {
 	appTmp.Name = NameDefault
 	appTmp.Prefix = PrefixDefault
 	appTmp.StopWord = StopWordDefault
-	appTmp.Version = VersionDefault
+
+	if appTmp.Version = versionApp; versionApp == "" {
+		appTmp.Version = VersionDefault
+	}
 
 	// テスト用のフラグ. テスト時に強制的に戻り値を変える場合に利用します.
 	appTmp.Force = map[string]bool{

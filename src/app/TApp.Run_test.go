@@ -9,7 +9,7 @@ import (
 )
 
 func TestRun_force_fail(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	app.ForceFailRun = true
 	defer func() { app.ForceFailRun = false }()

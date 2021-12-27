@@ -11,7 +11,7 @@ import (
 )
 
 func TestTranslate(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	err := appTest.SetEngine("deepl")
 	assert.NoError(t, err)
@@ -68,7 +68,7 @@ func TestTranslate(t *testing.T) {
 }
 
 func TestTranslate_force_not_translate(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 	orderLang := []string{"ja", "en", "ja"}
 
 	appTest.Force["NoTrans"] = true
@@ -81,7 +81,7 @@ func TestTranslate_force_not_translate(t *testing.T) {
 }
 
 func TestTranslate_force_translate_error(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 	orderLang := []string{"ja", "en", "ja"}
 
 	appTest.Force["TransError"] = true

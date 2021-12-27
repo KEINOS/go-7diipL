@@ -123,7 +123,7 @@ buildBinary() {
         GOARM="$GOARM" \
         go build \
         -installsuffix "$NAME_FILE_BIN" \
-        -ldflags="-s -w -extldflags \"-static\" -X 'main.versionApp=${VER_APP}'" \
+        -ldflags="-s -w -extldflags \"-static\" -X 'main.version=${VER_APP}'" \
         -o="$PATH_FILE_BIN" \
         "$PATH_DIR_PKG_MAIN"; then
 
