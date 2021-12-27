@@ -107,6 +107,12 @@ LangTo:
 
 ## Variables
 
+DebugReadBuildInfo は debug\.ReadBuildInfo のコピーです。テストで挙動を変えたい 場合にモック用の関数を割り当てるために利用します。
+
+```go
+var DebugReadBuildInfo = debug.ReadBuildInfo
+```
+
 ForceErrorGetUniformedInfo が true の場合、GetUniformedInfo はエラーを返します\.
 
 テスト時に強制的にエラーを返す必要がある場合のみ利用します\.
@@ -172,7 +178,7 @@ func (a *TApp) GetUniformedInfo() (string, error)
 
 GetUniformedInfo は API 情報を読みやすいように整えた状態で返します\.
 
-### func \(\*TApp\) [GetVersion](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetVersion.go#L13>)
+### func \(\*TApp\) [GetVersion](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetVersion.go#L17>)
 
 ```go
 func (a *TApp) GetVersion() string
