@@ -16,7 +16,7 @@ func TestValidate_flag_is_version(t *testing.T) {
 	})
 	defer funcDefer()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
@@ -36,7 +36,7 @@ func TestValidate_flag_is_info_only(t *testing.T) {
 	})
 	defer funcDefer()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
@@ -60,7 +60,7 @@ func TestValidate_all_args_missing(t *testing.T) {
 	funcDeferArgs := helperfunc.MockArgs(t, missingAllArgs)
 	defer funcDeferArgs()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
@@ -81,7 +81,7 @@ func TestValidate_missing_2nd_arg(t *testing.T) {
 	funcDeferArgs := helperfunc.MockArgs(t, missingArg)
 	defer funcDeferArgs()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
@@ -105,7 +105,7 @@ func TestValidate_bad_lang_type(t *testing.T) {
 	})
 	defer funcDeferArgs()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()

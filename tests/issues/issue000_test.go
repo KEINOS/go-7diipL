@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// Sample of issue fix.
+// This is a sample of how to write a test for an issue fix.
 func TestIssue000(t *testing.T) {
 	input := "foo bar buz"
 

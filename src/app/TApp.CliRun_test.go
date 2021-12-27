@@ -12,7 +12,7 @@ import (
 )
 
 func TestCliRun_fail_set_arg_value(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 	ctxDummy := new(cli.Context)
 
 	err := appTest.CliRun(ctxDummy)
@@ -34,7 +34,7 @@ func TestCliRun_fail_prerun(t *testing.T) {
 	funcDeferArgs := helperfunc.MockArgs(t, dummyArgs)
 	defer funcDeferArgs()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	appTest.Force["FailPreRun"] = true
 
@@ -61,7 +61,7 @@ func TestCliRun_fail_prerun_not_piped(t *testing.T) {
 	funcDeferArgs := helperfunc.MockArgs(t, dummyArgs)
 	defer funcDeferArgs()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	appTest.Force["IsNotPiped"] = true
 

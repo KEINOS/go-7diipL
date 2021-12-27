@@ -20,7 +20,7 @@ func TestAutoHelp(t *testing.T) {
 	funcDeferArgs := helperfunc.MockArgs(t, onlyHelpOption)
 	defer funcDeferArgs()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()

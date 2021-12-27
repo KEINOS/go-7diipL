@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetUniformedInfo(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	if err := appTest.SetEngine("deepl"); err != nil {
 		t.Fatalf("failed to set engine during test")
@@ -23,7 +23,7 @@ func TestGetUniformedInfo(t *testing.T) {
 }
 
 func TestGetUniformedInfo_error(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	if err := appTest.SetEngine("deepl"); err != nil {
 		t.Fatalf("failed set engine during test")
@@ -55,7 +55,7 @@ func TestGetUniformedInfo_error(t *testing.T) {
 }
 
 func TestGetUniformedInfo_error_forced(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	if err := appTest.SetEngine("deepl"); err != nil {
 		t.Fatalf("failed to set engine during test")

@@ -10,7 +10,7 @@ import (
 )
 
 func TestSetArgValue(t *testing.T) {
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 	argDummy := new(cli.Context)
 
 	out := capturer.CaptureOutput(func() {

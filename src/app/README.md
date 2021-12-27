@@ -16,7 +16,7 @@ QiiTrans の本体でもありますが、main ではアプリのインスタン
 - [Variables](<#variables>)
 - [func GetMsgHelpUsage(nameApp string, nameCmd string) string](<#func-getmsghelpusage>)
 - [type TApp](<#type-tapp>)
-  - [func New(cacheID ...string) *TApp](<#func-new>)
+  - [func New(versionApp string, cacheID ...string) *TApp](<#func-new>)
   - [func (a *TApp) CliRun(ctx *cli.Context) error](<#func-tapp-clirun>)
   - [func (a *TApp) GetUniformedInfo() (string, error)](<#func-tapp-getuniformedinfo>)
   - [func (a *TApp) GetVersion() string](<#func-tapp-getversion>)
@@ -107,6 +107,12 @@ LangTo:
 
 ## Variables
 
+DebugReadBuildInfo は debug\.ReadBuildInfo のコピーです。テストで挙動を変えたい 場合にモック用の関数を割り当てるために利用します。
+
+```go
+var DebugReadBuildInfo = debug.ReadBuildInfo
+```
+
 ForceErrorGetUniformedInfo が true の場合、GetUniformedInfo はエラーを返します\.
 
 テスト時に強制的にエラーを返す必要がある場合のみ利用します\.
@@ -146,15 +152,15 @@ type TApp struct {
 }
 ```
 
-### func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/New.go#L7>)
+### func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/New.go#L10>)
 
 ```go
-func New(cacheID ...string) *TApp
+func New(versionApp string, cacheID ...string) *TApp
 ```
 
-New はアプリの新規オプジェクトのポインタを返します\.
+#### New はアプリの新規オプジェクトのポインタを返します。
 
-コマンド・オプションの \-\-cache\-id でも指定できるため、通常 cacheID は指定する必要はありません\. テスト中、キャッシュがテスト間でバッティングしないようにキャッシュ ID を指定したい場合に利用します\.
+第 2 引数の cacheID は、コマンド・オプションの \-\-cache\-id でも指定できるため、 通常 cacheID は指定する必要はありません。 この ID は、API から受け取った翻訳済みのテキストを保存する際に使われます。テ スト中、キャッシュがテスト間でバッティングしないようにキャッシュ ID を指定し たい場合に利用します。
 
 ### func \(\*TApp\) [CliRun](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.CliRun.go#L8>)
 
@@ -172,7 +178,7 @@ func (a *TApp) GetUniformedInfo() (string, error)
 
 GetUniformedInfo は API 情報を読みやすいように整えた状態で返します\.
 
-### func \(\*TApp\) [GetVersion](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetVersion.go#L12>)
+### func \(\*TApp\) [GetVersion](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetVersion.go#L17>)
 
 ```go
 func (a *TApp) GetVersion() string
@@ -182,11 +188,13 @@ GetVersion メソッドはアプリ名を含めたバージョン情報を返し
 
 Version フィールドの値が "v" で始まらない場合は、頭に付け加えます\. Version フィールドの値が、空もしくは "dev" の場合は "dev version" になります\.
 
-### func \(\*TApp\) [InteractiveTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.InteractiveTranslation.go#L10>)
+### func \(\*TApp\) [InteractiveTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.InteractiveTranslation.go#L12>)
 
 ```go
 func (a *TApp) InteractiveTranslation(orderLang []string) error
 ```
+
+InteractiveTranslation は、対話式（標準入力がない場合）の連続的な翻訳を行う メソッドです。
 
 ### func \(\*TApp\) [NewEngine](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.NewEngine.go#L10>)
 
@@ -238,11 +246,13 @@ func (a *TApp) SetEngine(nameEngine string) (err error)
 
 SetEngine メソッドは Engine フィールドに翻訳エンジンの新規インスタンスのポインタをセットします\.
 
-### func \(\*TApp\) [SingleShotTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SingleShotTranslation.go#L5>)
+### func \(\*TApp\) [SingleShotTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SingleShotTranslation.go#L7>)
 
 ```go
 func (a *TApp) SingleShotTranslation(orderLang []string) (string, error)
 ```
+
+SingleShotTranslation は標準入力から受け取ったテキストを翻訳する、単発翻訳用 のメソッドです。
 
 ### func \(\*TApp\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.Translate.go#L10>)
 

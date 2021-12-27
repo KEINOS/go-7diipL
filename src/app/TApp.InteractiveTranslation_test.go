@@ -29,7 +29,7 @@ func TestInteractiveTranslation(t *testing.T) {
 
 	defer func() { utils.IsTerminalDummy = false }()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	appTest.StopWord = stopWord
 	appTest.Force["NoTrans"] = true
@@ -65,7 +65,7 @@ func TestInteractiveTranslation_fail(t *testing.T) {
 
 	defer func() { utils.IsTerminalDummy = false }()
 
-	appTest := app.New(t.Name())
+	appTest := app.New("", t.Name())
 
 	appTest.StopWord = stopWord
 	appTest.Force["TransError"] = true

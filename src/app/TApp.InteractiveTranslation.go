@@ -7,6 +7,8 @@ import (
 	"github.com/gookit/color"
 )
 
+// InteractiveTranslation は、対話式（標準入力がない場合）の連続的な翻訳を行う
+// メソッドです。
 func (a *TApp) InteractiveTranslation(orderLang []string) error {
 	stopWord := a.StopWord
 	translator := func(input string) error {

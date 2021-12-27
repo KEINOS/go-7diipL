@@ -18,7 +18,7 @@ func (a *TApp) CliRun(ctx *cli.Context) error {
 
 	// バージョン情報表示
 	if a.Argv.Version {
-		ctx.String("%s", a.GetVersion())
+		ctx.String("%s\n", a.GetVersion())
 
 		return nil
 	}
