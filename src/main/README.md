@@ -8,10 +8,17 @@ import "github.com/Qithub-BOT/QiiTrans/src/main"
 
 ## Index
 
+- [Variables](<#variables>)
 - [func main()](<#func-main>)
 
 
-## func [main](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/main/main.go#L8>)
+## Variables
+
+```go
+var version string
+```
+
+## func [main](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/main/main.go#L10>)
 
 ```go
 func main()
