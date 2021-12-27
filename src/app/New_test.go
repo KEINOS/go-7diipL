@@ -76,7 +76,7 @@ func TestNew_default_settings(t *testing.T) {
 	assert.Equal(t, app.NameDefault, appTest.Name, "it should be the default app name")
 
 	// Check default version
-	assert.Equal(t, app.VersionDefault, appTest.Version, "it should be the default app version")
+	assert.Empty(t, appTest.Version, "version should be empty by default to auto detect")
 }
 
 func TestNew_fail_get_info(t *testing.T) {

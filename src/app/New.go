@@ -15,10 +15,7 @@ func New(versionApp string, cacheID ...string) *TApp {
 	appTmp.Name = NameDefault
 	appTmp.Prefix = PrefixDefault
 	appTmp.StopWord = StopWordDefault
-
-	if appTmp.Version = versionApp; versionApp == "" {
-		appTmp.Version = VersionDefault
-	}
+	appTmp.Version = versionApp
 
 	// テスト用のフラグ. テスト時に強制的に戻り値を変える場合に利用します.
 	appTmp.Force = map[string]bool{
