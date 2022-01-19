@@ -2,7 +2,8 @@
 
 ## ローカル開発
 
-- VSCode + Docker + Remote - Containers 拡張機能に対応
+- VSCode + Docker + Remote-Containers 拡張機能に対応（x86_64/Intel/AMD のみ。Arm/Apple M1 には対応していません）
+    -
 - VSCode + GitHub CodeSpaces 拡張機能に対応
 
 ## オンライン開発

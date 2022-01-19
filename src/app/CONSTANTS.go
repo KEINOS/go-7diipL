@@ -10,6 +10,9 @@ const (
 	// PrefixDefault は対話モードで翻訳済みメッセージに付ける接頭辞です.
 	PrefixDefault = "再翻訳:"
 
+	// PromptDefault は対話モードで入力の待受時に表示されるプロンプトです.
+	PromptDefault = ">>> "
+
 	// StopWordDefault は対話モードで、終了扱いにするワードです.
 	StopWordDefault = "q"
 

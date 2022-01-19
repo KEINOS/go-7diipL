@@ -11,18 +11,43 @@ import (
 // メソッドです。
 func (a *TApp) InteractiveTranslation(orderLang []string) error {
 	stopWord := a.StopWord
+	prompt := a.Prompt
 	translator := func(input string) error {
-		output, err := a.Translate(orderLang, input)
+		listTranslated, err := a.Translate(orderLang, input)
 		if err != nil {
 			return err
 		}
 
-		prefix := color.Blue.Sprintf(a.Prefix)
+		utils.LogDebug(fmt.Sprintf("%#v", listTranslated))
 
-		fmt.Println(prefix, output)
+		lenTranslated := len(listTranslated)
+
+		// Usual print
+		if !a.Argv.IsVerbose {
+			prefix := color.Blue.Sprintf(a.Prefix)
+			translated := listTranslated[lenTranslated-1]
+
+			fmt.Println(prefix, translated.Translated)
+
+			return nil
+		}
+
+		// Verbose print
+		for i := 0; i < lenTranslated; i++ {
+			translated := listTranslated[i]
+			prefix := a.Prefix
+
+			if i != lenTranslated-1 {
+				prefix = fmt.Sprintf("%s -> %s:", translated.LangFrom, translated.LangTo)
+			}
+
+			prefix = color.Blue.Sprintf(prefix)
+
+			fmt.Println(prefix, translated.Translated)
+		}
 
 		return nil
 	}
 
-	return utils.InteractSTDIN(translator, stopWord)
+	return utils.InteractSTDIN(translator, stopWord, prompt)
 }

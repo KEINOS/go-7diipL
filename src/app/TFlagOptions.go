@@ -12,6 +12,7 @@ type TFlagOptions struct {
 	IsModeDebug    bool   `cli:"debug" usage:"デバッグ情報を標準エラー出力に出力します"`
 	IsNoCache      bool   `cli:"no-cache" usage:"キャッシュを利用せずに翻訳 API から再取得します。（API の利用枠を消費します）"`
 	IsPiped        bool   `cli:"-"` // パイプ渡しで値を受け取っているか
+	IsVerbose      bool   `cli:"verbose" usage:"中間翻訳も出力します。"`
 	ShowInfo       bool   `cli:"info" usage:"API のリクエスト可能な残数など、API 情報を出力します"`
 	ShowInfoOnly   bool   `cli:"-"` // 他の引数がない場合は true になり API 情報のみの出力になります
 	Version        bool   `cli:"v,version" usage:"アプリのバージョン情報を表示します"`

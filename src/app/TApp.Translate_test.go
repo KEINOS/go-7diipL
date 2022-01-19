@@ -33,11 +33,14 @@ func TestTranslate(t *testing.T) {
 		expect := []string{
 			"今日はとてもいい天気です。",
 			"今日はとてもいい天気だ。",
+			"今日はとてもいい天気ですね。",
 		}
 
-		actual, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")
+		listTranslated, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")
+		require.NoError(t, err)
+		require.NotEmpty(t, listTranslated)
 
-		assert.NoError(t, err)
+		actual := listTranslated[len(listTranslated)-1].Translated
 		assert.Contains(t, expect, actual)
 	}
 
@@ -54,11 +57,14 @@ func TestTranslate(t *testing.T) {
 			expect := []string{
 				"今日はとてもいい天気です。",
 				"今日はとてもいい天気だ。",
+				"今日はとてもいい天気ですね。",
 			}
 
-			actual, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")
+			listTranslated, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")
+			require.NoError(t, err)
+			require.NotEmpty(t, listTranslated)
 
-			assert.NoError(t, err)
+			actual := listTranslated[len(listTranslated)-1].Translated
 			assert.Contains(t, expect, actual)
 		})
 
@@ -74,9 +80,12 @@ func TestTranslate_force_not_translate(t *testing.T) {
 	appTest.Force["NoTrans"] = true
 
 	expect := "今日はとてもいい天気です。"
-	actual, err := appTest.Translate(orderLang, expect)
 
+	listTranslated, err := appTest.Translate(orderLang, expect)
 	require.NoError(t, err)
+	require.NotEmpty(t, listTranslated)
+
+	actual := listTranslated[len(listTranslated)-1].Translated
 	assert.Equal(t, expect, actual)
 }
 
@@ -87,7 +96,8 @@ func TestTranslate_force_translate_error(t *testing.T) {
 	appTest.Force["TransError"] = true
 
 	input := "今日はとてもいい天気です。"
-	_, err := appTest.Translate(orderLang, input)
+	listTranslated, err := appTest.Translate(orderLang, input)
 
 	require.Error(t, err)
+	require.Nil(t, listTranslated)
 }

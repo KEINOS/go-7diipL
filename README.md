@@ -9,13 +9,39 @@
 
 `qiitrans` コマンドは文書作成の支援ツールです。
 
-`qiitrans` の機能は、標準入力から受け取ったテキストを翻訳して返すだけです。
+## Install
+
+<details><summary>macOS/Linux/Windows (x86_64,Intel,AMD / ARM64 / Armv 5,6,7)</summary><br>
+
+### Homebrew
+
+Linux, macOS の場合は [Homebrew](https://brew.sh/) でインストールできます。（macOS は Intel と M1 にも対応しています）
+
+```bash
+brew install qithub-bot/apps/qiitrans
+```
+
+### 手動インストール
+
+Windows10, macOS, Linux 用の単体バイナリを用意しています。
+
+リリース・ページから OS と CPU に対応したバイナリをダウンロードし、パスの通ったディレクトリに実行権限付けて設置してください。
+
+- 対応アーキテクチャ: Intel/AMD 32bit/64bit, ARM64, ARM v5,6,7
+- [Releases](https://github.com/Qithub-BOT/QiiTrans/releases) | QiiTrans | Qithub @ GitHub
+
+</details>
+
+## Usage
+
+`qiitrans` の機能は、受け取ったテキストを翻訳して返すだけです。
 
 ```shellsession
-$ # 要 DeepL のトークン
+$ # Requirements: DeepL Access Token
 $ env | grep DEEPL_API_KEY
 DEEPL_API_KEY=12345678-ffff-ffff-ffff-123456789abc:fx
-
+```
+```shellsession
 $ # 日本語 → English に翻訳
 $ echo 'おはよう。今日はいい天気ですね。' | qiitrans ja en
 Good morning. It's a beautiful day.
@@ -28,12 +54,19 @@ $ echo 'Good morning. It\'s a beautiful day.' | qiitrans en ja
 しかし、使い方を工夫すれば、機械翻訳で読まれても理解しやすい文章を作ることができます。
 
 ```shellsession
-$ # 日本語 → English → 日本語
-$ echo '私は、賛成の反対に同意なのだ' | qiitrans ja en ja
-同意しないことに同意します。
+$ # English → Español → 日本語 → 中文 → English
+$ echo 'Difficult the document to read, it is.' | qiitrans en es ja zh en
+再翻訳: The document is difficult to read.
+
+$ echo 'The document is difficult to read.' | qiitrans en es ja zh en
+再翻訳: The document is difficult to read.
 ```
 
 ```shellsession
+$ # 日本語 → English → 日本語
+$ echo '私は、賛成の反対に同意なのだ。' | qiitrans ja en ja
+同意しないことに同意します。
+
 $ # 日本語 → Español → English → Español → 中文 → 日本語
 $ echo '同意しないことに同意します。' | qiitrans ja es en es zh ja
 同意しないことに同意します。
@@ -42,60 +75,66 @@ $ echo '同意しないことに同意します。' | qiitrans ja en
 I agree to disagree.
 ```
 
+### REPL（対話モード）
+
 標準入力がない場合は対話モードになります。ストップワードが入力されるまで翻訳を続けます。
 
 ```shellsession
-$ # 日本語 → Español → English → Español → 中文 → 日本語
-$ qiitrans ja es en es zh ja
+$ qiitrans en es ja zh en
 - ストップワード: q
-私は、賛成の反対に同意なのだ
-再翻訳: 同意しないことに同意します。
-同意しないことに同意します。
-再翻訳: 同意しないことに同意します。
-q
+>>> Difficult the code to read, it is.
+再翻訳: This is a difficult code to read.
+>>> q
+q を検知しました。対話モードを終了します。
 ```
 
-## インストール
+### Advanced Usage
 
-### Homebrew
+`--verbose` オプションを付けると、途中の翻訳も見ることができます。
 
-Linux, macOS の場合は [Homebrew](https://brew.sh/) でインストールできます。
-
-```bash
-brew install qithub-bot/apps/qiitrans
+```shellsession
+$ # One-liner
+$ echo 'Difficult the document to read, it is.' | qiitrans en es ja zh en --verbose
+EN -> ES: Difícil de leer es el documento.
+ES -> JA: ドキュメントが読みにくい。
+JA -> ZH: 文件难以阅读。
+再翻訳: The document is difficult to read.
+```
+```shellsession
+$ # Interactive Mode
+$ qiitrans en es ja zh en --verbose
+- ストップワード: q
+>>> Difficult the document to read, it is.
+EN -> ES: Difícil de leer es el documento.
+ES -> JA: ドキュメントが読みにくい。
+JA -> ZH: 文件难以阅读。
+再翻訳: The document is difficult to read.
+>>> q
+q を検知しました。対話モードを終了します。
 ```
 
-### 手動インストール
-
-Windows10, macOS, Linux 用の単体バイナリを用意しています。
-
-リリース・ページから OS と CPU に対応したバイナリをダウンロードし、パスの通ったディレクトリに実行権限付けて設置してください。
-
-- 対応アーキテクチャ: Intel/AMD 32bit/64bit, ARM64, ARM v5,6,7)
-- [Releases](https://github.com/Qithub-BOT/QiiTrans/releases) | QiiTrans | Qithub @ GitHub
-
-## コマンドの構文
+## ヘルプ
 
 ```shellsession
 $ qiitrans --help
-qiitrans
-  qiitrans コマンドは文書作成支援ツールです。
-  標準入力のテキストを、引数の言語から言語へ自動翻訳した結果を返します。
+QiiTrans
+  main コマンドは文書作成支援ツールです。
+  標準入力のテキストを、引数の言語から言語へ自動翻訳した結果を返します。標準入力がない場合は、対話モードになります。
 
 Usage:
-  qiitrans [Options] LangFrom LangTo [LangTo ...]
+  main [Options] LangFrom LangTo [LangTo ...]
 
 Example:
   $ # 日本語 → 英語に翻訳
-  $ echo '私は、賛成の反対に同意なのだ' | qiitrans ja en
+  $ echo '私は、賛成の反対に同意なのだ' | main ja en
   I agree to disagree.
 
   $ # 日本語 → 英語 → 日本語に翻訳
-  $ echo '私は、賛成の反対に同意なのだ' | qiitrans ja en ja
+  $ echo '私は、賛成の反対に同意なのだ' | main ja en ja
   同意しないことに同意します。
 
   $ # 日本語 → 英語 → スペイン語 → 中国語 → 日本語の順に翻訳
-  $ echo '同意しないことに同意します。' | qiitrans ja en es zh ja
+  $ echo '同意しないことに同意します。' | main ja en es zh ja
   同意しないことに同意します。
 
 LangFrom:
@@ -105,28 +144,35 @@ LangTo:
   翻訳先の言語を指定します。
   LangTo は複数指定可能で、1 つ前の言語から翻訳します。
 
-翻訳エンジンについて
-  現在は以下の翻訳 API に対応しています。
-  利用するには、無料もしくは有料アカウントの登録とアクセス・トークンの発行が必要です。
+翻訳エンジンについて:
+  --engine オプションで翻訳 API を指定することができます。現在は以下の翻訳 API に対応しています。
 
-  deepl ... DeepL API: https://www.deepl.com/docs-api/ （デフォルトの翻訳エンジン）
+    deepl ... DeepL Pro API を使ったエンジン（デフォルトの翻訳エンジン）
+              URL: https://www.deepl.com/pro?cta=menu-login-signup (Free プランでも利用可能)
+              認証キー確認先: https://www.deepl.com/pro-account/plan
+              API情報: https://www.deepl.com/docs-api/
 
-翻訳エンジンとアクセス・トークンの設定について:
-  qiitrans は、翻訳 API のアクセストークンを環境変数から読み取ります。
+注意: 利用するには、無料もしくは有料アカウントの登録とアクセストークン／認証キーの発行が必要です。
 
-  QIITRANS_API_KEY ... デフォルトで使うアクセス・トークンです。
-  DEEPL_API_KEY ... DeepL 専用のアクセス・トークンです。セットされている場合は、QIITRANS_API_KEY より優先されます。
+翻訳エンジンとアクセストークンの設定について:
+  --apikey オプションでアクセストークン／認証キーが指定されていない場合、以下の環境変数から読み取ります。
 
+  QIITRANS_API_KEY ... デフォルトで使うアクセストークンです。
+  DEEPL_API_KEY ... DeepL 専用のアクセストークンです。セットされている場合は、QIITRANS_API_KEY より優先されます。
 
 Options:
 
-      --apikey           翻訳に使うエンジンのアクセス・トークンを指定します
-      --engine[=deepl]   翻訳に使うエンジンを指定します
+  -a, --apikey           翻訳に使うエンジンのアクセス・トークンを指定します
+      --cache-id         キャッシュの DB 名。異なる DB にキャッシュを保存したい場合に指定します
+  -e, --engine[=deepl]   翻訳に使うエンジンを指定します
       --clear            実行前にキャッシュを完全に削除します。（API の利用枠を消費します）
   -h, --help             ヘルプを表示します
       --debug            デバッグ情報を標準エラー出力に出力します
       --no-cache         キャッシュを利用せずに翻訳 API から再取得します。（API の利用枠を消費します）
-      --info             API のリクエスト可能な残数など、API 情報を最後に出力します
+      --verbose          中間翻訳も出力します。
+      --info             API のリクエスト可能な残数など、API 情報を出力します
+  -v, --version          アプリのバージョン情報を表示します
+
 ```
 
 ## アクセス・トークン
