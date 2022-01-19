@@ -10,7 +10,6 @@ pull_request_rules:
       actions:
         merge:
           method: squash
-          strict: smart+fasttrack
     - name: automatic merge on CI success only if markdown files in repo root were changed
       conditions:
         - "check-success=Unit test and coverage"
@@ -21,7 +20,6 @@ pull_request_rules:
       actions:
         merge:
           method: squash
-          strict: smart+fasttrack
     - name: automatic merge on go.mod/go.sum update only
       conditions:
         - "check-success=Unit test and coverage"
@@ -33,7 +31,6 @@ pull_request_rules:
       actions:
         merge:
           method: squash
-          strict: smart+fasttrack
     - name: automatic merge for Dependabot pull requests
       conditions:
         - author~=^dependabot(|-preview)\[bot\]$
@@ -41,4 +38,3 @@ pull_request_rules:
       actions:
         merge:
           method: squash
-          strict: smart+fasttrack

@@ -3,19 +3,18 @@ package app
 import (
 	"strings"
 
+	"github.com/Qithub-BOT/QiiTrans/src/utils"
 	"golang.org/x/xerrors"
 )
 
 // Translate は、orderLang の順に inputText を翻訳した結果を返します.
-func (a *TApp) Translate(orderLang []string, inputText string) (string, error) {
+func (a *TApp) Translate(orderLang []string, inputText string) ([]TTranslation, error) {
 	var err error
 
-	if a.Force["NoTrans"] {
-		return inputText, nil
-	}
+	translations := make([]TTranslation, len(orderLang)-1)
 
 	if a.Force["TransError"] {
-		return "", xerrors.New("forced error for translation")
+		return nil, xerrors.New("forced error for translation")
 	}
 
 	transText := ""
@@ -36,14 +35,22 @@ func (a *TApp) Translate(orderLang []string, inputText string) (string, error) {
 
 		langTo = nameLang
 
-		// from -> to へ翻訳
-		transText, _, err = a.Engine.Translate(transText, langFrom, langTo)
-		if err != nil {
-			return "", err
+		obj := NewTranslation(langFrom, langTo, transText)
+
+		if !a.Force["NoTrans"] {
+			// from -> to へ翻訳
+			transText, _, err = a.Engine.Translate(transText, langFrom, langTo)
+			if err != nil {
+				return nil, err
+			}
+
+			utils.LogDebug("Translate 結果:", transText)
 		}
 
-		langFrom = langTo
+		obj.Translated = transText // Set translated text
+		translations[i-1] = obj    // Set tranlated object
+		langFrom = langTo          // Update lang
 	}
 
-	return transText, err
+	return translations, err
 }

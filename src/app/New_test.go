@@ -39,6 +39,36 @@ func TestNew(t *testing.T) {
 	appTest.Engine.Cache.ClearAll()
 }
 
+func TestNew_verbose(t *testing.T) {
+	dummySTDIN := "Hello, world!"
+	dummyArgs := []string{
+		"en",
+		"ja",
+		"es",
+		"--verbose",
+	}
+
+	funcDeferSTDIN := helperfunc.MockSTDIN(t, dummySTDIN)
+	defer funcDeferSTDIN()
+
+	funcDeferArgs := helperfunc.MockArgs(t, dummyArgs)
+	defer funcDeferArgs()
+
+	appTest := app.New("", t.Name())
+
+	out := capturer.CaptureOutput(func() {
+		status := appTest.Run()
+
+		assert.Equal(t, status, utils.SUCCESS, "it should end with status zero (SUCCESS)")
+	})
+
+	assert.Contains(t, out, "EN -> JA")
+	assert.Contains(t, out, "¡Hola, mundo!")
+
+	// Clean Up
+	appTest.Engine.Cache.ClearAll()
+}
+
 func TestNew_clear_cache(t *testing.T) {
 	dummySTDIN := "Hello, world!"
 	dummyArgs := []string{

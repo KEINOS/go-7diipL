@@ -14,6 +14,7 @@ func New(versionApp string, cacheID ...string) *TApp {
 	appTmp.cacheID = cacheID
 	appTmp.Name = NameDefault
 	appTmp.Prefix = PrefixDefault
+	appTmp.Prompt = PromptDefault
 	appTmp.StopWord = StopWordDefault
 	appTmp.Version = versionApp
 

@@ -17,7 +17,7 @@ import "github.com/Qithub-BOT/QiiTrans/src/utils"
 - [func GetNameExe() string](<#func-getnameexe>)
 - [func GetSTDIN() (stdin string, err error)](<#func-getstdin>)
 - [func Hash(algo string, value string) (string, []byte, error)](<#func-hash>)
-- [func InteractSTDIN(funcUser func(string) error, stopWord string) (err error)](<#func-interactstdin>)
+- [func InteractSTDIN(funcUser func(string) error, stopWord string, prompt string) (err error)](<#func-interactstdin>)
 - [func IsDir(pathFile string) bool](<#func-isdir>)
 - [func IsEnglish(input string) bool](<#func-isenglish>)
 - [func IsFile(pathFile string) bool](<#func-isfile>)
@@ -27,6 +27,7 @@ import "github.com/Qithub-BOT/QiiTrans/src/utils"
 - [func LogDebug(log string, a ...interface{})](<#func-logdebug>)
 - [func PanicOnErr(err error)](<#func-paniconerr>)
 - [func PathExists(pathFile string) bool](<#func-pathexists>)
+- [func PrintMsgWait(msg string) (setoff func())](<#func-printmsgwait>)
 - [func SetModeDebug(flag bool)](<#func-setmodedebug>)
 - [func SliceSentences(inputText string) []string](<#func-slicesentences>)
 - [func SliceToSentenceChore(inputText string) []string](<#func-slicetosentencechore>)
@@ -160,7 +161,7 @@ blake3_512 (experimental, 64 byte, 64 char length)
 ## func [InteractSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/InteractSTDIN.go#L15>)
 
 ```go
-func InteractSTDIN(funcUser func(string) error, stopWord string) (err error)
+func InteractSTDIN(funcUser func(string) error, stopWord string, prompt string) (err error)
 ```
 
 InteractSTDIN は対話モードで標準入力を処理します\.
@@ -252,6 +253,17 @@ func PathExists(pathFile string) bool
 ```
 
 PathExists はパスが存在する場合に true を返します\.
+
+## func [PrintMsgWait](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/PrintMsgWait.go#L12>)
+
+```go
+func PrintMsgWait(msg string) (setoff func())
+```
+
+### PrintMsgWait は msg を改行なしで標準出力に出力するだけですが、そのメッセージ
+を打ち消すための関数を返します。
+
+打ち消し関数を呼び出す前に別の標準出力があった場合は正常に打ち消されません。
 
 ## func [SetModeDebug](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/SetModeDebug.go#L8>)
 

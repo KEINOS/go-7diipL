@@ -1,6 +1,11 @@
 package app
 
-import "github.com/Qithub-BOT/QiiTrans/src/utils"
+import (
+	"fmt"
+
+	"github.com/Qithub-BOT/QiiTrans/src/utils"
+	"github.com/gookit/color"
+)
 
 // SingleShotTranslation は標準入力から受け取ったテキストを翻訳する、単発翻訳用
 // のメソッドです。
@@ -12,5 +17,38 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error) {
 	}
 
 	// 翻訳の実行
-	return a.Translate(orderLang, input)
+	listTranslated, err := a.Translate(orderLang, input)
+	if err != nil {
+		return "", err
+	}
+
+	lenTranslated := len(listTranslated)
+	result := ""
+
+	// Regular output
+	if !a.Argv.IsVerbose {
+		prefix := color.Blue.Sprintf(a.Prefix)
+		translated := listTranslated[lenTranslated-1]
+
+		result = fmt.Sprint(prefix, " ", translated.Translated)
+
+		return result, nil
+	}
+
+	// Verbose output
+	for i := 0; i < lenTranslated; i++ {
+		translated := listTranslated[i]
+		prefix := a.Prefix
+
+		// Print EN -> JA type prefix
+		if i != lenTranslated-1 {
+			prefix = fmt.Sprintf("%s -> %s:", translated.LangFrom, translated.LangTo)
+		}
+
+		prefix = color.Blue.Sprintf(prefix)
+
+		result += fmt.Sprint(prefix, " ", translated.Translated)
+	}
+
+	return result, nil
 }
