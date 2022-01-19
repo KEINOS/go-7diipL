@@ -28,11 +28,13 @@ QiiTrans の本体でもありますが、main ではアプリのインスタン
   - [func (a *TApp) SetArgValue(ctx *cli.Context) error](<#func-tapp-setargvalue>)
   - [func (a *TApp) SetEngine(nameEngine string) (err error)](<#func-tapp-setengine>)
   - [func (a *TApp) SingleShotTranslation(orderLang []string) (string, error)](<#func-tapp-singleshottranslation>)
-  - [func (a *TApp) Translate(orderLang []string, inputText string) (string, error)](<#func-tapp-translate>)
+  - [func (a *TApp) Translate(orderLang []string, inputText string) ([]TTranslation, error)](<#func-tapp-translate>)
 - [type TFlagOptions](<#type-tflagoptions>)
   - [func (argv *TFlagOptions) AutoHelp() bool](<#func-tflagoptions-autohelp>)
   - [func (argv *TFlagOptions) SetHelpMsg()](<#func-tflagoptions-sethelpmsg>)
   - [func (argv *TFlagOptions) Validate(ctx *cli.Context) error](<#func-tflagoptions-validate>)
+- [type TTranslation](<#type-ttranslation>)
+  - [func NewTranslation(langFrom, langTo, originalInput string) TTranslation](<#func-newtranslation>)
 
 
 ## Constants
@@ -47,6 +49,9 @@ const (
 
     // PrefixDefault は対話モードで翻訳済みメッセージに付ける接頭辞です.
     PrefixDefault = "再翻訳:"
+
+    // PromptDefault は対話モードで入力の待受時に表示されるプロンプトです.
+    PromptDefault = ">>> "
 
     // StopWordDefault は対話モードで、終了扱いにするワードです.
     StopWordDefault = "q"
@@ -135,7 +140,7 @@ func GetMsgHelpUsage(nameApp string, nameCmd string) string
 
 GetMsgHelpUsage はヘルプ（使い方）のテンプレートの定数 templateUsage から、name\_app と name\_cmd を置換した結果を返します\.
 
-## type [TApp](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.go#L6-L15>)
+## type [TApp](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.go#L6-L16>)
 
 TApp はアプリの構造体です\.
 
@@ -146,6 +151,7 @@ type TApp struct {
     Force    map[string]bool
     Name     string
     Prefix   string // 対話モード時に翻訳結果の前につける接頭辞
+    Prompt   string // 対話モード時の待受プロンプト文字（デフォルト: >>>）
     StopWord string // 対話モード時に終了を伝える単語（デフォルト: q）
     Version  string
     cacheID  []string
@@ -246,7 +252,7 @@ func (a *TApp) SetEngine(nameEngine string) (err error)
 
 SetEngine メソッドは Engine フィールドに翻訳エンジンの新規インスタンスのポインタをセットします\.
 
-### func \(\*TApp\) [SingleShotTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SingleShotTranslation.go#L7>)
+### func \(\*TApp\) [SingleShotTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SingleShotTranslation.go#L12>)
 
 ```go
 func (a *TApp) SingleShotTranslation(orderLang []string) (string, error)
@@ -254,15 +260,15 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error)
 
 SingleShotTranslation は標準入力から受け取ったテキストを翻訳する、単発翻訳用 のメソッドです。
 
-### func \(\*TApp\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.Translate.go#L10>)
+### func \(\*TApp\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.Translate.go#L11>)
 
 ```go
-func (a *TApp) Translate(orderLang []string, inputText string) (string, error)
+func (a *TApp) Translate(orderLang []string, inputText string) ([]TTranslation, error)
 ```
 
 Translate は、orderLang の順に inputText を翻訳した結果を返します\.
 
-## type [TFlagOptions](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TFlagOptions.go#L5-L18>)
+## type [TFlagOptions](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TFlagOptions.go#L5-L19>)
 
 TFlagOptions はアプリ（コマンド）のフラグやオプションの設定やその設定値およびヘルプの表示内容を定義した構造体です\. アプリの bool オプション（フラグ）や string オプションなどは、ここで定義します\.
 
@@ -277,6 +283,7 @@ type TFlagOptions struct {
     IsModeDebug    bool   `cli:"debug" usage:"デバッグ情報を標準エラー出力に出力します"`
     IsNoCache      bool   `cli:"no-cache" usage:"キャッシュを利用せずに翻訳 API から再取得します。（API の利用枠を消費します）"`
     IsPiped        bool   `cli:"-"` // パイプ渡しで値を受け取っているか
+    IsVerbose      bool   `cli:"verbose" usage:"中間翻訳も出力します。"`
     ShowInfo       bool   `cli:"info" usage:"API のリクエスト可能な残数など、API 情報を出力します"`
     ShowInfoOnly   bool   `cli:"-"` // 他の引数がない場合は true になり API 情報のみの出力になります
     Version        bool   `cli:"v,version" usage:"アプリのバージョン情報を表示します"`
@@ -310,6 +317,27 @@ func (argv *TFlagOptions) Validate(ctx *cli.Context) error
 Validate メソッドは、cli\.Validator インターフェースの実装です\.
 
 コマンドのフラグ、オプションや引数のバリデーションを行います。 cli\.Run\(\) で指定された関数が実行される前に呼び出されます\.
+
+## type [TTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TTranslation.go#L4-L9>)
+
+TTranslation は翻訳結果を保持するオブジェクトを定義します。
+
+```go
+type TTranslation struct {
+    LangFrom   string
+    LangTo     string
+    Original   string
+    Translated string
+}
+```
+
+### func [NewTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TTranslation.NewTranslation.go#L4>)
+
+```go
+func NewTranslation(langFrom, langTo, originalInput string) TTranslation
+```
+
+NewTranslation returns an initialized TTranslation object\.
 
 ------
 
