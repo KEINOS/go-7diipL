@@ -44,11 +44,11 @@ DEEPL_API_KEY=12345678-ffff-ffff-ffff-123456789abc:fx
 ```shellsession
 $ # 日本語 → English に翻訳
 $ echo 'おはよう。今日はいい天気ですね。' | qiitrans ja en
-Good morning. It's a beautiful day.
+再翻訳: Good morning. It's a beautiful day.
 
 $ # English → 日本語に翻訳
 $ echo 'Good morning. It\'s a beautiful day.' | qiitrans en ja
-おはようございます。今日はとてもいい天気ですね。
+再翻訳: おはようございます。今日はとてもいい天気ですね。
 ```
 
 しかし、使い方を工夫すれば、機械翻訳で読まれても理解しやすい文章を作ることができます。
@@ -65,14 +65,14 @@ $ echo 'The document is difficult to read.' | qiitrans en es ja zh en
 ```shellsession
 $ # 日本語 → English → 日本語
 $ echo '私は、賛成の反対に同意なのだ。' | qiitrans ja en ja
-同意しないことに同意します。
+再翻訳: 同意しないことに同意します。
 
 $ # 日本語 → Español → English → Español → 中文 → 日本語
 $ echo '同意しないことに同意します。' | qiitrans ja es en es zh ja
-同意しないことに同意します。
+再翻訳: 同意しないことに同意します。
 
 $ echo '同意しないことに同意します。' | qiitrans ja en
-I agree to disagree.
+再翻訳: I agree to disagree.
 ```
 
 ### REPL（対話モード）
