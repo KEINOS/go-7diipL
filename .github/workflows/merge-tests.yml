@@ -12,6 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Update os packages
+        run: |
+          DEBIAN_FRONTEND=noninteractive
+          sudo apt-get update
+          sudo apt-get -y upgrade
+
       - name: Checkout repo
         uses: actions/checkout@v2
 

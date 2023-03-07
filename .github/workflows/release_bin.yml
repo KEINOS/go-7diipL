@@ -17,6 +17,11 @@ jobs:
   goreleaser:
     runs-on: ubuntu-latest
     steps:
+      - name: Update os packages
+        run: |
+          DEBIAN_FRONTEND=noninteractive
+          sudo apt-get update
+          sudo apt-get -y upgrade
       - name: Checkout
         uses: actions/checkout@v2
         with:
