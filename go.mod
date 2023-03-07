@@ -8,10 +8,11 @@ require (
 	github.com/abadojack/whatlanggo v1.0.1
 	github.com/dgraph-io/badger/v3 v3.2103.0
 	github.com/dustin/go-humanize v1.0.0
+	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/gookit/color v1.4.2
 	github.com/kami-zh/go-capturer v0.0.0-20171211120116-e492ea43421d
 	github.com/mkideal/cli v0.2.5
-	github.com/neurosnap/sentences v1.0.9
+	github.com/neurosnap/sentences v1.1.2
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/crypto v0.1.0
 	golang.org/x/term v0.1.0
