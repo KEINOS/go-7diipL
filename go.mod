@@ -8,7 +8,7 @@ require (
 	github.com/abadojack/whatlanggo v1.0.1
 	github.com/dgraph-io/badger/v3 v3.2103.0
 	github.com/dustin/go-humanize v1.0.1
-	github.com/gookit/color v1.4.2
+	github.com/gookit/color v1.5.3
 	github.com/kami-zh/go-capturer v0.0.0-20171211120116-e492ea43421d
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/mkideal/cli v0.2.7
