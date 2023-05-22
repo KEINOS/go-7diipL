@@ -13,7 +13,7 @@ require (
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/mkideal/cli v0.2.7
 	github.com/neurosnap/sentences v1.0.9
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.3
 	golang.org/x/crypto v0.9.0
 	golang.org/x/term v0.8.0
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1
