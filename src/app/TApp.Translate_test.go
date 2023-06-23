@@ -29,11 +29,12 @@ func TestTranslate(t *testing.T) {
 
 	// 通常テスト
 	{
-		// タイミングによって異なるため複数パターンをチェック
+		// タイミングによって結果が異なるため複数パターンをチェック
 		expect := []string{
 			"今日はとてもいい天気です。",
 			"今日はとてもいい天気だ。",
 			"今日はとてもいい天気ですね。",
+			"今日はとてもいい日だ。",
 		}
 
 		listTranslated, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")
@@ -53,11 +54,12 @@ func TestTranslate(t *testing.T) {
 		}()
 
 		out := capturer.CaptureOutput(func() {
-			// タイミングによって異なるため複数パターンをチェック
+			// タイミングによって結果が異なるため複数パターンをチェック
 			expect := []string{
 				"今日はとてもいい天気です。",
 				"今日はとてもいい天気だ。",
 				"今日はとてもいい天気ですね。",
+				"今日はとてもいい日だ。",
 			}
 
 			listTranslated, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")

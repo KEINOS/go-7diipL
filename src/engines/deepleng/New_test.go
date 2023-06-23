@@ -19,10 +19,14 @@ func TestNew(t *testing.T) {
 
 	outputText, isCache, err := ngin.Translate(inputText, "JA", "EN")
 
-	expect := "Good morning. It's a very nice day today."
+	expectList := []string{
+		"Good morning. It's a very nice day today.",
+		"Good morning. It is a very nice day today.",
+	}
+
 	actual := outputText
 
 	assert.Nil(t, err)
 	assert.False(t, isCache, "when Update property is true then isCache flag should return false")
-	assert.Equal(t, expect, actual)
+	assert.Contains(t, expectList, actual)
 }
