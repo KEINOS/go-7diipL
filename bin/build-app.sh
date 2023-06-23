@@ -87,65 +87,9 @@ archiveDirToZip() {
     return $SUCCESS
 }
 
-buildBinary() {
-    GOOS="${1:-"$GOOS_DEFAULT"}"
-    GOARCH="${2:-"$GOARCH_DEFAULT"}"
-    GOARM="${3:-"$GOARM_DEFAULT"}"
-    GOARM_SUFFIX="${GOARM:+"-${GOARM}"}" # apply suffix only when GOARM is set
-
-    if [ "$GOARCH" = "x86_64" ]; then
-        GOARCH="amd64"
-    fi
-
-    VER_APP=""
-    if [ "${TAG_APP:+undefined}" ]; then
-        VER_APP="${TAG_APP} (${REV_APP})"
-    fi
-
-    NAME_DIR_BIN="${NAME_FILE_BIN}-${GOOS}-${GOARCH}${GOARM_SUFFIX}"
-    PATH_DIR_OUT="${PATH_DIR_BIN}/${NAME_DIR_BIN}"
-    PATH_FILE_BIN="${PATH_DIR_OUT}/${NAME_FILE_BIN}"
-
-    if [ -e "${PATH_DIR_OUT}" ]; then
-        rm -rf "${PATH_DIR_OUT:?"Output dir not set"}"
-    fi
-
-    # Make output dir
-    mkdir -p "$PATH_DIR_OUT"
-
-    # Build as static linked binary
-    echo "- Building static linked binary to ... ${PATH_FILE_BIN}"
-    echo "  Arch: ${GOOS} ${GOARCH}${GOARM}"
-
-    if CGO_ENABLED=0 \
-        GOOS="$GOOS" \
-        GOARCH="$GOARCH" \
-        GOARM="$GOARM" \
-        go build \
-        -installsuffix "$NAME_FILE_BIN" \
-        -ldflags="-s -w -extldflags \"-static\" -X 'main.version=${VER_APP}'" \
-        -o="$PATH_FILE_BIN" \
-        "$PATH_DIR_PKG_MAIN"; then
-
-        echo '  Build ... OK'
-
-        archiveDirToZip "$PATH_FILE_BIN" || {
-            echo >&2 'Failed to archive the built binary.'
-
-            return $FAILURE
-        }
-
-        return $SUCCESS
-    fi
-    echo >&2 'Failed to build binary.'
-
-    echo
-    echoHelp
-
-    return $FAILURE
-}
-
 echoHelp() {
+    status="${1:-"$SUCCESS"}"
+
     cat <<'HEREDOC'
 About:
   This script builds the application binary and ZIP archives it under ./bin directory.
@@ -214,7 +158,63 @@ Sample Usage:
 
 HEREDOC
 
-    exit $SUCCESS
+    exit "$status"
+}
+
+buildBinary() {
+    GOOS="${1:-"$GOOS_DEFAULT"}"
+    GOARCH="${2:-"$GOARCH_DEFAULT"}"
+    GOARM="${3:-"$GOARM_DEFAULT"}"
+    GOARM_SUFFIX="${GOARM:+"-${GOARM}"}" # apply suffix only when GOARM is set
+
+    if [ "$GOARCH" = "x86_64" ]; then
+        GOARCH="amd64"
+    fi
+
+    VER_APP=""
+    if [ "${TAG_APP:+undefined}" ]; then
+        VER_APP="${TAG_APP} (${REV_APP})"
+    fi
+
+    NAME_DIR_BIN="${NAME_FILE_BIN}-${GOOS}-${GOARCH}${GOARM_SUFFIX}"
+    PATH_DIR_OUT="${PATH_DIR_BIN}/${NAME_DIR_BIN}"
+    PATH_FILE_BIN="${PATH_DIR_OUT}/${NAME_FILE_BIN}"
+
+    if [ -e "${PATH_DIR_OUT}" ]; then
+        rm -rf "${PATH_DIR_OUT:?"Output dir not set"}"
+    fi
+
+    # Make output dir
+    mkdir -p "$PATH_DIR_OUT"
+
+    # Build as static linked binary
+    echo "- Building static linked binary to ... ${PATH_FILE_BIN}"
+    echo "  Arch: ${GOOS} ${GOARCH}${GOARM}"
+
+    CGO_ENABLED=0 \
+        GOOS="$GOOS" \
+        GOARCH="$GOARCH" \
+        GOARM="$GOARM" \
+        go build \
+        -installsuffix "$NAME_FILE_BIN" \
+        -ldflags="-s -w -extldflags \"-static\" -X 'main.version=${VER_APP}'" \
+        -o="$PATH_FILE_BIN" \
+        "$PATH_DIR_PKG_MAIN"] && {
+            echo '  Build ... OK'
+
+            archiveDirToZip "$PATH_FILE_BIN" || {
+                echo >&2 'Failed to archive the built binary.'
+
+                return $FAILURE
+        }
+
+        return $SUCCESS
+    }
+
+    echo >&2 'Failed to build binary.'
+
+    echo
+    echoHelp $FAILURE
 }
 
 isInsideDocker() {
