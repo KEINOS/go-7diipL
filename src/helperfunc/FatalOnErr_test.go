@@ -1,11 +1,11 @@
 package helperfunc_test
 
 import (
-	"errors"
 	"testing"
 
 	"github.com/Qithub-BOT/QiiTrans/src/helperfunc"
 	"github.com/kami-zh/go-capturer"
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 )
 

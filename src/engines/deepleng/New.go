@@ -3,6 +3,7 @@ package deepleng
 import "github.com/Qithub-BOT/QiiTrans/src/engines/engine"
 
 // NameVarEnvAPIKey は環境変数の変数名で、DeepL の認証キー（アクセストークン）用の変数名です.
+//
 //nolint:gosec // It is not a hardcoded credentials
 const NameVarEnvAPIKey = "DEEPL_API_KEY"
 

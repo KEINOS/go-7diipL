@@ -1,10 +1,10 @@
 package utils_test
 
 import (
-	"errors"
 	"testing"
 
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 )
 

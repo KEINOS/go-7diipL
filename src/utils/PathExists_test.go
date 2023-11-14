@@ -56,7 +56,6 @@ func genDummyDirAndFile(t *testing.T, pathDirTemp string) {
 	}
 }
 
-//nolint: dupl // The expected values differ from other tests
 func TestPathExists(t *testing.T) {
 	pathDirTest := t.TempDir()
 

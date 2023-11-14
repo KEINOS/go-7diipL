@@ -8,7 +8,7 @@ import (
 
 // IsTerminalDummy はテスト時に標準入力からの受け取りをモックするために使われる値です.
 // 値を true に設定すると IsTerminal() は強制的に true を返します。false に設定した場合は、自動検知が働きます.
-var IsTerminalDummy bool = false
+var IsTerminalDummy = false
 
 // IsTerminal はアプリがターミナル（コマンドライン）で実行されているか返します.
 //

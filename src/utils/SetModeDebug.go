@@ -1,6 +1,6 @@
 package utils
 
-var isModeDebug bool = false
+var isModeDebug = false
 
 // SetModeDebug はデバッグ・モードのオン・オフを行います.
 //

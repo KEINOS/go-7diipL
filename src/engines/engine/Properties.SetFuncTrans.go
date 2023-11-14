@@ -6,6 +6,7 @@ func (p *Properties) SetFuncTrans(transFunc func(
 	inputText string,
 	langFrom string,
 	langTo string,
-) (string, error)) {
+) (string, error),
+) {
 	p.translate = transFunc
 }

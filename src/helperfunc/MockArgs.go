@@ -8,10 +8,10 @@ import (
 // MockArgs は、テストでユーザのコマンド引数（オプションやフラグ含む入力）をモックするヘルパー関数です.
 // この関数は、モックの変更をリカバリーする defer 用の関数を返します.
 //
-//   dummyArgs := []string{"--debug", "ja", "en"}
-//   funcDefer := helperfunc.MockArgd(t, dummyArgs)
-//   defer funcDefer()
-//   /* DO SOMETHING WITH ARGS HERE */
+//	dummyArgs := []string{"--debug", "ja", "en"}
+//	funcDefer := helperfunc.MockArgd(t, dummyArgs)
+//	defer funcDefer()
+//	/* DO SOMETHING WITH ARGS HERE */
 func MockArgs(t *testing.T, argsDummy []string) func() {
 	t.Helper()
 

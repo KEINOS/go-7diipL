@@ -1,4 +1,3 @@
-//nolint: dupl // The expected values differ from other tests
 package utils_test
 
 import (

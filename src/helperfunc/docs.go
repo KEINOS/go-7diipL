@@ -17,39 +17,30 @@ Package helperfunc はテストをしやすくするためのヘルパー関数�
 
 より具体的な例
 
-	// 以下のテストは `echo "Hello, world." | qiitrans --debug ja en` と同等の状態.
-	func TestMockSTDIN(t *testing.T) {
-		dummySTDIN := "Hello, world."
-        dummyArgs := []string{"--debug", "ja", "en"}
+		// 以下のテストは `echo "Hello, world." | qiitrans --debug ja en` と同等の状態.
+		func TestMockSTDIN(t *testing.T) {
+			dummySTDIN := "Hello, world."
+	        dummyArgs := []string{"--debug", "ja", "en"}
 
-		// 標準入力のモックとリカバリ準備
-		funcDeferSTDIN := helperfunc.MockSTDIN(t, dummySTDIN)
-		defer funcDeferSTDIN() // モックのリカバリ
+			// 標準入力のモックとリカバリ準備
+			funcDeferSTDIN := helperfunc.MockSTDIN(t, dummySTDIN)
+			defer funcDeferSTDIN() // モックのリカバリ
 
-		// フラグ・オプションのモックとリカバリ準備
-		funcDeferArgs := helperfunc.MockArgs(t, dummyArgs)
-		defer funcDeferArgs() // モックのリカバリ
+			// フラグ・オプションのモックとリカバリ準備
+			funcDeferArgs := helperfunc.MockArgs(t, dummyArgs)
+			defer funcDeferArgs() // モックのリカバリ
 
-		// 標準入力のテスト
-		{
-			value, err := io.ReadAll(os.Stdin)
-			if err != nil {
-				t.Fatalf("failed to read stdin during test")
+			// 標準入力のテスト
+			{
+				value, err := io.ReadAll(os.Stdin)
+				if err != nil {
+					t.Fatalf("failed to read stdin during test")
+				}
+
+				expect := userInput
+				actual := string(value)
+
+				assert.Equal(t, expect, actual)
 			}
-
-			expect := userInput
-			actual := string(value)
-
-			assert.Equal(t, expect, actual)
-		}
-
-		// 引数のテスト
-		{
-			expect := dummyArgs
-			actual := os.Args[1:] // Args[0] は実行ファイルのパスなので、それ以降を取得
-
-			assert.Equal(t, expect, actual)
-		}
-	}
 */
 package helperfunc

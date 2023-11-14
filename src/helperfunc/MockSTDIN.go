@@ -8,11 +8,11 @@ import (
 // MockSTDIN は、テストでユーザからの標準入力をモックするヘルパー関数です.
 // この関数は、モックの変更をリカバリーする defer 用の関数を返します.
 //
-//   // 以下は echo "foo bar" | qiitrans と同等の状態
-//   dummySTDIN := "foo bar"
-//   funcDefer := helperfunc.MockSTDIN(t, dummySTDIN)
-//   defer funcDefer()
-//   /* DO SOMETHING WITH STDIN HERE */
+//	// 以下は echo "foo bar" | qiitrans と同等の状態
+//	dummySTDIN := "foo bar"
+//	funcDefer := helperfunc.MockSTDIN(t, dummySTDIN)
+//	defer funcDefer()
+//	/* DO SOMETHING WITH STDIN HERE */
 func MockSTDIN(t *testing.T, inputDummy string) func() {
 	t.Helper()
 

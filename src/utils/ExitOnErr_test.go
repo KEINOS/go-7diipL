@@ -1,22 +1,22 @@
 package utils_test
 
 import (
-	"errors"
 	"testing"
 
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
 	"github.com/kami-zh/go-capturer"
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestExitOnErr(t *testing.T) {
 	oldOsExit := utils.OsExit
-
 	defer func() {
 		utils.OsExit = oldOsExit
 	}()
 
-	msg := "foobar"
+	const msg = "foobar"
+
 	err := errors.New(msg)
 
 	var received int

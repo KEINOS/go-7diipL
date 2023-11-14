@@ -9,7 +9,7 @@ import (
 )
 
 func TestGetSTDIN(t *testing.T) {
-	expect := "foobar"
+	const expect = "foobar"
 
 	utils.ValSTDINDummy = expect
 

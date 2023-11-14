@@ -5,7 +5,6 @@ Package issues は Issue Fix のテスト専用パッケージです
 
 ファイル・フォーマット
 
-  `issueNNN_test.go`: `NNN` は 3 桁の Issue #
-
+	`issueNNN_test.go`: `NNN` は 3 桁の Issue #
 */
 package issues

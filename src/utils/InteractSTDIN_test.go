@@ -1,20 +1,22 @@
 package utils_test
 
 import (
-	"errors"
 	"fmt"
 	"testing"
 
 	"github.com/Qithub-BOT/QiiTrans/src/helperfunc"
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
 	"github.com/kami-zh/go-capturer"
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func TestInteractSTDIN_not_terminal(t *testing.T) {
-	stopWord := "stop"
-	prompt := ">>>"
+	const (
+		stopWord = "stop"
+		prompt   = ">>>"
+	)
 
 	// utils.InteractSTDIN 内で利用するユーザ関数
 	funcUser := func(input string) error {
@@ -26,11 +28,15 @@ func TestInteractSTDIN_not_terminal(t *testing.T) {
 }
 
 func TestInteractSTDIN(t *testing.T) {
-	stopWord := "stop"
-	prompt := ">>>"
+	const (
+		stopWord = "stop"
+		prompt   = ">>>"
+	)
+
 	userInput := "foo bar\nhoge fuga\n" + stopWord + "\n"
 
 	// utils.InteractSTDIN 内で利用するユーザ関数
+	//nolint:forbidigo // disable due to the nature of this function
 	funcUser := func(input string) error {
 		fmt.Println("out:" + input)
 
@@ -56,12 +62,16 @@ func TestInteractSTDIN(t *testing.T) {
 }
 
 func TestInteractSTDIN_user_func_error(t *testing.T) {
-	stopWord := "stop"
-	prompt := ">>>"
+	const (
+		stopWord = "stop"
+		prompt   = ">>>"
+	)
+
 	expectError := "dummy error"
 	userInput := "foo bar\nhoge fuga\n" + stopWord + "\n"
 
 	// utils.InteractSTDIN 内で利用するユーザ関数
+	//nolint:forbidigo // disable due to the nature of this function
 	funcUser := func(input string) error {
 		if input == "hoge fuga" {
 			return errors.New(expectError)

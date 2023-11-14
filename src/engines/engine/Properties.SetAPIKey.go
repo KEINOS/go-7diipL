@@ -13,9 +13,9 @@ import (
 // このメソッドは呼び出し元の defer 用に関数を返します。各々の翻訳エンジンが参照する環境変数に apiKey の値をセットするため、
 // 既存の値があった場合は処理後 defer で元に戻せるようにするための関数です.
 //
-//   myEngine := deepleng.New("myCacheID")
-//   myAPIKey := "foobar"
-//   defer myEngine.SetAPIKey(myAPIKey)
+//	myEngine := deepleng.New("myCacheID")
+//	myAPIKey := "foobar"
+//	defer myEngine.SetAPIKey(myAPIKey)
 func (p *Properties) SetAPIKey(apiKey string) func() {
 	if p.NameVarEnvAPIKey == "" {
 		msg := "翻訳エンジンが参照する API キー/アクセス・トークンの環境変数名が指定されていません"

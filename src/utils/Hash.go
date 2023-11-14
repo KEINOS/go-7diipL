@@ -16,15 +16,15 @@ import (
 //
 // Supported hash
 //
-//   fnv1_32    (checksum usage, 4 byte, 8 char length)
-//   fnv1_64    (checksum usage, 8 byte, 16 char length)
-//   md5        (checksum usage, 16 byte, 32 char length)
-//   sha2_256   (casual usage, 32 byte, 64 char length)
-//   blake3_256 (experimental, 32 byte, 64 char length)
-//   sha3_256   (recommended, 32 byte, 64 char length)
-//   sha2_512   (recommended, 64 byte, 128 char length)
-//   sha3_512   (recommended, 64 byte, 128 char length)
-//   blake3_512 (experimental, 64 byte, 64 char length)
+//	fnv1_32    (checksum usage, 4 byte, 8 char length)
+//	fnv1_64    (checksum usage, 8 byte, 16 char length)
+//	md5        (checksum usage, 16 byte, 32 char length)
+//	sha2_256   (casual usage, 32 byte, 64 char length)
+//	blake3_256 (experimental, 32 byte, 64 char length)
+//	sha3_256   (recommended, 32 byte, 64 char length)
+//	sha2_512   (recommended, 64 byte, 128 char length)
+//	sha3_512   (recommended, 64 byte, 128 char length)
+//	blake3_512 (experimental, 64 byte, 64 char length)
 func Hash(algo string, value string) (string, []byte, error) {
 	switch algo {
 	case "blake3_256":

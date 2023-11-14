@@ -26,20 +26,20 @@ func SliceToSentenceChore(inputText string) []string {
 	)
 
 	// 英語以外の場合は、句点もしくは ". " or ".\n" を検知した場合に 1 文の区切りとしてスライス化
-	for _, c := range inputText {
+	for _, char := range inputText {
 		switch {
-		case (string(c) == "。"):
+		case (string(char) == "。"):
 			isEOS = true
-		case (unicode.IsSpace(c) && wasDotPrev):
+		case (unicode.IsSpace(char) && wasDotPrev):
 			isEOS = true
-		case (string(c) == "."):
+		case (string(char) == "."):
 			wasDotPrev = true
 		default:
 			wasDotPrev = false
 		}
 
 		if isEOS {
-			buff = append(buff, c)
+			buff = append(buff, char)
 			result = append(result, strings.TrimSpace(string(buff)))
 
 			// Reset
@@ -50,7 +50,7 @@ func SliceToSentenceChore(inputText string) []string {
 			continue
 		}
 
-		buff = append(buff, c)
+		buff = append(buff, char)
 	}
 
 	// バッファの残りを追加
