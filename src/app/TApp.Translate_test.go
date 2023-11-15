@@ -10,11 +10,12 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:funlen // allow long function due to test
 func TestTranslate(t *testing.T) {
 	appTest := app.New("", t.Name())
 
 	err := appTest.SetEngine("deepl")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	defer func() {
 		appTest.Engine.Cache.ClearAll()

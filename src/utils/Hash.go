@@ -4,7 +4,7 @@ import (
 	"crypto/md5" //nolint:gosec // not for cryptographic usage
 	"crypto/sha256"
 	"crypto/sha512"
-	"fmt"
+	"encoding/hex"
 	"hash/fnv"
 
 	"golang.org/x/crypto/sha3"
@@ -30,44 +30,44 @@ func Hash(algo string, value string) (string, []byte, error) {
 	case "blake3_256":
 		valByte := blake3.Sum256([]byte(value))
 
-		return fmt.Sprintf("%x", valByte), valByte[:], nil
+		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	case "blake3_512":
 		valByte := blake3.Sum512([]byte(value))
 
-		return fmt.Sprintf("%x", valByte), valByte[:], nil
+		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	case "fnv1_32":
 		h := fnv.New32()
 		_, err := h.Write([]byte(value))
 		valByte := h.Sum(nil)
 
-		return fmt.Sprintf("%x", valByte), valByte, err
+		return hex.EncodeToString(valByte), valByte, err
 	case "fnv1_64":
 		h := fnv.New64()
 		_, err := h.Write([]byte(value))
 		valByte := h.Sum(nil)
 
-		return fmt.Sprintf("%x", valByte), valByte, err
+		return hex.EncodeToString(valByte), valByte, err
 	case "md5":
 		//nolint:gosec // not used for cryptographical purpose
 		valByte := md5.Sum([]byte(value))
 
-		return fmt.Sprintf("%x", valByte), valByte[:], nil
+		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	case "sha2_256":
 		valByte := sha256.Sum256([]byte(value))
 
-		return fmt.Sprintf("%x", valByte), valByte[:], nil
+		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	case "sha2_512":
 		valByte := sha512.Sum512([]byte(value))
 
-		return fmt.Sprintf("%x", valByte), valByte[:], nil
+		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	case "sha3_256":
 		valByte := sha3.Sum256([]byte(value))
 
-		return fmt.Sprintf("%x", valByte), valByte[:], nil
+		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	case "sha3_512":
 		valByte := sha3.Sum512([]byte(value))
 
-		return fmt.Sprintf("%x", valByte), valByte[:], nil
+		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	}
 
 	return "", nil, xerrors.New("Unsupported algorithm: " + algo)

@@ -1,8 +1,13 @@
 package app
 
-// SetEngine メソッドは Engine フィールドに翻訳エンジンの新規インスタンスのポインタをセットします.
-func (a *TApp) SetEngine(nameEngine string) (err error) {
-	a.Engine, err = a.NewEngine(nameEngine, a.cacheID...)
+import "github.com/pkg/errors"
 
-	return err
+// SetEngine メソッドは Engine フィールドに翻訳エンジンの新規インスタンスのポインタをセットします.
+func (a *TApp) SetEngine(nameEngine string) error {
+	ngin, err := a.NewEngine(nameEngine, a.cacheID...)
+	if err == nil {
+		a.Engine = ngin
+	}
+
+	return errors.Wrap(err, "failed to set translation engine")
 }

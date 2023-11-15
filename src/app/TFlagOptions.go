@@ -2,6 +2,8 @@ package app
 
 // TFlagOptions はアプリ（コマンド）のフラグやオプションの設定やその設定値およびヘルプの表示内容を定義した構造体です.
 // アプリの bool オプション（フラグ）や string オプションなどは、ここで定義します.
+//
+//nolint:lll // allow long line due to help message
 type TFlagOptions struct {
 	APIKey         string `cli:"a,apikey"  dft:""                                                                                                                  usage:"翻訳に使うエンジンのアクセス・トークンを指定します"`
 	CacheID        string `cli:"cache-id"  dft:""                                                                                                                  usage:"キャッシュの DB 名。異なる DB にキャッシュを保存したい場合に指定します"`

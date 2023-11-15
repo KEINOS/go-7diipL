@@ -15,7 +15,8 @@ func TestFatalOnErr(t *testing.T) {
 		helperfunc.IsErrorDummy = false
 	}()
 
-	msgErr := "foo bar"
+	const msgErr = "foo bar"
+
 	err := errors.New(msgErr)
 
 	out := capturer.CaptureStderr(func() {
@@ -34,7 +35,8 @@ func TestFatalOnErr_additional_comment(t *testing.T) {
 		helperfunc.IsErrorDummy = false
 	}()
 
-	msgErr := "foo bar"
+	const msgErr = "foo bar"
+
 	err := errors.New(msgErr)
 
 	comment1 := "this is an additional comment1"

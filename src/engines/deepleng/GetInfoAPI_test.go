@@ -5,6 +5,7 @@ import (
 
 	"github.com/Qithub-BOT/QiiTrans/src/engines/deepleng"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetInfoAPI(t *testing.T) {
@@ -14,12 +15,14 @@ func TestGetInfoAPI(t *testing.T) {
 
 	quotaLeft, err := ngin.GetQuotaLeft()
 
-	assert.Nil(t, err)
-
+	require.NoError(t, err)
 	t.Logf("Current API quota left: %v characters", quotaLeft)
 
-	assert.NotEqual(t, quotaLeft, 0, "no quota left. seems that API limit exceed or wrong return")
-	assert.Greater(t, quotaLeft, 0, "it should return the char number left")
+	expect := 0
+	actual := quotaLeft
+
+	assert.NotEqual(t, expect, actual, "no quota left. seems that API limit exceed or wrong return")
+	assert.Greater(t, actual, expect, "it should return the char number left")
 }
 
 func TestGetInfoAPI_no_token_set(t *testing.T) {
@@ -31,5 +34,5 @@ func TestGetInfoAPI_no_token_set(t *testing.T) {
 
 	_, err := ngin.GetQuotaLeft()
 
-	assert.Error(t, err, "if required env key not found then it should return an error")
+	require.Error(t, err, "if required env key not found then it should return an error")
 }

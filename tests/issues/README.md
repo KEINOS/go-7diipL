@@ -6,9 +6,9 @@
 import "github.com/Qithub-BOT/QiiTrans/tests/issues"
 ```
 
-### Package issues は Issue Fix のテスト専用パッケージです
+Package issues は Issue Fix のテスト専用パッケージです
 
-このディレクトリには Issue を再現して PASS したテストが置かれています\.
+このディレクトリには Issue を再現して PASS したテストが置かれています.
 
 ファイル・フォーマット
 

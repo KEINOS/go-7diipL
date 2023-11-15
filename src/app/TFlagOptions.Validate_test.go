@@ -51,7 +51,8 @@ func TestValidate_flag_is_info_only(t *testing.T) {
 }
 
 func TestValidate_all_args_missing(t *testing.T) {
-	dummySTDIN := "Hello, world"
+	const dummySTDIN = "Hello, world"
+
 	missingAllArgs := []string{}
 
 	funcDeferSTDIN := helperfunc.MockSTDIN(t, dummySTDIN)
@@ -72,7 +73,8 @@ func TestValidate_all_args_missing(t *testing.T) {
 }
 
 func TestValidate_missing_2nd_arg(t *testing.T) {
-	dummySTDIN := "Hello, world"
+	const dummySTDIN = "Hello, world"
+
 	missingArg := []string{"ja"} // 2 args are required
 
 	funcDeferSTDIN := helperfunc.MockSTDIN(t, dummySTDIN)
@@ -93,7 +95,8 @@ func TestValidate_missing_2nd_arg(t *testing.T) {
 }
 
 func TestValidate_bad_lang_type(t *testing.T) {
-	dummySTDIN := "Hello, world"
+	const dummySTDIN = "Hello, world"
+
 	badLang := "unknownlangtype"
 
 	funcDeferSTDIN := helperfunc.MockSTDIN(t, dummySTDIN)

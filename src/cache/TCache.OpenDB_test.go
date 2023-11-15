@@ -10,12 +10,12 @@ import (
 )
 
 func TestOpenDB(t *testing.T) {
-	c := cache.New(t.Name())
+	tmpCache := cache.New(t.Name())
 
 	utils.SetModeDebug(true) // デバッグ・モード有効
 
 	defer func() {
-		c.ClearAll()              // 終了時にキャッシュを削除
+		tmpCache.ClearAll()       // 終了時にキャッシュを削除
 		utils.SetModeDebug(false) // 終了時にデバッグ・モード無効
 	}()
 
@@ -24,10 +24,10 @@ func TestOpenDB(t *testing.T) {
 
 	out := capturer.CaptureOutput(func() {
 		// Set でキャッシュに登録
-		_ = c.Set(phraseOriginal, phraseTranslated)
+		_ = tmpCache.Set(phraseOriginal, phraseTranslated)
 
 		// Get でキャッシュから取得
-		result, _ := c.Get(phraseOriginal)
+		result, _ := tmpCache.Get(phraseOriginal)
 
 		expect := phraseTranslated
 		actual := result

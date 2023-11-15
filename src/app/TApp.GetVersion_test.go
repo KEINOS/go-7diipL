@@ -48,13 +48,17 @@ func TestGetVersion_via_build_info(t *testing.T) {
 	dummyVersion := "0.0.0-" + t.Name()
 
 	// Mock
+	//
+	//nolint:nonamedreturns // allow named return dur to its readability
 	app.DebugReadBuildInfo = func() (info *debug.BuildInfo, ok bool) {
-		info = &debug.BuildInfo{
-			Path: t.Name(),
-			Main: debug.Module{
-				Path:    "",
-				Version: dummyVersion,
-			},
+		info = new(debug.BuildInfo)
+
+		info.Path = t.Name()
+		info.Main = debug.Module{
+			Path:    "",
+			Version: dummyVersion,
+			Sum:     "",
+			Replace: nil,
 		}
 
 		require.Equal(t, dummyVersion, info.Main.Version)

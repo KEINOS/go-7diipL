@@ -6,38 +6,40 @@
 import "github.com/Qithub-BOT/QiiTrans/src/app"
 ```
 
-Package app は、engines\, cache\, utils などのパッケージを組み合わせてアプリを構成するパッケージです\.
+Package app は、engines, cache, utils などのパッケージを組み合わせてアプリを構成するパッケージです.
 
-QiiTrans の本体でもありますが、main ではアプリのインスタンスの作成と実行だけで済むことで、テストを行いやすいように別のパッケージにしています\.
+QiiTrans の本体でもありますが、main ではアプリのインスタンスの作成と実行だけで済むことで、テストを行いやすいように別のパッケージにしています.
 
 ## Index
 
 - [Constants](<#constants>)
 - [Variables](<#variables>)
-- [func GetMsgHelpUsage(nameApp string, nameCmd string) string](<#func-getmsghelpusage>)
-- [type TApp](<#type-tapp>)
-  - [func New(versionApp string, cacheID ...string) *TApp](<#func-new>)
-  - [func (a *TApp) CliRun(ctx *cli.Context) error](<#func-tapp-clirun>)
-  - [func (a *TApp) GetUniformedInfo() (string, error)](<#func-tapp-getuniformedinfo>)
-  - [func (a *TApp) GetVersion() string](<#func-tapp-getversion>)
-  - [func (a *TApp) InteractiveTranslation(orderLang []string) error](<#func-tapp-interactivetranslation>)
-  - [func (a *TApp) NewEngine(nameEngine string, cacheID ...string) (*engine.Properties, error)](<#func-tapp-newengine>)
-  - [func (a *TApp) PreRun() error](<#func-tapp-prerun>)
-  - [func (a *TApp) PrintInfo(ctx *cli.Context) error](<#func-tapp-printinfo>)
-  - [func (a *TApp) Run() int](<#func-tapp-run>)
-  - [func (a *TApp) SetArgValue(ctx *cli.Context) error](<#func-tapp-setargvalue>)
-  - [func (a *TApp) SetEngine(nameEngine string) (err error)](<#func-tapp-setengine>)
-  - [func (a *TApp) SingleShotTranslation(orderLang []string) (string, error)](<#func-tapp-singleshottranslation>)
-  - [func (a *TApp) Translate(orderLang []string, inputText string) ([]TTranslation, error)](<#func-tapp-translate>)
-- [type TFlagOptions](<#type-tflagoptions>)
-  - [func (argv *TFlagOptions) AutoHelp() bool](<#func-tflagoptions-autohelp>)
-  - [func (argv *TFlagOptions) SetHelpMsg()](<#func-tflagoptions-sethelpmsg>)
-  - [func (argv *TFlagOptions) Validate(ctx *cli.Context) error](<#func-tflagoptions-validate>)
-- [type TTranslation](<#type-ttranslation>)
-  - [func NewTranslation(langFrom, langTo, originalInput string) TTranslation](<#func-newtranslation>)
+- [func GetMsgHelpUsage\(nameApp string, nameCmd string\) string](<#GetMsgHelpUsage>)
+- [type TApp](<#TApp>)
+  - [func New\(versionApp string, cacheID ...string\) \*TApp](<#New>)
+  - [func \(a \*TApp\) CliRun\(ctx \*cli.Context\) error](<#TApp.CliRun>)
+  - [func \(a \*TApp\) GetUniformedInfo\(\) \(string, error\)](<#TApp.GetUniformedInfo>)
+  - [func \(a \*TApp\) GetVersion\(\) string](<#TApp.GetVersion>)
+  - [func \(a \*TApp\) InteractiveTranslation\(orderLang \[\]string\) error](<#TApp.InteractiveTranslation>)
+  - [func \(a \*TApp\) NewEngine\(nameEngine string, cacheID ...string\) \(\*engine.Properties, error\)](<#TApp.NewEngine>)
+  - [func \(a \*TApp\) PreRun\(\) error](<#TApp.PreRun>)
+  - [func \(a \*TApp\) PrintInfo\(ctx \*cli.Context\) error](<#TApp.PrintInfo>)
+  - [func \(a \*TApp\) Run\(\) int](<#TApp.Run>)
+  - [func \(a \*TApp\) SetArgValue\(ctx \*cli.Context\) error](<#TApp.SetArgValue>)
+  - [func \(a \*TApp\) SetEngine\(nameEngine string\) error](<#TApp.SetEngine>)
+  - [func \(a \*TApp\) SingleShotTranslation\(orderLang \[\]string\) \(string, error\)](<#TApp.SingleShotTranslation>)
+  - [func \(a \*TApp\) Translate\(orderLang \[\]string, inputText string\) \(\[\]TTranslation, error\)](<#TApp.Translate>)
+- [type TFlagOptions](<#TFlagOptions>)
+  - [func \(argv \*TFlagOptions\) AutoHelp\(\) bool](<#TFlagOptions.AutoHelp>)
+  - [func \(argv \*TFlagOptions\) SetHelpMsg\(\)](<#TFlagOptions.SetHelpMsg>)
+  - [func \(argv \*TFlagOptions\) Validate\(ctx \*cli.Context\) error](<#TFlagOptions.Validate>)
+- [type TTranslation](<#TTranslation>)
+  - [func NewTranslation\(langFrom, langTo, originalInput string\) TTranslation](<#NewTranslation>)
 
 
 ## Constants
+
+<a name="NameDefault"></a>
 
 ```go
 const (
@@ -112,37 +114,39 @@ LangTo:
 
 ## Variables
 
-DebugReadBuildInfo は debug\.ReadBuildInfo のコピーです。テストで挙動を変えたい 場合にモック用の関数を割り当てるために利用します。
+<a name="DebugReadBuildInfo"></a>DebugReadBuildInfo は debug.ReadBuildInfo のコピーです。テストで挙動を変えたい 場合にモック用の関数を割り当てるために利用します。
 
 ```go
 var DebugReadBuildInfo = debug.ReadBuildInfo
 ```
 
-ForceErrorGetUniformedInfo が true の場合、GetUniformedInfo はエラーを返します\.
+<a name="ForceErrorGetUniformedInfo"></a>ForceErrorGetUniformedInfo が true の場合、GetUniformedInfo はエラーを返します.
 
-テスト時に強制的にエラーを返す必要がある場合のみ利用します\.
+テスト時に強制的にエラーを返す必要がある場合のみ利用します.
 
 ```go
 var ForceErrorGetUniformedInfo = false
 ```
 
-ForceFailRun は Run メソッドを強制的に失敗させる（1 を返す）ためのフラグです\. 主にテスト目的で使われます\.
+<a name="ForceFailRun"></a>ForceFailRun は Run メソッドを強制的に失敗させる（1 を返す）ためのフラグです. 主にテスト目的で使われます.
 
 ```go
-var ForceFailRun bool = false
+var ForceFailRun = false
 ```
 
+<a name="GetMsgHelpUsage"></a>
 ## func [GetMsgHelpUsage](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/GetMsgHelpUsage.go#L8>)
 
 ```go
 func GetMsgHelpUsage(nameApp string, nameCmd string) string
 ```
 
-GetMsgHelpUsage はヘルプ（使い方）のテンプレートの定数 templateUsage から、name\_app と name\_cmd を置換した結果を返します\.
+GetMsgHelpUsage はヘルプ（使い方）のテンプレートの定数 templateUsage から、name\_app と name\_cmd を置換した結果を返します.
 
+<a name="TApp"></a>
 ## type [TApp](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.go#L6-L16>)
 
-TApp はアプリの構造体です\.
+TApp はアプリの構造体です.
 
 ```go
 type TApp struct {
@@ -158,43 +162,48 @@ type TApp struct {
 }
 ```
 
+<a name="New"></a>
 ### func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/New.go#L10>)
 
 ```go
 func New(versionApp string, cacheID ...string) *TApp
 ```
 
-#### New はアプリの新規オプジェクトのポインタを返します。
+New はアプリの新規オプジェクトのポインタを返します。
 
 第 2 引数の cacheID は、コマンド・オプションの \-\-cache\-id でも指定できるため、 通常 cacheID は指定する必要はありません。 この ID は、API から受け取った翻訳済みのテキストを保存する際に使われます。テ スト中、キャッシュがテスト間でバッティングしないようにキャッシュ ID を指定し たい場合に利用します。
 
+<a name="TApp.CliRun"></a>
 ### func \(\*TApp\) [CliRun](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.CliRun.go#L8>)
 
 ```go
 func (a *TApp) CliRun(ctx *cli.Context) error
 ```
 
-CliRun は app\.Run\(\) の本体です。cli\.Run に登録して呼び出されるメソッドです\.
+CliRun は app.Run\(\) の本体です。cli.Run に登録して呼び出されるメソッドです.
 
+<a name="TApp.GetUniformedInfo"></a>
 ### func \(\*TApp\) [GetUniformedInfo](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetUniformedInfo.go#L16>)
 
 ```go
 func (a *TApp) GetUniformedInfo() (string, error)
 ```
 
-GetUniformedInfo は API 情報を読みやすいように整えた状態で返します\.
+GetUniformedInfo は API 情報を読みやすいように整えた状態で返します.
 
+<a name="TApp.GetVersion"></a>
 ### func \(\*TApp\) [GetVersion](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.GetVersion.go#L17>)
 
 ```go
 func (a *TApp) GetVersion() string
 ```
 
-GetVersion メソッドはアプリ名を含めたバージョン情報を返します\.
+GetVersion メソッドはアプリ名を含めたバージョン情報を返します.
 
-Version フィールドの値が "v" で始まらない場合は、頭に付け加えます\. Version フィールドの値が、空もしくは "dev" の場合は "dev version" になります\.
+Version フィールドの値が "v" で始まらない場合は、頭に付け加えます. Version フィールドの値が、空もしくは "dev" の場合は "dev version" になります.
 
-### func \(\*TApp\) [InteractiveTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.InteractiveTranslation.go#L12>)
+<a name="TApp.InteractiveTranslation"></a>
+### func \(\*TApp\) [InteractiveTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.InteractiveTranslation.go#L15>)
 
 ```go
 func (a *TApp) InteractiveTranslation(orderLang []string) error
@@ -202,57 +211,64 @@ func (a *TApp) InteractiveTranslation(orderLang []string) error
 
 InteractiveTranslation は、対話式（標準入力がない場合）の連続的な翻訳を行う メソッドです。
 
+<a name="TApp.NewEngine"></a>
 ### func \(\*TApp\) [NewEngine](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.NewEngine.go#L10>)
 
 ```go
 func (a *TApp) NewEngine(nameEngine string, cacheID ...string) (*engine.Properties, error)
 ```
 
-NewEngine メソッドは nameEngine で指定された翻訳エンジンの新規オブジェクト・ポインタを返します\.
+NewEngine メソッドは nameEngine で指定された翻訳エンジンの新規オブジェクト・ポインタを返します.
 
-### func \(\*TApp\) [PreRun](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.PreRun.go#L11>)
+<a name="TApp.PreRun"></a>
+### func \(\*TApp\) [PreRun](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.PreRun.go#L12>)
 
 ```go
 func (a *TApp) PreRun() error
 ```
 
-PreRun は Run の本体処理を行う前にフラグ、オプションなどの引数のセットなどを行います\.
+PreRun は Run の本体処理を行う前にフラグ、オプションなどの引数のセットなどを行います.
 
+<a name="TApp.PrintInfo"></a>
 ### func \(\*TApp\) [PrintInfo](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.PrintInfo.go#L9>)
 
 ```go
 func (a *TApp) PrintInfo(ctx *cli.Context) error
 ```
 
-PrintInfo は ctx に API 情報を書き込みます\.
+PrintInfo は ctx に API 情報を書き込みます.
 
+<a name="TApp.Run"></a>
 ### func \(\*TApp\) [Run](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.Run.go#L15>)
 
 ```go
 func (a *TApp) Run() int
 ```
 
-Run メソッドはアプリを実行します\. 実行に成功した場合は nil を、失敗した場合は error を返します\.
+Run メソッドはアプリを実行します. 実行に成功した場合は nil を、失敗した場合は error を返します.
 
-テスト目的で強制的に失敗させる場合は ForceFail を true に設定します\.
+テスト目的で強制的に失敗させる場合は ForceFail を true に設定します.
 
+<a name="TApp.SetArgValue"></a>
 ### func \(\*TApp\) [SetArgValue](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SetArgValue.go#L9>)
 
 ```go
 func (a *TApp) SetArgValue(ctx *cli.Context) error
 ```
 
-SetArgValue は cli\.Run 内で渡されるコンテキストからフラグやオプションの値をセットします\.
+SetArgValue は cli.Run 内で渡されるコンテキストからフラグやオプションの値をセットします.
 
-### func \(\*TApp\) [SetEngine](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SetEngine.go#L4>)
+<a name="TApp.SetEngine"></a>
+### func \(\*TApp\) [SetEngine](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SetEngine.go#L6>)
 
 ```go
-func (a *TApp) SetEngine(nameEngine string) (err error)
+func (a *TApp) SetEngine(nameEngine string) error
 ```
 
-SetEngine メソッドは Engine フィールドに翻訳エンジンの新規インスタンスのポインタをセットします\.
+SetEngine メソッドは Engine フィールドに翻訳エンジンの新規インスタンスのポインタをセットします.
 
-### func \(\*TApp\) [SingleShotTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SingleShotTranslation.go#L12>)
+<a name="TApp.SingleShotTranslation"></a>
+### func \(\*TApp\) [SingleShotTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.SingleShotTranslation.go#L13>)
 
 ```go
 func (a *TApp) SingleShotTranslation(orderLang []string) (string, error)
@@ -260,64 +276,70 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error)
 
 SingleShotTranslation は標準入力から受け取ったテキストを翻訳する、単発翻訳用 のメソッドです。
 
-### func \(\*TApp\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.Translate.go#L11>)
+<a name="TApp.Translate"></a>
+### func \(\*TApp\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TApp.Translate.go#L12>)
 
 ```go
 func (a *TApp) Translate(orderLang []string, inputText string) ([]TTranslation, error)
 ```
 
-Translate は、orderLang の順に inputText を翻訳した結果を返します\.
+Translate は、orderLang の順に inputText を翻訳した結果を返します.
 
-## type [TFlagOptions](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TFlagOptions.go#L5-L19>)
+<a name="TFlagOptions"></a>
+## type [TFlagOptions](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TFlagOptions.go#L7-L21>)
 
-TFlagOptions はアプリ（コマンド）のフラグやオプションの設定やその設定値およびヘルプの表示内容を定義した構造体です\. アプリの bool オプション（フラグ）や string オプションなどは、ここで定義します\.
+TFlagOptions はアプリ（コマンド）のフラグやオプションの設定やその設定値およびヘルプの表示内容を定義した構造体です. アプリの bool オプション（フラグ）や string オプションなどは、ここで定義します.
 
 ```go
 type TFlagOptions struct {
-    APIKey         string `cli:"a,apikey" usage:"翻訳に使うエンジンのアクセス・トークンを指定します" dft:""`
-    CacheID        string `cli:"cache-id" usage:"キャッシュの DB 名。異なる DB にキャッシュを保存したい場合に指定します" dft:""`
-    NameEngine     string `cli:"e,engine" usage:"翻訳に使うエンジンを指定します" dft:"deepl"`
+    APIKey         string `cli:"a,apikey"  dft:""                                                                                                                  usage:"翻訳に使うエンジンのアクセス・トークンを指定します"`
+    CacheID        string `cli:"cache-id"  dft:""                                                                                                                  usage:"キャッシュの DB 名。異なる DB にキャッシュを保存したい場合に指定します"`
+    NameEngine     string `cli:"e,engine"  dft:"deepl"                                                                                                             usage:"翻訳に使うエンジンを指定します"`
     UsageApp       string `cli:"-"` // アプリのヘルプ表示で使われる本文メッセージ
-    ClearBeforeRun bool   `cli:"clear" usage:"実行前にキャッシュを完全に削除します。（API の利用枠を消費します）"`
-    Help           bool   `cli:"h,help" usage:"ヘルプを表示します"`
-    IsModeDebug    bool   `cli:"debug" usage:"デバッグ情報を標準エラー出力に出力します"`
-    IsNoCache      bool   `cli:"no-cache" usage:"キャッシュを利用せずに翻訳 API から再取得します。（API の利用枠を消費します）"`
+    ClearBeforeRun bool   `cli:"clear"     usage:"実行前にキャッシュを完全に削除します。（API の利用枠を消費します）"`
+    Help           bool   `cli:"h,help"    usage:"ヘルプを表示します"`
+    IsModeDebug    bool   `cli:"debug"     usage:"デバッグ情報を標準エラー出力に出力します"`
+    IsNoCache      bool   `cli:"no-cache"  usage:"キャッシュを利用せずに翻訳 API から再取得します。（API の利用枠を消費します）"`
     IsPiped        bool   `cli:"-"` // パイプ渡しで値を受け取っているか
-    IsVerbose      bool   `cli:"verbose" usage:"中間翻訳も出力します。"`
-    ShowInfo       bool   `cli:"info" usage:"API のリクエスト可能な残数など、API 情報を出力します"`
+    IsVerbose      bool   `cli:"verbose"   usage:"中間翻訳も出力します。"`
+    ShowInfo       bool   `cli:"info"      usage:"API のリクエスト可能な残数など、API 情報を出力します"`
     ShowInfoOnly   bool   `cli:"-"` // 他の引数がない場合は true になり API 情報のみの出力になります
     Version        bool   `cli:"v,version" usage:"アプリのバージョン情報を表示します"`
 }
 ```
 
+<a name="TFlagOptions.AutoHelp"></a>
 ### func \(\*TFlagOptions\) [AutoHelp](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TFlagOptions.AutoHelp.go#L10>)
 
 ```go
 func (argv *TFlagOptions) AutoHelp() bool
 ```
 
-AutoHelp は cli\.AutoHelper インターフェースの実装です\.
+AutoHelp は cli.AutoHelper インターフェースの実装です.
 
-この関数は cli\.Run\(\) から呼び出され、AutoHelp\(\) が true を返した場合は cli\.Run\(\) は argv のオプションのヘルプを表示します\.
+この関数は cli.Run\(\) から呼び出され、AutoHelp\(\) が true を返した場合は cli.Run\(\) は argv のオプションのヘルプを表示します.
 
+<a name="TFlagOptions.SetHelpMsg"></a>
 ### func \(\*TFlagOptions\) [SetHelpMsg](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TFlagOptions.SetHelpMsg.go#L6>)
 
 ```go
 func (argv *TFlagOptions) SetHelpMsg()
 ```
 
-SetHelpMsg はヘルプのテンプレートに現在のアプリ名及び実行ファイル名を流し込みセットします\.
+SetHelpMsg はヘルプのテンプレートに現在のアプリ名及び実行ファイル名を流し込みセットします.
 
+<a name="TFlagOptions.Validate"></a>
 ### func \(\*TFlagOptions\) [Validate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TFlagOptions.Validate.go#L12>)
 
 ```go
 func (argv *TFlagOptions) Validate(ctx *cli.Context) error
 ```
 
-Validate メソッドは、cli\.Validator インターフェースの実装です\.
+Validate メソッドは、cli.Validator インターフェースの実装です.
 
-コマンドのフラグ、オプションや引数のバリデーションを行います。 cli\.Run\(\) で指定された関数が実行される前に呼び出されます\.
+コマンドのフラグ、オプションや引数のバリデーションを行います。 cli.Run\(\) で指定された関数が実行される前に呼び出されます.
 
+<a name="TTranslation"></a>
 ## type [TTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TTranslation.go#L4-L9>)
 
 TTranslation は翻訳結果を保持するオブジェクトを定義します。
@@ -331,13 +353,14 @@ type TTranslation struct {
 }
 ```
 
+<a name="NewTranslation"></a>
 ### func [NewTranslation](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/app/TTranslation.NewTranslation.go#L4>)
 
 ```go
 func NewTranslation(langFrom, langTo, originalInput string) TTranslation
 ```
 
-NewTranslation returns an initialized TTranslation object\.
+NewTranslation returns an initialized TTranslation object.
 
 ------
 

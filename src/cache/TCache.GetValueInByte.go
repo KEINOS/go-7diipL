@@ -1,6 +1,9 @@
 package cache
 
-import "github.com/dgraph-io/badger/v3"
+import (
+	"github.com/dgraph-io/badger/v3"
+	"github.com/pkg/errors"
+)
 
 // GetValueInByte はバイトデータにハッシュ化された keyHashed キーを使ってキャッシュを探索しバイトデータで返します.
 func (c *TCache) GetValueInByte(keyHashed []byte) ([]byte, error) {
@@ -13,7 +16,7 @@ func (c *TCache) GetValueInByte(keyHashed []byte) ([]byte, error) {
 		// キーを指定してアイテム取得
 		item, err := txn.Get(keyHashed)
 		if err != nil {
-			return err
+			return errors.Wrap(err, "failed to get item from cache")
 		}
 
 		// アイテムの byte データ取得
@@ -23,8 +26,8 @@ func (c *TCache) GetValueInByte(keyHashed []byte) ([]byte, error) {
 			return nil
 		})
 
-		return err
+		return errors.Wrap(err, "failed to get value from cache")
 	})
 
-	return valCopy, err
+	return valCopy, errors.Wrap(err, "failed execute view transaction to read cache")
 }

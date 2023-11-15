@@ -24,7 +24,7 @@ func TestInteractSTDIN_not_terminal(t *testing.T) {
 	}
 
 	err := utils.InteractSTDIN(funcUser, stopWord, prompt)
-	assert.Error(t, err)
+	require.Error(t, err)
 }
 
 func TestInteractSTDIN(t *testing.T) {

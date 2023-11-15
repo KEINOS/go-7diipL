@@ -6,18 +6,20 @@ import (
 
 	"github.com/DaikiYamakawa/deepl-go"
 	"github.com/Qithub-BOT/QiiTrans/src/engines/engine"
-	"golang.org/x/xerrors"
+	"github.com/pkg/errors"
 )
 
 // GetInfoAPI はアクセス・トークンのアカウント情報のうち、engine.AccountInfo に必要なものだけセットして返します.
-func GetInfoAPI(p *engine.Properties) (engine.AccountInfo, error) {
-	info := engine.AccountInfo{}
-
-	if os.Getenv(p.NameVarEnvAPIKey) == "" {
-		return info, xerrors.New("API key for DeepL not set")
+func GetInfoAPI(prop *engine.Properties) (engine.AccountInfo, error) {
+	info := engine.AccountInfo{
+		CharacterLeft: 0,
 	}
 
-	if client, err := deepl.New(GetURLBaseAPI(p), nil); err == nil {
+	if os.Getenv(prop.NameVarEnvAPIKey) == "" {
+		return info, errors.New("API key for DeepL not set")
+	}
+
+	if client, err := deepl.New(GetURLBaseAPI(prop), nil); err == nil {
 		accountStatus, err := client.GetAccountStatus(context.Background())
 
 		if err == nil {

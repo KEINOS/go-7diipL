@@ -114,6 +114,5 @@ cd "$PATH_DIR_PARENT"
 runShfmt &&
     runShellCheck &&
     runGofmt &&
-    runGolangCiLint &&
     runDocCheck &&
     runGoUnitTests

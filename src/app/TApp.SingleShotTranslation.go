@@ -5,6 +5,7 @@ import (
 
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
 	"github.com/gookit/color"
+	"github.com/pkg/errors"
 )
 
 // SingleShotTranslation は標準入力から受け取ったテキストを翻訳する、単発翻訳用
@@ -13,13 +14,13 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error) {
 	// 標準入力から翻訳元のデータを取得
 	input, err := utils.GetSTDIN()
 	if err != nil {
-		return "", err
+		return "", errors.Wrap(err, "failed to get STDIN during single shot translation")
 	}
 
 	// 翻訳の実行
 	listTranslated, err := a.Translate(orderLang, input)
 	if err != nil {
-		return "", err
+		return "", errors.Wrap(err, "failed to translate during single shot translation")
 	}
 
 	lenTranslated := len(listTranslated)

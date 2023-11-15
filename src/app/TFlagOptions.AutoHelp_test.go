@@ -25,7 +25,7 @@ func TestAutoHelp(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Equal(t, status, utils.SUCCESS, "--help should end with status zero")
+		assert.Equal(t, utils.SUCCESS, status, "--help should end with status zero")
 	})
 
 	assert.Contains(t, out, appTest.Name, "help msg should contain the app name")

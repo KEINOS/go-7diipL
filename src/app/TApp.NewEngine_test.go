@@ -6,6 +6,7 @@ import (
 	"github.com/Qithub-BOT/QiiTrans/src/app"
 	"github.com/Qithub-BOT/QiiTrans/src/engines/deepleng"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNewEngine(t *testing.T) {
@@ -14,8 +15,9 @@ func TestNewEngine(t *testing.T) {
 	defer expect.Cache.ClearAll() // 終了後に削除
 
 	appTest := app.New("", t.Name())
+
 	actual, err := appTest.NewEngine("deepl", t.Name())
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	defer actual.Cache.ClearAll() // 終了後に削除
 

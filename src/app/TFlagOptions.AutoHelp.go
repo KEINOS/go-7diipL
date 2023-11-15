@@ -10,6 +10,7 @@ import (
 func (argv *TFlagOptions) AutoHelp() bool {
 	// ヘルプのオプションフラグが true の場合、アプリの usage を表示
 	if argv.Help {
+		//nolint:forbidigo // allow fmt due to help message
 		fmt.Println(argv.UsageApp)
 	}
 

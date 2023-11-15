@@ -7,7 +7,7 @@ import (
 
 // ForceFailRun は Run メソッドを強制的に失敗させる（1 を返す）ためのフラグです.
 // 主にテスト目的で使われます.
-var ForceFailRun bool = false
+var ForceFailRun = false
 
 // Run メソッドはアプリを実行します. 実行に成功した場合は nil を、失敗した場合は error を返します.
 //

@@ -6,6 +6,7 @@ import (
 	"github.com/Qithub-BOT/QiiTrans/src/helperfunc"
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetSTDIN(t *testing.T) {
@@ -19,7 +20,7 @@ func TestGetSTDIN(t *testing.T) {
 
 	actual, err := utils.GetSTDIN()
 
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, expect, actual)
 }
 
@@ -32,7 +33,7 @@ func TestGetSTDIN_mock_stdin(t *testing.T) {
 	expect := userInput
 	actual, err := utils.GetSTDIN()
 
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, expect, actual)
 }
 
@@ -47,6 +48,6 @@ func TestGetSTDIN_forced_error(t *testing.T) {
 
 	out, err := utils.GetSTDIN()
 
-	assert.Error(t, err)
+	require.Error(t, err)
 	assert.Empty(t, out, "on error it should be empty")
 }

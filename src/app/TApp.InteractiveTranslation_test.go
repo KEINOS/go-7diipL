@@ -12,8 +12,11 @@ import (
 )
 
 func TestInteractiveTranslation(t *testing.T) {
-	stopWord := "stop"
-	userInput := "foo bar\nhoge fuga\n" + stopWord + "\n"
+	const (
+		stopWord  = "stop"
+		userInput = "foo bar\nhoge fuga\nstop\n"
+	)
+
 	dummyOrderLang := []string{"en", "ja", "es", "en", "ja"}
 
 	// 標準入力をモック
@@ -47,8 +50,11 @@ func TestInteractiveTranslation(t *testing.T) {
 }
 
 func TestInteractiveTranslation_verbose(t *testing.T) {
-	stopWord := "stop"
-	userInput := "foo bar\nhoge fuga\n" + stopWord + "\n"
+	const (
+		stopWord  = "stop"
+		userInput = "foo bar\nhoge fuga\n" + stopWord + "\n"
+	)
+
 	dummyOrderLang := []string{"en", "ja", "es", "en", "ja"}
 
 	// 標準入力をモック
@@ -87,8 +93,11 @@ func TestInteractiveTranslation_verbose(t *testing.T) {
 }
 
 func TestInteractiveTranslation_fail(t *testing.T) {
-	stopWord := "stop"
-	userInput := "foo bar\nhoge fuga\n" + stopWord + "\n"
+	const (
+		stopWord  = "stop"
+		userInput = "foo bar\nhoge fuga\n" + stopWord + "\n"
+	)
+
 	dummyArgs := []string{"en", "ja", "es"}
 
 	// 標準入力をモック

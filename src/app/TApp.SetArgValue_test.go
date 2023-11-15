@@ -7,6 +7,7 @@ import (
 	"github.com/kami-zh/go-capturer"
 	"github.com/mkideal/cli"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSetArgValue(t *testing.T) {
@@ -16,8 +17,8 @@ func TestSetArgValue(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		err := appTest.SetArgValue(argDummy)
 
-		assert.Error(t, err)
+		require.Error(t, err, "missing engine name should return an error")
 	})
 
-	assert.Empty(t, out)
+	assert.Empty(t, out, "on error it should not print anything")
 }

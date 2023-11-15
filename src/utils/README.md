@@ -10,31 +10,33 @@ import "github.com/Qithub-BOT/QiiTrans/src/utils"
 
 - [Constants](<#constants>)
 - [Variables](<#variables>)
-- [func DelimitComma(i int) string](<#func-delimitcomma>)
-- [func EchoSTDERR(format string, a ...interface{})](<#func-echostderr>)
-- [func ExitOnErr(err error)](<#func-exitonerr>)
-- [func GetListLang() map[string]string](<#func-getlistlang>)
-- [func GetNameExe() string](<#func-getnameexe>)
-- [func GetSTDIN() (stdin string, err error)](<#func-getstdin>)
-- [func Hash(algo string, value string) (string, []byte, error)](<#func-hash>)
-- [func InteractSTDIN(funcUser func(string) error, stopWord string, prompt string) (err error)](<#func-interactstdin>)
-- [func IsDir(pathFile string) bool](<#func-isdir>)
-- [func IsEnglish(input string) bool](<#func-isenglish>)
-- [func IsFile(pathFile string) bool](<#func-isfile>)
-- [func IsModeDebug() bool](<#func-ismodedebug>)
-- [func IsTerminal() bool](<#func-isterminal>)
-- [func IsValidLang(lang string) bool](<#func-isvalidlang>)
-- [func LogDebug(log string, a ...interface{})](<#func-logdebug>)
-- [func PanicOnErr(err error)](<#func-paniconerr>)
-- [func PathExists(pathFile string) bool](<#func-pathexists>)
-- [func PrintMsgWait(msg string) (setoff func())](<#func-printmsgwait>)
-- [func SetModeDebug(flag bool)](<#func-setmodedebug>)
-- [func SliceSentences(inputText string) []string](<#func-slicesentences>)
-- [func SliceToSentenceChore(inputText string) []string](<#func-slicetosentencechore>)
-- [func SliceToSentenceEng(inputTextEn string) []string](<#func-slicetosentenceeng>)
+- [func DelimitComma\(i int\) string](<#DelimitComma>)
+- [func EchoSTDERR\(format string, a ...interface\{\}\)](<#EchoSTDERR>)
+- [func ExitOnErr\(err error\)](<#ExitOnErr>)
+- [func GetListLang\(\) map\[string\]string](<#GetListLang>)
+- [func GetNameExe\(\) string](<#GetNameExe>)
+- [func GetSTDIN\(\) \(string, error\)](<#GetSTDIN>)
+- [func Hash\(algo string, value string\) \(string, \[\]byte, error\)](<#Hash>)
+- [func InteractSTDIN\(funcUser func\(string\) error, stopWord string, prompt string\) error](<#InteractSTDIN>)
+- [func IsDir\(pathFile string\) bool](<#IsDir>)
+- [func IsEnglish\(input string\) bool](<#IsEnglish>)
+- [func IsFile\(pathFile string\) bool](<#IsFile>)
+- [func IsModeDebug\(\) bool](<#IsModeDebug>)
+- [func IsTerminal\(\) bool](<#IsTerminal>)
+- [func IsValidLang\(lang string\) bool](<#IsValidLang>)
+- [func LogDebug\(log string, logs ...interface\{\}\)](<#LogDebug>)
+- [func PanicOnErr\(err error\)](<#PanicOnErr>)
+- [func PathExists\(pathFile string\) bool](<#PathExists>)
+- [func PrintMsgWait\(msg string\) \(setoff func\(\)\)](<#PrintMsgWait>)
+- [func SetModeDebug\(flag bool\)](<#SetModeDebug>)
+- [func SliceSentences\(inputText string\) \[\]string](<#SliceSentences>)
+- [func SliceToSentenceChore\(inputText string\) \[\]string](<#SliceToSentenceChore>)
+- [func SliceToSentenceEng\(inputTextEn string\) \[\]string](<#SliceToSentenceEng>)
 
 
 ## Constants
+
+<a name="SUCCESS"></a>
 
 ```go
 const (
@@ -48,103 +50,114 @@ const (
 
 ## Variables
 
+<a name="ValSTDINDummy"></a>
+
 ```go
 var (
     // ValSTDINDummy は GetSTDIN() の挙動を mock するための値です.
     //
     // この値が空ではない場合、そのセットされた値を返します.
-    ValSTDINDummy string = ""
+    ValSTDINDummy = ""
 
     // ForceErrorGetSTDIN はテスト用の変数です。true の場合、GetSTDIN は強制的にエラーを返します.
     //
     // この設定はテストで強制的にエラーを発生したい場合に利用されます.
-    ForceErrorGetSTDIN bool = false
+    ForceErrorGetSTDIN = false
 )
 ```
 
-IsTerminalDummy はテスト時に標準入力からの受け取りをモックするために使われる値です\. 値を true に設定すると IsTerminal\(\) は強制的に true を返します。false に設定した場合は、自動検知が働きます\.
+<a name="IsTerminalDummy"></a>IsTerminalDummy はテスト時に標準入力からの受け取りをモックするために使われる値です. 値を true に設定すると IsTerminal\(\) は強制的に true を返します。false に設定した場合は、自動検知が働きます.
 
 ```go
-var IsTerminalDummy bool = false
+var IsTerminalDummy = false
 ```
 
-OsExit は os\.Exit のエイリアスです\. テストで os\.Exit の終了ステータスをモックする場合に使われます\.
+<a name="OsExit"></a>OsExit は os.Exit のエイリアスです. テストで os.Exit の終了ステータスをモックする場合に使われます.
 
 ```go
 var OsExit = os.Exit
 ```
 
+<a name="isModeDebug"></a>
+
 ```go
-var isModeDebug bool = false
+var isModeDebug = false
 ```
 
-listLang は利用可能な言語のマップです\. 自動生成されるため GetListLang\(\) か IsValidLang\(\) を利用してください\.
+<a name="listLang"></a>listLang は利用可能な言語のマップです. 自動生成されるため GetListLang\(\) か IsValidLang\(\) を利用してください.
 
 ```go
 var listLang map[string]string
 ```
 
+<a name="DelimitComma"></a>
 ## func [DelimitComma](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/DelimitComma.go#L6>)
 
 ```go
 func DelimitComma(i int) string
 ```
 
-DelimitComma は int の値を 3 桁ごとにカンマを入れます（1000 \-\> 1\,000）\.
+DelimitComma は int の値を 3 桁ごとにカンマを入れます（1000 \-\> 1,000）.
 
-## func [EchoSTDERR](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/EchoSTDERR.go#L9>)
+<a name="EchoSTDERR"></a>
+## func [EchoSTDERR](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/EchoSTDERR.go#L11>)
 
 ```go
 func EchoSTDERR(format string, a ...interface{})
 ```
 
-EchoSTDERR は fmt\.Fprintf のラッパー関数で、標準エラー出力に出力します\.
+EchoSTDERR は fmt.Fprintf のラッパー関数で、標準エラー出力に出力します.
 
+<a name="ExitOnErr"></a>
 ## func [ExitOnErr](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/ExitOnErr.go#L9>)
 
 ```go
 func ExitOnErr(err error)
 ```
 
-ExitOnErr は err がエラーの場合のみ、エラー内容を標準エラー出力に出力して OsExit\(1\) を呼び出します\.
+ExitOnErr は err がエラーの場合のみ、エラー内容を標準エラー出力に出力して OsExit\(1\) を呼び出します.
 
+<a name="GetListLang"></a>
 ## func [GetListLang](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/GetListLang.go#L13>)
 
 ```go
 func GetListLang() map[string]string
 ```
 
-GetListLang は、翻訳に使える言語の一覧をマップで返します\.
+GetListLang は、翻訳に使える言語の一覧をマップで返します.
 
-"map\[検索\]: 指定フォーマット" の形で返ってくるので、バリデーションに使います\. "japanese" でキーを検索すると "ja"、"JA" でキーを検索しても "ja" が取得できます\.
+"map\[検索\]: 指定フォーマット" の形で返ってくるので、バリデーションに使います. "japanese" でキーを検索すると "ja"、"JA" でキーを検索しても "ja" が取得できます.
 
+<a name="GetNameExe"></a>
 ## func [GetNameExe](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/GetNameExe.go#L9>)
 
 ```go
 func GetNameExe() string
 ```
 
-GetNameExe は、コマンド名（現在の実行ファイル名からパスと拡張子を除いたファイル名）を返します\.
+GetNameExe は、コマンド名（現在の実行ファイル名からパスと拡張子を除いたファイル名）を返します.
 
+<a name="GetSTDIN"></a>
 ## func [GetSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/GetSTDIN.go#L25>)
 
 ```go
-func GetSTDIN() (stdin string, err error)
+func GetSTDIN() (string, error)
 ```
 
-GetSTDIN はパイプ渡し or リダイレクトされた標準入力からのデータを返します\.
+GetSTDIN はパイプ渡し or リダイレクトされた標準入力からのデータを返します.
 
-対話式で標準入力を取得したい場合は InteractSTDIN\(\) を利用してください\.
+対話式で標準入力を取得したい場合は InteractSTDIN\(\) を利用してください.
 
+<a name="Hash"></a>
 ## func [Hash](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/Hash.go#L28>)
 
 ```go
 func Hash(algo string, value string) (string, []byte, error)
 ```
 
-Hash は指定されたアルゴリズムを使って value をハッシュ化し、文字列と byte で結果を返します\.
+Hash は指定されたアルゴリズムを使って value をハッシュ化し、文字列と byte で結果を返します.
 
-### Supported hash
+Supported hash
 
 ```
 fnv1_32    (checksum usage, 4 byte, 8 char length)
@@ -158,146 +171,160 @@ sha3_512   (recommended, 64 byte, 128 char length)
 blake3_512 (experimental, 64 byte, 64 char length)
 ```
 
-## func [InteractSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/InteractSTDIN.go#L15>)
+<a name="InteractSTDIN"></a>
+## func [InteractSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/InteractSTDIN.go#L17>)
 
 ```go
-func InteractSTDIN(funcUser func(string) error, stopWord string, prompt string) (err error)
+func InteractSTDIN(funcUser func(string) error, stopWord string, prompt string) error
 ```
 
-InteractSTDIN は対話モードで標準入力を処理します\.
+InteractSTDIN は対話モードで標準入力を処理します.
 
-標準入力から stopWord が入力されるまで、funcUser\(\) に標準入力の値を入れた結果を表示し続けます\. 単発の標準入力が欲しい場合は GetSTDIN\(\) を利用してください\.
+標準入力から stopWord が入力されるまで、funcUser\(\) に標準入力の値を入れた結果を表示し続けます. 単発の標準入力が欲しい場合は GetSTDIN\(\) を利用してください.
 
+<a name="IsDir"></a>
 ## func [IsDir](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/IsDir.go#L8>)
 
 ```go
 func IsDir(pathFile string) bool
 ```
 
-IsDir は pathFile のパスが存在し、ディレクトリの場合に true を返します\.
+IsDir は pathFile のパスが存在し、ディレクトリの場合に true を返します.
 
-パスの構文解析に失敗した場合はエラーで終了（OsExit）します\.
+パスの構文解析に失敗した場合はエラーで終了（OsExit）します.
 
+<a name="IsEnglish"></a>
 ## func [IsEnglish](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/IsEnglish.go#L12>)
 
 ```go
 func IsEnglish(input string) bool
 ```
 
-IsEnglish は input が英文であると予測した場合に true を返します\.
+IsEnglish は input が英文であると予測した場合に true を返します.
 
-この関数は、文書を文に分けて翻訳＆キャッシュをする際に使われます\.
+この関数は、文書を文に分けて翻訳＆キャッシュをする際に使われます.
 
+<a name="IsFile"></a>
 ## func [IsFile](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/IsFile.go#L10>)
 
 ```go
 func IsFile(pathFile string) bool
 ```
 
-IsFile は pathFile のパスが存在し、ファイルの場合に true を返します\.
+IsFile は pathFile のパスが存在し、ファイルの場合に true を返します.
 
-パスの構文解析に失敗した場合はエラーで終了（OsExit）します\.
+パスの構文解析に失敗した場合はエラーで終了（OsExit）します.
 
+<a name="IsModeDebug"></a>
 ## func [IsModeDebug](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/IsModeDebug.go#L7>)
 
 ```go
 func IsModeDebug() bool
 ```
 
-IsModeDebug はデバッグ・モードの場合に true を返します\.
+IsModeDebug はデバッグ・モードの場合に true を返します.
 
-Verbose 出力と異なり、ユーザ・サポートに必要な情報を出力する場合などに使います\. デバッグ・モードの設定は SetModeDebut\(\) を使います\.
+Verbose 出力と異なり、ユーザ・サポートに必要な情報を出力する場合などに使います. デバッグ・モードの設定は SetModeDebut\(\) を使います.
 
+<a name="IsTerminal"></a>
 ## func [IsTerminal](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/IsTerminal.go#L16>)
 
 ```go
 func IsTerminal() bool
 ```
 
-IsTerminal はアプリがターミナル（コマンドライン）で実行されているか返します\.
+IsTerminal はアプリがターミナル（コマンドライン）で実行されているか返します.
 
-テストでは必ず false になるため、テストでこの挙動を変えたい場合は IsTerminalDummy の値を true にします\.
+テストでは必ず false になるため、テストでこの挙動を変えたい場合は IsTerminalDummy の値を true にします.
 
+<a name="IsValidLang"></a>
 ## func [IsValidLang](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/IsValidLang.go#L6>)
 
 ```go
 func IsValidLang(lang string) bool
 ```
 
-IsValidLang は lang が QiiTrans の引数として有効な書式かチェックします\.
+IsValidLang は lang が QiiTrans の引数として有効な書式かチェックします.
 
+<a name="LogDebug"></a>
 ## func [LogDebug](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/LogDebug.go#L12>)
 
 ```go
-func LogDebug(log string, a ...interface{})
+func LogDebug(log string, logs ...interface{})
 ```
 
-LogDebug はデバッグ・モードが true の場合のみ標準エラー出力に出力します\.
+LogDebug はデバッグ・モードが true の場合のみ標準エラー出力に出力します.
 
-デバッグ・モードをセットするには SetModeDebug\(\) を使ってください\.
+デバッグ・モードをセットするには SetModeDebug\(\) を使ってください.
 
+<a name="PanicOnErr"></a>
 ## func [PanicOnErr](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/PanicOnErr.go#L11>)
 
 ```go
 func PanicOnErr(err error)
 ```
 
-PanicOnErr は err がエラーの場合のみパニックを発生します\.
+PanicOnErr は err がエラーの場合のみパニックを発生します.
 
-OsExit では都合が悪い時（defer を実行させる必要があるなど）に利用します\.
+OsExit では都合が悪い時（defer を実行させる必要があるなど）に利用します.
 
+<a name="PathExists"></a>
 ## func [PathExists](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/PathExists.go#L6>)
 
 ```go
 func PathExists(pathFile string) bool
 ```
 
-PathExists はパスが存在する場合に true を返します\.
+PathExists はパスが存在する場合に true を返します.
 
-## func [PrintMsgWait](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/PrintMsgWait.go#L12>)
+<a name="PrintMsgWait"></a>
+## func [PrintMsgWait](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/PrintMsgWait.go#L14>)
 
 ```go
 func PrintMsgWait(msg string) (setoff func())
 ```
 
-### PrintMsgWait は msg を改行なしで標準出力に出力するだけですが、そのメッセージ
-を打ち消すための関数を返します。
+PrintMsgWait は msg を改行なしで標準出力に出力するだけですが、そのメッセージ を打ち消すための関数を返します。
 
 打ち消し関数を呼び出す前に別の標準出力があった場合は正常に打ち消されません。
 
+<a name="SetModeDebug"></a>
 ## func [SetModeDebug](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/SetModeDebug.go#L8>)
 
 ```go
 func SetModeDebug(flag bool)
 ```
 
-SetModeDebug はデバッグ・モードのオン・オフを行います\.
+SetModeDebug はデバッグ・モードのオン・オフを行います.
 
-引数を true でセットすると GetModeDebug\(\) は true を返します\.
+引数を true でセットすると GetModeDebug\(\) は true を返します.
 
+<a name="SliceSentences"></a>
 ## func [SliceSentences](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/SliceToSentence.go#L11>)
 
 ```go
 func SliceSentences(inputText string) []string
 ```
 
-SliceSentences は文字列を文の区切りごとにスライスにします\.
+SliceSentences は文字列を文の区切りごとにスライスにします.
 
+<a name="SliceToSentenceChore"></a>
 ## func [SliceToSentenceChore](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/SliceToSentence.go#L20>)
 
 ```go
 func SliceToSentenceChore(inputText string) []string
 ```
 
-SliceToSentenceChore は英語以外の文字列として文の区切りごとにスライスするのに使われます\.
+SliceToSentenceChore は英語以外の文字列として文の区切りごとにスライスするのに使われます.
 
+<a name="SliceToSentenceEng"></a>
 ## func [SliceToSentenceEng](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/utils/SliceToSentence.go#L65>)
 
 ```go
 func SliceToSentenceEng(inputTextEn string) []string
 ```
 
-SliceToSentenceEng は英語の文字列として文の区切りごとにスライスするのに使われます\.
+SliceToSentenceEng は英語の文字列として文の区切りごとにスライスするのに使われます.
 
 ------
 

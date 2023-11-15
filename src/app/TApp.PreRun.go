@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
+	"github.com/pkg/errors"
 	"golang.org/x/xerrors"
 )
 
@@ -20,7 +21,7 @@ func (a *TApp) PreRun() error {
 
 	// 翻訳エンジンのセット
 	if err := a.SetEngine(a.Argv.NameEngine); err != nil {
-		return err
+		return errors.Wrap(err, "failed to set translation engine")
 	}
 
 	// キャッシュの可否をセット
@@ -39,5 +40,5 @@ func (a *TApp) PreRun() error {
 		a.Argv.IsPiped = false
 	}
 
-	return err
+	return errors.Wrap(err, "failed to set pre-run")
 }

@@ -9,24 +9,24 @@ import (
 )
 
 func TestGetURLBaseAPI(t *testing.T) {
-	e := engine.New(t.Name())
+	eng := engine.New(t.Name())
 
-	defer e.Cache.ClearAll()
+	defer eng.Cache.ClearAll()
 
 	{
-		e.IsAccountFree = true
+		eng.IsAccountFree = true
 
 		expect := "https://api-free.deepl.com"
-		actual := deepleng.GetURLBaseAPI(e)
+		actual := deepleng.GetURLBaseAPI(eng)
 
 		assert.Equal(t, expect, actual)
 	}
 
 	{
-		e.IsAccountFree = false
+		eng.IsAccountFree = false
 
 		expect := "https://api.deepl.com"
-		actual := deepleng.GetURLBaseAPI(e)
+		actual := deepleng.GetURLBaseAPI(eng)
 
 		assert.Equal(t, expect, actual)
 	}

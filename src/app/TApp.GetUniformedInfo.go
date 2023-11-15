@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
-	"golang.org/x/xerrors"
+	"github.com/pkg/errors"
 )
 
 // ForceErrorGetUniformedInfo が true の場合、GetUniformedInfo はエラーを返します.
@@ -15,7 +15,7 @@ var ForceErrorGetUniformedInfo = false
 // GetUniformedInfo は API 情報を読みやすいように整えた状態で返します.
 func (a *TApp) GetUniformedInfo() (string, error) {
 	if ForceErrorGetUniformedInfo {
-		return "", xerrors.New("forced to return error")
+		return "", errors.New("forced to return error")
 	}
 
 	result := ""
@@ -23,7 +23,7 @@ func (a *TApp) GetUniformedInfo() (string, error) {
 	// 利用可能文字の残数取得
 	quotaLeft, err := a.Engine.GetQuotaLeft()
 	if err != nil {
-		return "", err
+		return "", errors.Wrap(err, "failed to get quota left")
 	}
 
 	result += fmt.Sprintf("[INFO]: 残り文字数: %v", utils.DelimitComma(quotaLeft))

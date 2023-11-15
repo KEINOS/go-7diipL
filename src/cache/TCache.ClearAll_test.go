@@ -6,22 +6,25 @@ import (
 	"github.com/Qithub-BOT/QiiTrans/src/cache"
 	"github.com/kami-zh/go-capturer"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestClearAll(t *testing.T) {
-	c := cache.New(t.Name())
+	tmpCache := cache.New(t.Name())
 
-	defer c.ClearAll()
+	defer tmpCache.ClearAll()
 
-	pathDirCache := c.GetPathDirCache()
+	pathDirCache := tmpCache.GetPathDirCache()
 	phraseOriginal := "foo bar"
 	phraseTranslated := "hoge fuga"
 
 	// Set cache
-	_ = c.Set(phraseOriginal, phraseTranslated)
+	err := tmpCache.Set(phraseOriginal, phraseTranslated)
+	require.NoError(t, err, "failed to set cache during test preparation")
 
 	// Get cache
-	result, _ := c.Get(phraseOriginal)
+	result, err := tmpCache.Get(phraseOriginal)
+	require.NoError(t, err, "failed to get cache during test preparation")
 
 	// Test save
 	expect := phraseTranslated
@@ -31,13 +34,13 @@ func TestClearAll(t *testing.T) {
 	assert.DirExists(t, pathDirCache, "before ClearAll() call, the cache dir should exist")
 
 	// Run ClearAll
-	c.ClearAll()
+	tmpCache.ClearAll()
 
 	assert.NoDirExists(t, pathDirCache, "after ClearAll() call, cache dir should not exist")
 
 	// Run secondary call
 	out := capturer.CaptureOutput(func() {
-		c.ClearAll()
+		tmpCache.ClearAll()
 	})
 
 	// Test delete
@@ -45,15 +48,15 @@ func TestClearAll(t *testing.T) {
 }
 
 func TestClearAll_on_opened_DB(t *testing.T) {
-	c := cache.New(t.Name())
+	tmpCache := cache.New(t.Name())
 
-	defer c.ClearAll()
+	defer tmpCache.ClearAll()
 
 	out := capturer.CaptureOutput(func() {
-		err := c.OpenDB()
-		assert.NoError(t, err)
+		err := tmpCache.OpenDB()
+		require.NoError(t, err)
 
-		c.ClearAll()
+		tmpCache.ClearAll()
 	})
 
 	assert.Empty(t, out, "if the DB is opend it should close before deletion")

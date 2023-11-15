@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
+	"github.com/pkg/errors"
 	"golang.org/x/xerrors"
 )
 
@@ -17,16 +18,17 @@ func (a *TApp) Translate(orderLang []string, inputText string) ([]TTranslation, 
 		return nil, xerrors.New("forced error for translation")
 	}
 
+	var langTo string
+
 	transText := ""
 	langFrom := ""
-	langTo := ""
 
 	// orderLang 順に再帰的に翻訳
-	for i, nameLang := range orderLang {
+	for index, nameLang := range orderLang {
 		nameLang = strings.ToUpper(nameLang) // API に合わせて言語を大文字に統一
 
 		// 最初の言語をセット
-		if i == 0 {
+		if index == 0 {
 			langFrom = nameLang
 			transText = inputText
 
@@ -41,16 +43,16 @@ func (a *TApp) Translate(orderLang []string, inputText string) ([]TTranslation, 
 			// from -> to へ翻訳
 			transText, _, err = a.Engine.Translate(transText, langFrom, langTo)
 			if err != nil {
-				return nil, err
+				break
 			}
 
 			utils.LogDebug("Translate 結果:", transText)
 		}
 
-		obj.Translated = transText // Set translated text
-		translations[i-1] = obj    // Set tranlated object
-		langFrom = langTo          // Update lang
+		obj.Translated = transText  // Set translated text
+		translations[index-1] = obj // Set tranlated object
+		langFrom = langTo           // Update lang
 	}
 
-	return translations, err
+	return translations, errors.Wrap(err, "failed to translate")
 }

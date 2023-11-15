@@ -6,35 +6,36 @@
 import "github.com/Qithub-BOT/QiiTrans/src/engines/engine"
 ```
 
-Package engine は、各翻訳エンジンの基本となる構造体とそのメソッドを定義しています\.
+Package engine は、各翻訳エンジンの基本となる構造体とそのメソッドを定義しています.
 
 ## Index
 
 - [Constants](<#constants>)
-- [type AccountInfo](<#type-accountinfo>)
-- [type Properties](<#type-properties>)
-  - [func New(cacheID ...string) *Properties](<#func-new>)
-  - [func (p *Properties) GetAPIKey() string](<#func-properties-getapikey>)
-  - [func (p *Properties) GetQuotaLeft() (int, error)](<#func-properties-getquotaleft>)
-  - [func (p *Properties) SetAPIKey(apiKey string) func()](<#func-properties-setapikey>)
-  - [func (p *Properties) SetDefault()](<#func-properties-setdefault>)
-  - [func (p *Properties) SetFuncGetInfoAPI(getInfoFunc func(properties *Properties) (AccountInfo, error))](<#func-properties-setfuncgetinfoapi>)
-  - [func (p *Properties) SetFuncTrans(transFunc func(properties *Properties, inputText string, langFrom string, langTo string) (string, error))](<#func-properties-setfunctrans>)
-  - [func (p *Properties) Translate(inTxt string, langFrom string, langTo string) (outText string, isCache bool, err error)](<#func-properties-translate>)
-  - [func (p *Properties) UniformLang(lang string) string](<#func-properties-uniformlang>)
+- [type AccountInfo](<#AccountInfo>)
+- [type Properties](<#Properties>)
+  - [func New\(cacheID ...string\) \*Properties](<#New>)
+  - [func \(p \*Properties\) GetAPIKey\(\) string](<#Properties.GetAPIKey>)
+  - [func \(p \*Properties\) GetQuotaLeft\(\) \(int, error\)](<#Properties.GetQuotaLeft>)
+  - [func \(p \*Properties\) SetAPIKey\(apiKey string\) func\(\)](<#Properties.SetAPIKey>)
+  - [func \(p \*Properties\) SetDefault\(\)](<#Properties.SetDefault>)
+  - [func \(p \*Properties\) SetFuncGetInfoAPI\(getInfoFunc func\(properties \*Properties\) \(AccountInfo, error\)\)](<#Properties.SetFuncGetInfoAPI>)
+  - [func \(p \*Properties\) SetFuncTrans\(transFunc func\(properties \*Properties, inputText string, langFrom string, langTo string\) \(string, error\)\)](<#Properties.SetFuncTrans>)
+  - [func \(p \*Properties\) Translate\(inTxt string, langFrom string, langTo string\) \(outText string, isCache bool, err error\)](<#Properties.Translate>)
+  - [func \(p \*Properties\) UniformLang\(lang string\) string](<#Properties.UniformLang>)
 
 
 ## Constants
 
-NameVarEnvAPIKeyDefault は環境変数の変数名で、翻訳 API のアクセストークンを設定するための変数名です\.
+<a name="NameVarEnvAPIKeyDefault"></a>NameVarEnvAPIKeyDefault は環境変数の変数名で、翻訳 API のアクセストークンを設定するための変数名です.
 
 ```go
 const NameVarEnvAPIKeyDefault = "QIITRANS_API_KEY"
 ```
 
+<a name="AccountInfo"></a>
 ## type [AccountInfo](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/AccountInfo.go#L4-L6>)
 
-AccountInfo は、利用中の翻訳 API の必要最低限の情報を保持する構造体です\.
+AccountInfo は、利用中の翻訳 API の必要最低限の情報を保持する構造体です.
 
 ```go
 type AccountInfo struct {
@@ -42,9 +43,10 @@ type AccountInfo struct {
 }
 ```
 
+<a name="Properties"></a>
 ## type [Properties](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.go#L9-L38>)
 
-Properties は各翻訳エンジンの基本となる構造体です\. 翻訳エンジンが API を呼び出すのに必要な基本情報と、翻訳に使われるメソッド（クラス関数）を持った構造体です\.
+Properties は各翻訳エンジンの基本となる構造体です. 翻訳エンジンが API を呼び出すのに必要な基本情報と、翻訳に使われるメソッド（クラス関数）を持った構造体です.
 
 ```go
 type Properties struct {
@@ -79,39 +81,43 @@ type Properties struct {
 }
 ```
 
+<a name="New"></a>
 ### func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/New.go#L6>)
 
 ```go
 func New(cacheID ...string) *Properties
 ```
 
-New は翻訳エンジンの基本構造体の新規オブジェクトのポインタを返します\.
+New は翻訳エンジンの基本構造体の新規オブジェクトのポインタを返します.
 
+<a name="Properties.GetAPIKey"></a>
 ### func \(\*Properties\) [GetAPIKey](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.GetAPIKey.go#L7>)
 
 ```go
 func (p *Properties) GetAPIKey() string
 ```
 
-GetAPIKey はコマンドのオプションで指定されたアクセス・トークンを返します\. オプションで指定がされていない場合は、環境変数から読み取って返します\.
+GetAPIKey はコマンドのオプションで指定されたアクセス・トークンを返します. オプションで指定がされていない場合は、環境変数から読み取って返します.
 
+<a name="Properties.GetQuotaLeft"></a>
 ### func \(\*Properties\) [GetQuotaLeft](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.GetQuotaLeft.go#L4>)
 
 ```go
 func (p *Properties) GetQuotaLeft() (int, error)
 ```
 
-GetQuotaLeft は API のリクエスト残量（翻訳可能文字数）を返します。有料アカウントなど、制限がない場合は \-1 を返します\.
+GetQuotaLeft は API のリクエスト残量（翻訳可能文字数）を返します。有料アカウントなど、制限がない場合は \-1 を返します.
 
+<a name="Properties.SetAPIKey"></a>
 ### func \(\*Properties\) [SetAPIKey](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetAPIKey.go#L19>)
 
 ```go
 func (p *Properties) SetAPIKey(apiKey string) func()
 ```
 
-SetAPIKey はコマンド引数から取得したアクセストークン／認証キー（"apiKey"）を翻訳エンジンが使えるようにセットします\.
+SetAPIKey はコマンド引数から取得したアクセストークン／認証キー（"apiKey"）を翻訳エンジンが使えるようにセットします.
 
-このメソッドは呼び出し元の defer 用に関数を返します。各々の翻訳エンジンが参照する環境変数に apiKey の値をセットするため、 既存の値があった場合は処理後 defer で元に戻せるようにするための関数です\.
+このメソッドは呼び出し元の defer 用に関数を返します。各々の翻訳エンジンが参照する環境変数に apiKey の値をセットするため、 既存の値があった場合は処理後 defer で元に戻せるようにするための関数です.
 
 ```
 myEngine := deepleng.New("myCacheID")
@@ -119,45 +125,50 @@ myAPIKey := "foobar"
 defer myEngine.SetAPIKey(myAPIKey)
 ```
 
+<a name="Properties.SetDefault"></a>
 ### func \(\*Properties\) [SetDefault](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetDefault.go#L4>)
 
 ```go
 func (p *Properties) SetDefault()
 ```
 
-SetDefault はプロパティ（オブジェクトのフィールド）値を初期値に設定します\.
+SetDefault はプロパティ（オブジェクトのフィールド）値を初期値に設定します.
 
+<a name="Properties.SetFuncGetInfoAPI"></a>
 ### func \(\*Properties\) [SetFuncGetInfoAPI](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetFuncGetInfoAPI.go#L4>)
 
 ```go
 func (p *Properties) SetFuncGetInfoAPI(getInfoFunc func(properties *Properties) (AccountInfo, error))
 ```
 
-SetFuncGetInfoAPI メソッドは翻訳用の関数を割り当てます\.
+SetFuncGetInfoAPI メソッドは翻訳用の関数を割り当てます.
 
-### func \(\*Properties\) [SetFuncTrans](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetFuncTrans.go#L4-L9>)
+<a name="Properties.SetFuncTrans"></a>
+### func \(\*Properties\) [SetFuncTrans](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetFuncTrans.go#L4-L10>)
 
 ```go
 func (p *Properties) SetFuncTrans(transFunc func(properties *Properties, inputText string, langFrom string, langTo string) (string, error))
 ```
 
-SetFuncTrans メソッドは翻訳用の関数を割り当てます\.
+SetFuncTrans メソッドは翻訳用の関数を割り当てます.
 
-### func \(\*Properties\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.Translate.go#L11>)
+<a name="Properties.Translate"></a>
+### func \(\*Properties\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.Translate.go#L14>)
 
 ```go
 func (p *Properties) Translate(inTxt string, langFrom string, langTo string) (outText string, isCache bool, err error)
 ```
 
-Translate は翻訳エンジンから割り当てられた翻訳関数を実行し、inText を langFrom から langTo に翻訳した結果を返します\. この値はキャッシュされます。キャッシュを更新したい場合は Update フィールド（プロパティ）を true にセットしてください\.
+Translate は翻訳エンジンから割り当てられた翻訳関数を実行し、inText を langFrom から langTo に翻訳した結果を返します. この値はキャッシュされます。キャッシュを更新したい場合は Update フィールド（プロパティ）を true にセットしてください.
 
+<a name="Properties.UniformLang"></a>
 ### func \(\*Properties\) [UniformLang](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.UniformLang.go#L11>)
 
 ```go
 func (p *Properties) UniformLang(lang string) string
 ```
 
-UniformLang は lang を API が検知可能な書式に変換します\. もし lang が未対応の言語だった場合は、空の値を返します\.
+UniformLang は lang を API が検知可能な書式に変換します. もし lang が未対応の言語だった場合は、空の値を返します.
 
 ------
 

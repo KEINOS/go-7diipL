@@ -12,7 +12,8 @@ import (
 )
 
 func TestNew(t *testing.T) {
-	dummySTDIN := "Hello, world!"
+	const dummySTDIN = "Hello, world!"
+
 	dummyArgs := []string{
 		"en",
 		"ja",
@@ -30,7 +31,7 @@ func TestNew(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Equal(t, status, utils.SUCCESS, "it should end with status zero (SUCCESS)")
+		assert.Equal(t, utils.SUCCESS, status, "it should end with status zero (SUCCESS)")
 	})
 
 	assert.Contains(t, out, "¡Hola, mundo!")
@@ -40,7 +41,8 @@ func TestNew(t *testing.T) {
 }
 
 func TestNew_verbose(t *testing.T) {
-	dummySTDIN := "Hello, world!"
+	const dummySTDIN = "Hello, world!"
+
 	dummyArgs := []string{
 		"en",
 		"ja",
@@ -59,7 +61,7 @@ func TestNew_verbose(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Equal(t, status, utils.SUCCESS, "it should end with status zero (SUCCESS)")
+		assert.Equal(t, utils.SUCCESS, status, "it should end with status zero (SUCCESS)")
 	})
 
 	assert.Contains(t, out, "EN -> JA")
@@ -70,7 +72,8 @@ func TestNew_verbose(t *testing.T) {
 }
 
 func TestNew_clear_cache(t *testing.T) {
-	dummySTDIN := "Hello, world!"
+	const dummySTDIN = "Hello, world!"
+
 	dummyArgs := []string{
 		"en",
 		"es",
@@ -88,11 +91,10 @@ func TestNew_clear_cache(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Equal(t, status, utils.SUCCESS, "it should end with status zero (SUCCESS)")
+		assert.Equal(t, utils.SUCCESS, status, "it should end with status zero (SUCCESS)")
 	})
 
 	assert.Contains(t, out, "¡Hola, mundo!")
-
 	assert.True(t, appTest.Argv.IsNoCache, "--clear should set IsNoCache as true as well")
 
 	// Clean Up
@@ -110,7 +112,8 @@ func TestNew_default_settings(t *testing.T) {
 }
 
 func TestNew_fail_get_info(t *testing.T) {
-	dummySTDIN := "Hello, world!"
+	const dummySTDIN = "Hello, world!"
+
 	dummyArgs := []string{
 		"en",
 		"es",
@@ -132,7 +135,7 @@ func TestNew_fail_get_info(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Equal(t, status, utils.FAILURE, "reading failure of API info should return status non-zero")
+		assert.Equal(t, utils.FAILURE, status, "reading failure of API info should return status non-zero")
 	})
 
 	assert.Contains(t, out, "forced to return error")
@@ -142,7 +145,8 @@ func TestNew_fail_get_info(t *testing.T) {
 }
 
 func TestNew_fail_read_stdin(t *testing.T) {
-	dummySTDIN := "Hello, world!"
+	const dummySTDIN = "Hello, world!"
+
 	dummyArgs := []string{
 		"en",
 		"es",
@@ -163,7 +167,7 @@ func TestNew_fail_read_stdin(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Equal(t, status, utils.FAILURE, "reading failure of STDIN should return status non-zero")
+		assert.Equal(t, utils.FAILURE, status, "reading failure of STDIN should return status non-zero")
 	})
 
 	assert.Contains(t, out, "forced to return error")
@@ -181,7 +185,8 @@ func TestNew_instantiation(t *testing.T) {
 }
 
 func TestNew_no_apikey_set(t *testing.T) {
-	dummySTDIN := "Hello, world!"
+	const dummySTDIN = "Hello, world!"
+
 	dummyArgs := []string{
 		"en",
 		"ja",
@@ -195,22 +200,12 @@ func TestNew_no_apikey_set(t *testing.T) {
 	defer funcDeferArgs()
 
 	// テスト用にアクセストークンのバックアップとリカバリ
-	nameKeyEnv := "DEEPL_API_KEY"
-	oldKey := os.Getenv(nameKeyEnv)
-
-	defer func() {
-		err := os.Setenv(nameKeyEnv, oldKey)
-		if err != nil {
-			t.Fatalf("failed to recover env key during test")
-		}
-	}()
-
-	appTest := app.New("", t.Name())
+	const nameKeyEnv = "DEEPL_API_KEY"
 
 	// アクセストークンの環境変数を一時的に変更
-	if err := os.Setenv(nameKeyEnv, ""); err != nil {
-		t.Fatalf("failed to change env key during test")
-	}
+	t.Setenv(nameKeyEnv, "")
+
+	appTest := app.New("", t.Name())
 
 	out := capturer.CaptureOutput(func() {
 		t.Logf("Current Env: %v", os.Getenv(nameKeyEnv))
@@ -226,7 +221,8 @@ func TestNew_no_apikey_set(t *testing.T) {
 }
 
 func TestNew_show_info(t *testing.T) {
-	dummySTDIN := "Hello, world!"
+	const dummySTDIN = "Hello, world!"
+
 	dummyArgs := []string{
 		"en",
 		"ja",
@@ -245,7 +241,7 @@ func TestNew_show_info(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Equal(t, status, utils.SUCCESS, "it should end with status zero (SUCCESS)")
+		assert.Equal(t, utils.SUCCESS, status, "it should end with status zero (SUCCESS)")
 	})
 
 	assert.Contains(t, out, "[INFO]: 残り文字数:")

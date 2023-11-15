@@ -5,6 +5,7 @@ import (
 
 	"github.com/Qithub-BOT/QiiTrans/src/app"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSetEngine(t *testing.T) {
@@ -13,8 +14,7 @@ func TestSetEngine(t *testing.T) {
 	appTest := app.New("", t.Name())
 
 	err := appTest.SetEngine(nameEngine)
-
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	defer appTest.Engine.Cache.ClearAll()
 

@@ -5,6 +5,7 @@ import (
 
 	"github.com/Qithub-BOT/QiiTrans/src/engines/deepleng"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNew(t *testing.T) {
@@ -26,7 +27,7 @@ func TestNew(t *testing.T) {
 
 	actual := outputText
 
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.False(t, isCache, "when Update property is true then isCache flag should return false")
 	assert.Contains(t, expectList, actual)
 }

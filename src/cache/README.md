@@ -6,11 +6,11 @@
 import "github.com/Qithub-BOT/QiiTrans/src/cache"
 ```
 
-Package cache は key\-value 型の簡易 DB です\. 翻訳済みの結果をキャッシュするのに使われます\.
+Package cache は key\-value 型の簡易 DB です. 翻訳済みの結果をキャッシュするのに使われます.
 
 New\(\<キャッシュ ID\>\) でインスタンスが作成されると、テンポラリ・ディレクトリにキャッシュ用のディレクトリを作成します。
 
-主に "Set\(\<翻訳前テキスト\>\, \<翻訳後テキスト\>\)" のように、翻訳結果をキャッシュするのに使われます。 デフォルトで共通のキャッシュ・ディレクトリを利用します。異なるキャッシュにしたい場合は任意のキャッシュ ID を指定します。
+主に "Set\(\<翻訳前テキスト\>, \<翻訳後テキスト\>\)" のように、翻訳結果をキャッシュするのに使われます。 デフォルトで共通のキャッシュ・ディレクトリを利用します。異なるキャッシュにしたい場合は任意のキャッシュ ID を指定します。
 
 ```
 myCache := cache.New("myCache")
@@ -27,31 +27,32 @@ ClearAll() ... キャッシュ・ディレクトリを削除します。
 ## Index
 
 - [Constants](<#constants>)
-- [type TCache](<#type-tcache>)
-  - [func New(cacheID ...string) *TCache](<#func-new>)
-  - [func (c *TCache) ClearAll()](<#func-tcache-clearall>)
-  - [func (c *TCache) CloseDB()](<#func-tcache-closedb>)
-  - [func (c *TCache) Get(key string) (string, error)](<#func-tcache-get>)
-  - [func (c *TCache) GetPathDirCache() string](<#func-tcache-getpathdircache>)
-  - [func (c *TCache) GetValueInByte(keyHashed []byte) ([]byte, error)](<#func-tcache-getvalueinbyte>)
-  - [func (c *TCache) OpenDB() (err error)](<#func-tcache-opendb>)
-  - [func (c *TCache) Set(key string, value string) (err error)](<#func-tcache-set>)
-  - [func (c *TCache) hash64(content string) []byte](<#func-tcache-hash64>)
+- [type TCache](<#TCache>)
+  - [func New\(cacheID ...string\) \*TCache](<#New>)
+  - [func \(c \*TCache\) ClearAll\(\)](<#TCache.ClearAll>)
+  - [func \(c \*TCache\) CloseDB\(\)](<#TCache.CloseDB>)
+  - [func \(c \*TCache\) Get\(key string\) \(string, error\)](<#TCache.Get>)
+  - [func \(c \*TCache\) GetPathDirCache\(\) string](<#TCache.GetPathDirCache>)
+  - [func \(c \*TCache\) GetValueInByte\(keyHashed \[\]byte\) \(\[\]byte, error\)](<#TCache.GetValueInByte>)
+  - [func \(c \*TCache\) OpenDB\(\) error](<#TCache.OpenDB>)
+  - [func \(c \*TCache\) Set\(key string, value string\) error](<#TCache.Set>)
+  - [func \(c \*TCache\) hash64\(content string\) \[\]byte](<#TCache.hash64>)
 
 
 ## Constants
 
-NameDirCacheDefault はキャッシュ時のデフォルトのディレクトリ名もしくはプレフィックス（接頭辞）です\.
+<a name="NameDirCacheDefault"></a>NameDirCacheDefault はキャッシュ時のデフォルトのディレクトリ名もしくはプレフィックス（接頭辞）です.
 
-テンポラリ・ディレクトリの、この名前の付いたディレクトリは削除可能です\.
+テンポラリ・ディレクトリの、この名前の付いたディレクトリは削除可能です.
 
 ```go
 const NameDirCacheDefault = "QiiTrans"
 ```
 
+<a name="TCache"></a>
 ## type [TCache](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.go#L11-L15>)
 
-TCache はキャッシュ DB の構造体です\. \[badger\]\(https://github.com/dgraph-io/badger\) のラッパーです\.
+TCache はキャッシュ DB の構造体です. [badger](<https://pkg.go.dev/github.com/dgraph-io/badger/v3/>)\(https://github.com/dgraph-io/badger\) のラッパーです.
 
 ```go
 type TCache struct {
@@ -61,40 +62,50 @@ type TCache struct {
 }
 ```
 
+<a name="New"></a>
 ### func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/New.go#L10>)
 
 ```go
 func New(cacheID ...string) *TCache
 ```
 
-New は TCache の新規オブジェクトのポインタを返します\. デフォルトで共通のキャッシュを利用します。各々異なるキャッシュにしたい場合は、引数に ID を指定します\.
+New は TCache の新規オブジェクトのポインタを返します. デフォルトで共通のキャッシュを利用します。各々異なるキャッシュにしたい場合は、引数に ID を指定します.
 
 <details><summary>Example</summary>
 <p>
+
+
 
 ```go
 package main
 
 import (
 	"fmt"
+
 	"github.com/Qithub-BOT/QiiTrans/src/cache"
 )
 
 func main() {
 	// 汎用のキャッシュにしたくない場合は ID を指定する。この場合は "my sample DB".
-	c := cache.New("my sample DB")
+	tmpCache := cache.New("my sample DB")
 
 	// 終了時にキャッシュを削除したい場合は defer で ClearAll する
-	defer c.ClearAll()
+	defer tmpCache.ClearAll()
 
 	phraseOriginal := "Hello, world!"
 	phraseTranslated := "世界よ、こんにちは！"
 
 	// Set でキャッシュに登録
-	_ = c.Set(phraseOriginal, phraseTranslated)
+	err := tmpCache.Set(phraseOriginal, phraseTranslated)
+	if err != nil {
+		panic(err)
+	}
 
 	// Get でキャッシュから取得
-	result, _ := c.Get(phraseOriginal)
+	result, err := tmpCache.Get(phraseOriginal)
+	if err != nil {
+		panic(err)
+	}
 
 	fmt.Println(result)
 }
@@ -109,75 +120,83 @@ func main() {
 </p>
 </details>
 
+<a name="TCache.ClearAll"></a>
 ### func \(\*TCache\) [ClearAll](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.ClearAll.go#L10>)
 
 ```go
 func (c *TCache) ClearAll()
 ```
 
-ClearAll はキャッシュ・データを削除します\.
+ClearAll はキャッシュ・データを削除します.
 
+<a name="TCache.CloseDB"></a>
 ### func \(\*TCache\) [CloseDB](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.CloseDB.go#L11>)
 
 ```go
 func (c *TCache) CloseDB()
 ```
 
-CloseDB はキャッシュの DB をクローズします\. DB がオープンされていない場合は何もしません\. クローズに失敗した場合はパニックを起こします\.
+CloseDB はキャッシュの DB をクローズします. DB がオープンされていない場合は何もしません. クローズに失敗した場合はパニックを起こします.
 
-このメソッドは、Get\(\) Set\(\) でも呼び出されるため、利用時に OpenDB\(\) CloseDB\(\) を行う必要はありません\.
+このメソッドは、Get\(\) Set\(\) でも呼び出されるため、利用時に OpenDB\(\) CloseDB\(\) を行う必要はありません.
 
+<a name="TCache.Get"></a>
 ### func \(\*TCache\) [Get](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.Get.go#L5>)
 
 ```go
 func (c *TCache) Get(key string) (string, error)
 ```
 
-Get はキャッシュから key を探索し、その値を文字列で返します\. キャッシュに key がない場合はエラーを返します\.
+Get はキャッシュから key を探索し、その値を文字列で返します. キャッシュに key がない場合はエラーを返します.
 
+<a name="TCache.GetPathDirCache"></a>
 ### func \(\*TCache\) [GetPathDirCache](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.GetPathDirCache.go#L6>)
 
 ```go
 func (c *TCache) GetPathDirCache() string
 ```
 
-GetPathDirCache は現在のキャッシュ先のディレクトリを返します\.
+GetPathDirCache は現在のキャッシュ先のディレクトリを返します.
 
-### func \(\*TCache\) [GetValueInByte](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.GetValueInByte.go#L6>)
+<a name="TCache.GetValueInByte"></a>
+### func \(\*TCache\) [GetValueInByte](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.GetValueInByte.go#L9>)
 
 ```go
 func (c *TCache) GetValueInByte(keyHashed []byte) ([]byte, error)
 ```
 
-GetValueInByte はバイトデータにハッシュ化された keyHashed キーを使ってキャッシュを探索しバイトデータで返します\.
+GetValueInByte はバイトデータにハッシュ化された keyHashed キーを使ってキャッシュを探索しバイトデータで返します.
 
-### func \(\*TCache\) [OpenDB](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.OpenDB.go#L11>)
-
-```go
-func (c *TCache) OpenDB() (err error)
-```
-
-OpenDB はキャッシュ用の DB をオープンします\. キャッシュ・ディレクトリが存在しない場合は、テンポラリディレクトリに新規に作成します\.
-
-このメソッドは、Get\(\) Set\(\) でも呼び出されるため、利用時に OpenDB\(\) CloseDB\(\) を行う必要はありません\.
-
-### func \(\*TCache\) [Set](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.Set.go#L11>)
+<a name="TCache.OpenDB"></a>
+### func \(\*TCache\) [OpenDB](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.OpenDB.go#L12>)
 
 ```go
-func (c *TCache) Set(key string, value string) (err error)
+func (c *TCache) OpenDB() error
 ```
 
-Set は key に value の値を割り当ててキャッシュします\. この関数は、主に翻訳前の文を key、翻訳後の文を value としてキャッシュに使われます\.
+OpenDB はキャッシュ用の DB をオープンします. キャッシュ・ディレクトリが存在しない場合は、テンポラリディレクトリに新規に作成します.
 
-引数 key は長さに依存しません（内部で 64 バイトの固定長にハッシュ化されるため）\. 呼び出しごとにキャッシュ DB を open/close するため、大量の連続呼び出しには向きません\. 大量に登録する場合は SetList\(\) 関数を利用してください\.
+このメソッドは、Get\(\) Set\(\) でも呼び出されるため、利用時に OpenDB\(\) CloseDB\(\) を行う必要はありません.
 
+<a name="TCache.Set"></a>
+### func \(\*TCache\) [Set](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.Set.go#L14>)
+
+```go
+func (c *TCache) Set(key string, value string) error
+```
+
+Set は key に value の値を割り当ててキャッシュします. この関数は、主に翻訳前の文を key、翻訳後の文を value としてキャッシュに使われます.
+
+引数 key は長さに依存しません（内部で 64 バイトの固定長にハッシュ化されるため）. 呼び出しごとにキャッシュ DB を open/close するため、大量の連続呼び出しには向きません. 大量に登録する場合は SetList\(\) 関数を利用してください.
+
+<a name="TCache.hash64"></a>
 ### func \(\*TCache\) [hash64](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/cache/TCache.hash64.go#L6>)
 
 ```go
 func (c *TCache) hash64(content string) []byte
 ```
 
-hash64 は content の内容を 64 バイトのハッシュ値に変換します\.
+hash64 は content の内容を 64 バイトのハッシュ値に変換します.
 
 ------
 

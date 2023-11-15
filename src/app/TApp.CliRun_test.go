@@ -9,6 +9,7 @@ import (
 	"github.com/kami-zh/go-capturer"
 	"github.com/mkideal/cli"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestCliRun_fail_set_arg_value(t *testing.T) {
@@ -17,7 +18,7 @@ func TestCliRun_fail_set_arg_value(t *testing.T) {
 
 	err := appTest.CliRun(ctxDummy)
 
-	assert.Error(t, err, "malformed context should return an error")
+	require.Error(t, err, "malformed context should return an error")
 }
 
 func TestCliRun_fail_prerun(t *testing.T) {
