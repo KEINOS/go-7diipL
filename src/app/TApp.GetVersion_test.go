@@ -1,7 +1,6 @@
 package app_test
 
 import (
-	"fmt"
 	"runtime/debug"
 	"testing"
 
@@ -68,7 +67,7 @@ func TestGetVersion_via_build_info(t *testing.T) {
 
 	appTest := app.New("", t.Name())
 
-	expect := fmt.Sprintf("QiiTrans v%s", dummyVersion)
+	expect := "QiiTrans v" + dummyVersion
 	actual := appTest.GetVersion()
 
 	assert.Equal(t, expect, actual, "it should be the version via debug.ReadBuildInfo")

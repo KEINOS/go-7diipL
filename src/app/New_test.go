@@ -209,8 +209,8 @@ func TestNew_no_apikey_set(t *testing.T) {
 
 	out := capturer.CaptureOutput(func() {
 		t.Logf("Current Env: %v", os.Getenv(nameKeyEnv))
-		status := appTest.Run()
 
+		status := appTest.Run()
 		assert.Greater(t, status, 0, "missing api key should be a non-zero")
 	})
 

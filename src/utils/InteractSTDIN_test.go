@@ -19,7 +19,7 @@ func TestInteractSTDIN_not_terminal(t *testing.T) {
 	)
 
 	// utils.InteractSTDIN 内で利用するユーザ関数
-	funcUser := func(input string) error {
+	funcUser := func(_ string) error {
 		return nil
 	}
 
