@@ -1,3 +1,7 @@
+> __Note__: This repo is currently migrating to English-based repo rather than Japanese-base.
+
+---
+
 [![All Tests](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/merge-tests.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Qithub-BOT/QiiTrans)](https://goreportcard.com/report/github.com/Qithub-BOT/QiiTrans)
 [![CodeQL](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml)
