@@ -5,7 +5,7 @@
 #
 # For your convenience run the "./build-app.sh" script in this directory which
 # does everything you need to build the app.
-FROM golang:1.16-alpine
+FROM golang:1.22-alpine
 
 WORKDIR /app
 

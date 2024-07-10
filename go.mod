@@ -1,6 +1,8 @@
 module github.com/Qithub-BOT/QiiTrans
 
-go 1.19
+go 1.22
+
+toolchain go1.22.5
 
 require (
 	github.com/DaikiYamakawa/deepl-go v0.0.0-20200812214128-8b85310fcaec
