@@ -37,7 +37,7 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error) {
 	}
 
 	// Verbose output
-	for i := 0; i < lenTranslated; i++ {
+	for i := range lenTranslated {
 		translated := listTranslated[i]
 		prefix := a.Prefix
 

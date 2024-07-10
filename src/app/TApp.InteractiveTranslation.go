@@ -36,7 +36,7 @@ func (a *TApp) InteractiveTranslation(orderLang []string) error {
 		}
 
 		// Verbose print
-		for i := 0; i < lenTranslated; i++ {
+		for i := range lenTranslated {
 			translated := listTranslated[i]
 			prefix := a.Prefix
 
