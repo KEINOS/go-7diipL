@@ -66,7 +66,7 @@ func TestValidate_all_args_missing(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Greater(t, status, 0, "missing arg should be non-zero status")
+		assert.Positive(t, status, "missing arg should be non-zero status")
 	})
 
 	assert.Contains(t, out, "引数が足りません。最低でも翻訳元と翻訳先の言語を指定してください")
@@ -88,7 +88,7 @@ func TestValidate_missing_2nd_arg(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Greater(t, status, 0, "missing arg should be non-zero status")
+		assert.Positive(t, status, "missing arg should be non-zero status")
 	})
 
 	assert.Contains(t, out, "引数が足りません。翻訳先の言語を指定してください")
@@ -113,7 +113,7 @@ func TestValidate_bad_lang_type(t *testing.T) {
 	out := capturer.CaptureOutput(func() {
 		status := appTest.Run()
 
-		assert.Greater(t, status, 0, "missing arg should be non-zero status")
+		assert.Positive(t, status, "missing arg should be non-zero status")
 	})
 
 	assert.Contains(t, out, "引数の言語名が未定義のものです: "+badLang)

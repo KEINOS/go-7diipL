@@ -211,7 +211,7 @@ func TestNew_no_apikey_set(t *testing.T) {
 		t.Logf("Current Env: %v", os.Getenv(nameKeyEnv))
 
 		status := appTest.Run()
-		assert.Greater(t, status, 0, "missing api key should be a non-zero")
+		assert.Positive(t, status, "missing api key should be a non-zero")
 	})
 
 	assert.Contains(t, out, "API key for DeepL not set")
