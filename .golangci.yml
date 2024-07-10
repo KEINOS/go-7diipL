@@ -25,17 +25,21 @@ output:
 linters:
   enable-all: true
   disable:
-  # Disable deprecated linters
-  - exhaustivestruct
-  - golint
-  - ifshort
-  - interfacer
-  - maligned
-  - scopelint
-  - structcheck
-  - varcheck
-  - deadcode
-  - nosnakecase
+  # Remove deprecated and deactivated old linters
+  #- exhaustivestruct
+  #- golint
+  #- ifshort
+  #- interfacer
+  #- maligned
+  #- scopelint
+  #- structcheck
+  #- varcheck
+  #- deadcode
+  #- nosnakecase
+  # Disable deprecated and unmaintained linters
+  - execinquery
+  # Disable deprecated (renamed) linters
+  - gomnd
   # Disable due to non-standard package usage
   - depguard
   # Disable due to global variables usage
