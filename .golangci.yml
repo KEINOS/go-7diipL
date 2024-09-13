@@ -38,6 +38,7 @@ linters:
   #- nosnakecase
   # Disable deprecated and unmaintained linters
   - execinquery
+  - exportloopref
   # Disable deprecated (renamed) linters
   - gomnd
   # Disable due to non-standard package usage

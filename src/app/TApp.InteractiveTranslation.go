@@ -24,13 +24,13 @@ func (a *TApp) InteractiveTranslation(orderLang []string) error {
 		utils.LogDebug(fmt.Sprintf("%#v", listTranslated))
 
 		lenTranslated := len(listTranslated)
+		blue := color.Blue.Sprintf
 
 		// Usual print
 		if !a.Argv.IsVerbose {
-			prefix := color.Blue.Sprintf(a.Prefix)
 			translated := listTranslated[lenTranslated-1]
 
-			fmt.Println(prefix, translated.Translated)
+			fmt.Println(blue(a.Prefix), translated.Translated)
 
 			return nil
 		}
@@ -44,9 +44,7 @@ func (a *TApp) InteractiveTranslation(orderLang []string) error {
 				prefix = fmt.Sprintf("%s -> %s:", translated.LangFrom, translated.LangTo)
 			}
 
-			prefix = color.Blue.Sprintf(prefix)
-
-			fmt.Println(prefix, translated.Translated)
+			fmt.Println(blue(prefix), translated.Translated)
 		}
 
 		return nil
