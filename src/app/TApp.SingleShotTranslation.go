@@ -25,13 +25,13 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error) {
 
 	lenTranslated := len(listTranslated)
 	result := ""
+	blue := color.Blue.Sprintf
 
 	// Regular output
 	if !a.Argv.IsVerbose {
-		prefix := color.Blue.Sprintf(a.Prefix)
 		translated := listTranslated[lenTranslated-1]
 
-		result = fmt.Sprint(prefix, " ", translated.Translated)
+		result = fmt.Sprint(blue(a.Prefix), " ", translated.Translated)
 
 		return result, nil
 	}
@@ -46,9 +46,7 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error) {
 			prefix = fmt.Sprintf("%s -> %s:", translated.LangFrom, translated.LangTo)
 		}
 
-		prefix = color.Blue.Sprintf(prefix)
-
-		result += fmt.Sprint(prefix, " ", translated.Translated)
+		result += fmt.Sprint(blue(prefix), " ", translated.Translated)
 	}
 
 	return result, nil
