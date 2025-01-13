@@ -15,7 +15,7 @@ require (
 	github.com/neurosnap/sentences v1.1.2
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.10.0
-	golang.org/x/crypto v0.31.0
+	golang.org/x/crypto v0.32.0
 	golang.org/x/term v0.28.0
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da
 	lukechampine.com/blake3 v1.3.0
