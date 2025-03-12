@@ -36,11 +36,11 @@ linters:
   #- varcheck
   #- deadcode
   #- nosnakecase
+  #- execinquery
+  #- exportloopref
+  #- gomnd
   # Disable deprecated and unmaintained linters
-  - execinquery
-  - exportloopref
-  # Disable deprecated (renamed) linters
-  - gomnd
+  - tenv
   # Disable due to non-standard package usage
   - depguard
   # Disable due to global variables usage
