@@ -1,4 +1,4 @@
-> __Note__: This repo is currently migrating to English-based repo rather than Japanese-base.
+> __Note__: The repository is currently in the process of a major redesign and conversion to an English-language base.
 
 ---
 
