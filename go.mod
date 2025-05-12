@@ -18,7 +18,7 @@ require (
 	golang.org/x/crypto v0.37.0
 	golang.org/x/term v0.31.0
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da
-	lukechampine.com/blake3 v1.4.0
+	lukechampine.com/blake3 v1.4.1
 )
 
 require (
