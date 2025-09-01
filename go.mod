@@ -14,7 +14,7 @@ require (
 	github.com/mkideal/cli v0.2.7
 	github.com/neurosnap/sentences v1.1.2
 	github.com/pkg/errors v0.9.1
-	github.com/stretchr/testify v1.11.0
+	github.com/stretchr/testify v1.11.1
 	golang.org/x/crypto v0.41.0
 	golang.org/x/term v0.34.0
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da
