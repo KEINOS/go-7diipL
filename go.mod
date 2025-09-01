@@ -9,7 +9,7 @@ require (
 	github.com/abadojack/whatlanggo v1.0.1
 	github.com/dgraph-io/badger/v3 v3.2103.5
 	github.com/dustin/go-humanize v1.0.1
-	github.com/gookit/color v1.5.4
+	github.com/gookit/color v1.6.0
 	github.com/kami-zh/go-capturer v0.0.0-20171211120116-e492ea43421d
 	github.com/mkideal/cli v0.2.7
 	github.com/neurosnap/sentences v1.1.2
