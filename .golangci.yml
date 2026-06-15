@@ -1,51 +1,20 @@
-# This file contains configuration options for GolangCI-Lint.
-#
-# - It requires golangci-lint 1.48.0 or newer.
-# - Available linters see: https://golangci-lint.run/usage/linters/
-# - Sample of config see: https://golangci-lint.run/usage/configuration/#config-file
+version: "2"
 
-# Options for analysis running
 run:
-  # Include test files.
-  tests: true
+    tests: true
+    allow-parallel-runners: true
 
-  # List of build tags, all linters use it. Default is empty list.
-  build-tags:
-    - golangci
-
-  # Disable multiple parallel golangci-lint instances running.
-  allow-parallel-runners: true
-
-# Output configuration options
-output:
-  # Sorts results by: filepath, line and column
-  sort-results: true
-
-# Enabled all linters. Conf settings may follow.
 linters:
-  enable-all: true
-  disable:
-  # Remove deprecated and deactivated old linters
-  #- exhaustivestruct
-  #- golint
-  #- ifshort
-  #- interfacer
-  #- maligned
-  #- scopelint
-  #- structcheck
-  #- varcheck
-  #- deadcode
-  #- nosnakecase
-  #- execinquery
-  #- exportloopref
-  #- gomnd
-  # Disable deprecated and unmaintained linters
-  - tenv
-  # Disable due to non-standard package usage
-  - depguard
-  # Disable due to global variables usage
-  - gochecknoglobals
-  # Disable paralleltest temporarily
-  - paralleltest
-  # Disable due to no-internationalization required for now
-  - gosmopolitan
+    default: all
+    disable:
+        # Deprecated linters
+        - wsl
+        - gomodguard
+    settings:
+        paralleltest:
+            ignore-missing: false
+        varnamelen:
+            ignore-names:
+                - ok
+                - t
+                - tt

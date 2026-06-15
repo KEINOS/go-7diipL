@@ -11,7 +11,7 @@ var (
 	// IsErrorDummy が true の場合、FatalOnErr() は t.FailNow せずに標準エラー出力します.
 	IsErrorDummy bool
 
-	failNow func(format string, args ...interface{})
+	failNow func(format string, args ...any)
 )
 
 // FatalOnErr は err が nil ではない場合に t.FailNow でテストを終了します.
@@ -37,7 +37,7 @@ func FatalOnErr(t *testing.T, err error, comment ...string) {
 
 	// IsErrorDummy が true にセットされていた場合は標準エラー出力にエラー内容を出力する
 	if IsErrorDummy {
-		failNow = func(format string, args ...interface{}) {
+		failNow = func(format string, args ...any) {
 			fmt.Fprintf(os.Stderr, format, args...)
 		}
 

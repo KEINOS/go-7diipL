@@ -31,6 +31,8 @@ func TestValidate_flag_is_version(t *testing.T) {
 }
 
 func TestValidate_flag_is_info_only(t *testing.T) {
+	requireDeepLAPIKey(t)
+
 	funcDefer := helperfunc.MockArgs(t, []string{
 		"--info",
 	})

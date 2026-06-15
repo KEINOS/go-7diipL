@@ -25,7 +25,7 @@ func (a *TApp) GetVersion() string {
 	}
 
 	// dev version
-	if verApp == "" {
+	if verApp == "" || verApp == "dev" || verApp == "(devel)" {
 		return fmt.Sprintf("%s %s version", nameApp, VersionDefault)
 	}
 

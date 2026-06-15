@@ -3,11 +3,11 @@ package utils
 import (
 	"crypto/md5" //nolint:gosec // not for cryptographic usage
 	"crypto/sha256"
+	sha30 "crypto/sha3"
 	"crypto/sha512"
 	"encoding/hex"
 	"hash/fnv"
 
-	"golang.org/x/crypto/sha3"
 	"golang.org/x/xerrors"
 	"lukechampine.com/blake3"
 )
@@ -61,11 +61,11 @@ func Hash(algo string, value string) (string, []byte, error) {
 
 		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	case "sha3_256":
-		valByte := sha3.Sum256([]byte(value))
+		valByte := sha30.Sum256([]byte(value))
 
 		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	case "sha3_512":
-		valByte := sha3.Sum512([]byte(value))
+		valByte := sha30.Sum512([]byte(value))
 
 		return hex.EncodeToString(valByte[:]), valByte[:], nil
 	}

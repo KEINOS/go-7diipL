@@ -11,6 +11,8 @@ import (
 )
 
 func TestTranslate(t *testing.T) {
+	requireDeepLAPIKey(t)
+
 	appTest := app.New("", t.Name())
 
 	err := appTest.SetEngine("deepl")

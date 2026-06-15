@@ -18,7 +18,8 @@ func genDummyDirAndFile(t *testing.T, pathDirTemp string) {
 	nameDir := "dir"
 	pathDir := filepath.Join(pathDirTemp, nameDir)
 
-	if err := os.MkdirAll(pathDir, 0o777); err != nil {
+	err := os.MkdirAll(pathDir, 0o777)
+	if err != nil {
 		t.Fatalf("Failed to create dir.\nMsg Error: %v", err)
 	}
 
@@ -27,7 +28,8 @@ func genDummyDirAndFile(t *testing.T, pathDirTemp string) {
 	pathDirSymlink := filepath.Join(pathDirTemp, nameDirSymlink)
 	pathDirTarget := pathDir
 
-	if err := os.Symlink(pathDirTarget, pathDirSymlink); err != nil {
+	err = os.Symlink(pathDirTarget, pathDirSymlink)
+	if err != nil {
 		t.Fatalf("Failed to create symbolic link of a directory.\nMsg Error: %v", err)
 	}
 
@@ -51,7 +53,8 @@ func genDummyDirAndFile(t *testing.T, pathDirTemp string) {
 	pathFileSymlink := filepath.Join(pathDirTemp, nameFileSymlink)
 	pathFileTarget := pathFile
 
-	if err := os.Symlink(pathFileTarget, pathFileSymlink); err != nil {
+	err = os.Symlink(pathFileTarget, pathFileSymlink)
+	if err != nil {
 		t.Fatalf("Failed to create file.\nMsg Error: %v", err)
 	}
 }

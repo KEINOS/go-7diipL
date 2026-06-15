@@ -9,7 +9,7 @@ import (
 // LogDebug はデバッグ・モードが true の場合のみ標準エラー出力に出力します.
 //
 // デバッグ・モードをセットするには SetModeDebug() を使ってください.
-func LogDebug(log string, logs ...interface{}) {
+func LogDebug(log string, logs ...any) {
 	// isModeDebug は SetModeDebug.go で定義してます
 	if !isModeDebug {
 		return

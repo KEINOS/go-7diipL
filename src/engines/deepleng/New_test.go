@@ -9,6 +9,8 @@ import (
 )
 
 func TestNew(t *testing.T) {
+	requireDeepLAPIKey(t)
+
 	ngin := deepleng.New()
 
 	defer ngin.Cache.ClearAll()

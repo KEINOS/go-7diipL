@@ -12,6 +12,8 @@ import (
 )
 
 func TestNew(t *testing.T) {
+	requireDeepLAPIKey(t)
+
 	const dummySTDIN = "Hello, world!"
 
 	dummyArgs := []string{
@@ -41,6 +43,8 @@ func TestNew(t *testing.T) {
 }
 
 func TestNew_verbose(t *testing.T) {
+	requireDeepLAPIKey(t)
+
 	const dummySTDIN = "Hello, world!"
 
 	dummyArgs := []string{
@@ -72,6 +76,8 @@ func TestNew_verbose(t *testing.T) {
 }
 
 func TestNew_clear_cache(t *testing.T) {
+	requireDeepLAPIKey(t)
+
 	const dummySTDIN = "Hello, world!"
 
 	dummyArgs := []string{
@@ -112,6 +118,8 @@ func TestNew_default_settings(t *testing.T) {
 }
 
 func TestNew_fail_get_info(t *testing.T) {
+	requireDeepLAPIKey(t)
+
 	const dummySTDIN = "Hello, world!"
 
 	dummyArgs := []string{
@@ -221,6 +229,8 @@ func TestNew_no_apikey_set(t *testing.T) {
 }
 
 func TestNew_show_info(t *testing.T) {
+	requireDeepLAPIKey(t)
+
 	const dummySTDIN = "Hello, world!"
 
 	dummyArgs := []string{

@@ -11,6 +11,8 @@ import (
 
 // Test issue #1 fix.
 func TestIssue001(t *testing.T) {
+	requireDeepLAPIKey(t)
+
 	// 標準入力のダミーデータ
 	userInput := "今日はいい天気ですね"
 

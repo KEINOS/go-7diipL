@@ -41,7 +41,8 @@ func InteractSTDIN(funcUser func(string) error, stopWord string, prompt string) 
 		}
 
 		// Run user function
-		if err := funcUser(input); err != nil {
+		err := funcUser(input)
+		if err != nil {
 			return err
 		}
 

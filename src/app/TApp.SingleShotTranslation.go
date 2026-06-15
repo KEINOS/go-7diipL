@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/Qithub-BOT/QiiTrans/src/utils"
 	"github.com/gookit/color"
@@ -37,6 +38,7 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error) {
 	}
 
 	// Verbose output
+	var resultSb40 strings.Builder
 	for i := range lenTranslated {
 		translated := listTranslated[i]
 		prefix := a.Prefix
@@ -46,8 +48,9 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error) {
 			prefix = fmt.Sprintf("%s -> %s:", translated.LangFrom, translated.LangTo)
 		}
 
-		result += fmt.Sprint(blue(prefix), " ", translated.Translated)
+		resultSb40.WriteString(fmt.Sprint(blue(prefix), " ", translated.Translated))
 	}
+	result += resultSb40.String()
 
 	return result, nil
 }
