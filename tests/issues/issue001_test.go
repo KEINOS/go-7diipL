@@ -10,6 +10,7 @@ import (
 )
 
 // Test issue #1 fix.
+//
 //nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestIssue001(t *testing.T) {
 	requireDeepLAPIKey(t)

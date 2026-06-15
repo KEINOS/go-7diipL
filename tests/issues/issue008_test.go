@@ -10,6 +10,7 @@ import (
 )
 
 // Test issue #8 fix.
+//
 //nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestIssue008(t *testing.T) {
 	// 標準入力のダミーデータ
