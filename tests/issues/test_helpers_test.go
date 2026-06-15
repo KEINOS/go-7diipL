@@ -3,6 +3,8 @@ package issues_test
 import (
 	"os"
 	"testing"
+
+	"github.com/Qithub-BOT/QiiTrans/src/engines/deepleng"
 )
 
 func requireDeepLAPIKey(t *testing.T) {
@@ -10,5 +12,12 @@ func requireDeepLAPIKey(t *testing.T) {
 
 	if os.Getenv("DEEPL_API_KEY") == "" {
 		t.Skip("DEEPL_API_KEY is not set")
+	}
+
+	eng := deepleng.New(t.Name())
+	defer eng.Cache.ClearAll()
+
+	if _, _, err := eng.Translate("auth check", "EN", "JA"); err != nil {
+		t.Skipf("DEEPL_API_KEY is not usable for integration tests: %v", err)
 	}
 }
