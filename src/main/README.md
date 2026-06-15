@@ -6,6 +6,8 @@
 import "github.com/Qithub-BOT/QiiTrans/src/main"
 ```
 
+Package main is the CLI entry point for QiiTrans.
+
 ## Index
 
 - [Variables](<#variables>)
@@ -21,8 +23,7 @@ var version string
 ```
 
 <a name="main"></a>
-
-## func [main](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/main/main.go#L10>)
+## func [main](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/main/main.go#L11>)
 
 ```go
 func main()

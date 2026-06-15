@@ -33,7 +33,6 @@ const NameVarEnvAPIKeyDefault = "QIITRANS_API_KEY"
 ```
 
 <a name="AccountInfo"></a>
-
 ## type [AccountInfo](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/AccountInfo.go#L4-L6>)
 
 AccountInfo は、利用中の翻訳 API の必要最低限の情報を保持する構造体です.
@@ -45,7 +44,6 @@ type AccountInfo struct {
 ```
 
 <a name="Properties"></a>
-
 ## type [Properties](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.go#L9-L38>)
 
 Properties は各翻訳エンジンの基本となる構造体です. 翻訳エンジンが API を呼び出すのに必要な基本情報と、翻訳に使われるメソッド（クラス関数）を持った構造体です.
@@ -84,7 +82,6 @@ type Properties struct {
 ```
 
 <a name="New"></a>
-
 ### func [New](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/New.go#L6>)
 
 ```go
@@ -94,7 +91,6 @@ func New(cacheID ...string) *Properties
 New は翻訳エンジンの基本構造体の新規オブジェクトのポインタを返します.
 
 <a name="Properties.GetAPIKey"></a>
-
 ### func \(\*Properties\) [GetAPIKey](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.GetAPIKey.go#L7>)
 
 ```go
@@ -104,7 +100,6 @@ func (p *Properties) GetAPIKey() string
 GetAPIKey はコマンドのオプションで指定されたアクセス・トークンを返します. オプションで指定がされていない場合は、環境変数から読み取って返します.
 
 <a name="Properties.GetQuotaLeft"></a>
-
 ### func \(\*Properties\) [GetQuotaLeft](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.GetQuotaLeft.go#L4>)
 
 ```go
@@ -114,7 +109,6 @@ func (p *Properties) GetQuotaLeft() (int, error)
 GetQuotaLeft は API のリクエスト残量（翻訳可能文字数）を返します。有料アカウントなど、制限がない場合は \-1 を返します.
 
 <a name="Properties.SetAPIKey"></a>
-
 ### func \(\*Properties\) [SetAPIKey](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetAPIKey.go#L19>)
 
 ```go
@@ -132,7 +126,6 @@ defer myEngine.SetAPIKey(myAPIKey)
 ```
 
 <a name="Properties.SetDefault"></a>
-
 ### func \(\*Properties\) [SetDefault](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetDefault.go#L4>)
 
 ```go
@@ -142,7 +135,6 @@ func (p *Properties) SetDefault()
 SetDefault はプロパティ（オブジェクトのフィールド）値を初期値に設定します.
 
 <a name="Properties.SetFuncGetInfoAPI"></a>
-
 ### func \(\*Properties\) [SetFuncGetInfoAPI](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetFuncGetInfoAPI.go#L4>)
 
 ```go
@@ -152,7 +144,6 @@ func (p *Properties) SetFuncGetInfoAPI(getInfoFunc func(properties *Properties) 
 SetFuncGetInfoAPI メソッドは翻訳用の関数を割り当てます.
 
 <a name="Properties.SetFuncTrans"></a>
-
 ### func \(\*Properties\) [SetFuncTrans](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.SetFuncTrans.go#L4-L10>)
 
 ```go
@@ -162,7 +153,6 @@ func (p *Properties) SetFuncTrans(transFunc func(properties *Properties, inputTe
 SetFuncTrans メソッドは翻訳用の関数を割り当てます.
 
 <a name="Properties.Translate"></a>
-
 ### func \(\*Properties\) [Translate](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.Translate.go#L14>)
 
 ```go
@@ -172,7 +162,6 @@ func (p *Properties) Translate(inTxt string, langFrom string, langTo string) (ou
 Translate は翻訳エンジンから割り当てられた翻訳関数を実行し、inText を langFrom から langTo に翻訳した結果を返します. この値はキャッシュされます。キャッシュを更新したい場合は Update フィールド（プロパティ）を true にセットしてください.
 
 <a name="Properties.UniformLang"></a>
-
 ### func \(\*Properties\) [UniformLang](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/engines/engine/Properties.UniformLang.go#L11>)
 
 ```go
