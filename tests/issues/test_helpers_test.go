@@ -17,7 +17,8 @@ func requireDeepLAPIKey(t *testing.T) {
 	eng := deepleng.New(t.Name())
 	defer eng.Cache.ClearAll()
 
-	if _, _, err := eng.Translate("auth check", "EN", "JA"); err != nil {
+	_, _, err := eng.Translate("auth check", "EN", "JA")
+	if err != nil {
 		t.Skipf("DEEPL_API_KEY is not usable for integration tests: %v", err)
 	}
 }
