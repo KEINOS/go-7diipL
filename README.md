@@ -7,7 +7,7 @@
 [![CodeQL](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Qithub-BOT/QiiTrans/actions/workflows/codeql-analysis.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Qithub-BOT/QiiTrans.svg)](https://pkg.go.dev/github.com/Qithub-BOT/QiiTrans)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Qithub-BOT/QiiTrans/blob/main/LICENSE.md)
-[![](https://shields.io/badge/GitHub-Codespaces%20%E5%AF%BE%E5%BF%9C-blue?logo=github&style=flat)](https://docs.github.com/en/codespaces "このリポジトリは GitHub Codespaces に対応しています")
+[![Codespaces](https://shields.io/badge/GitHub-Codespaces%20%E5%AF%BE%E5%BF%9C-blue?logo=github&style=flat)](https://docs.github.com/en/codespaces "このリポジトリは GitHub Codespaces に対応しています")
 
 # `QiiTrans`
 
@@ -45,6 +45,7 @@ $ # Requirements: DeepL Access Token
 $ env | grep DEEPL_API_KEY
 DEEPL_API_KEY=12345678-ffff-ffff-ffff-123456789abc:fx
 ```
+
 ```shellsession
 $ # 日本語 → English に翻訳
 $ echo 'おはよう。今日はいい天気ですね。' | qiitrans ja en
@@ -104,6 +105,7 @@ ES -> JA: ドキュメントが読みにくい。
 JA -> ZH: 文件难以阅读。
 再翻訳: The document is difficult to read.
 ```
+
 ```shellsession
 $ # Interactive Mode
 $ qiitrans en es ja zh en --verbose

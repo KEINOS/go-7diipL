@@ -75,6 +75,7 @@ var (
 ```
 
 <a name="FatalOnErr"></a>
+
 ## func [FatalOnErr](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/helperfunc/FatalOnErr.go#L21>)
 
 ```go
@@ -86,6 +87,7 @@ FatalOnErr は err が nil ではない場合に t.FailNow でテストを終了
 基本的に MockArgs と MockSTDIN などのヘルパー関数自身のカバレッジ目的で使用します. 一般的なテストでは t.Fatalf を利用してください.
 
 <a name="MockArgs"></a>
+
 ## func [MockArgs](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/helperfunc/MockArgs.go#L15>)
 
 ```go
@@ -102,6 +104,7 @@ defer funcDefer()
 ```
 
 <a name="MockSTDIN"></a>
+
 ## func [MockSTDIN](<https://github.com/Qithub-BOT/QiiTrans/blob/main/src/helperfunc/MockSTDIN.go#L16>)
 
 ```go
