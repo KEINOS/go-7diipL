@@ -10,6 +10,12 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const (
+	// inputJapanese is the Japanese sentence used as translation input in tests.
+	inputJapanese = "今日はとてもいい天気です。"
+)
+
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestTranslate(t *testing.T) {
 	requireDeepLAPIKey(t)
 
@@ -33,13 +39,13 @@ func TestTranslate(t *testing.T) {
 	{
 		// タイミングによって結果が異なるため複数パターンをチェック
 		expect := []string{
-			"今日はとてもいい天気です。",
+			inputJapanese,
 			"今日はとてもいい天気だ。",
 			"今日はとてもいい天気ですね。",
 			"今日はとてもいい日だ。",
 		}
 
-		listTranslated, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")
+		listTranslated, err := appTest.Translate(orderLang, inputJapanese)
 		require.NoError(t, err)
 		require.NotEmpty(t, listTranslated)
 
@@ -58,13 +64,13 @@ func TestTranslate(t *testing.T) {
 		out := capturer.CaptureOutput(func() {
 			// タイミングによって結果が異なるため複数パターンをチェック
 			expect := []string{
-				"今日はとてもいい天気です。",
+				inputJapanese,
 				"今日はとてもいい天気だ。",
 				"今日はとてもいい天気ですね。",
 				"今日はとてもいい日だ。",
 			}
 
-			listTranslated, err := appTest.Translate(orderLang, "今日はとてもいい天気です。")
+			listTranslated, err := appTest.Translate(orderLang, inputJapanese)
 			require.NoError(t, err)
 			require.NotEmpty(t, listTranslated)
 
@@ -78,12 +84,14 @@ func TestTranslate(t *testing.T) {
 }
 
 func TestTranslate_force_not_translate(t *testing.T) {
+	t.Parallel()
+
 	appTest := app.New("", t.Name())
 	orderLang := []string{"ja", "en", "ja"}
 
 	appTest.Force["NoTrans"] = true
 
-	expect := "今日はとてもいい天気です。"
+	expect := inputJapanese
 
 	listTranslated, err := appTest.Translate(orderLang, expect)
 	require.NoError(t, err)
@@ -94,12 +102,14 @@ func TestTranslate_force_not_translate(t *testing.T) {
 }
 
 func TestTranslate_force_translate_error(t *testing.T) {
+	t.Parallel()
+
 	appTest := app.New("", t.Name())
 	orderLang := []string{"ja", "en", "ja"}
 
 	appTest.Force["TransError"] = true
 
-	input := "今日はとてもいい天気です。"
+	input := inputJapanese
 	listTranslated, err := appTest.Translate(orderLang, input)
 
 	require.Error(t, err)

@@ -11,6 +11,8 @@ import (
 )
 
 func TestSetArgValue(t *testing.T) {
+	t.Parallel()
+
 	appTest := app.New("", t.Name())
 	argDummy := new(cli.Context)
 

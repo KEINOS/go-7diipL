@@ -9,6 +9,8 @@ import (
 )
 
 func TestEchoSTDERR(t *testing.T) {
+	t.Parallel()
+
 	input := "foo bar"
 	expect := "Hoge foo bar Fuga"
 

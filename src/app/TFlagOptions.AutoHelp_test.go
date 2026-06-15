@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestAutoHelp(t *testing.T) {
 	dummySTDIN := ""
 	onlyHelpOption := []string{"--help"}

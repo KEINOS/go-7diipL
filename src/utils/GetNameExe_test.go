@@ -8,6 +8,8 @@ import (
 )
 
 func TestGetNameExe(t *testing.T) {
+	t.Parallel()
+
 	expect := "utils"
 	actual := utils.GetNameExe()
 

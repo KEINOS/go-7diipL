@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestTCache_Set(t *testing.T) {
 	tmpCache := new(cache.TCache)
 

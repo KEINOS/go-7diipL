@@ -9,6 +9,8 @@ import (
 )
 
 func TestNew(t *testing.T) {
+	t.Parallel()
+
 	requireDeepLAPIKey(t)
 
 	ngin := deepleng.New()

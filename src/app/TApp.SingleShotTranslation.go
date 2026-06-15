@@ -39,6 +39,7 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error) {
 
 	// Verbose output
 	var resultSb40 strings.Builder
+
 	for i := range lenTranslated {
 		translated := listTranslated[i]
 		prefix := a.Prefix
@@ -48,8 +49,9 @@ func (a *TApp) SingleShotTranslation(orderLang []string) (string, error) {
 			prefix = fmt.Sprintf("%s -> %s:", translated.LangFrom, translated.LangTo)
 		}
 
-		resultSb40.WriteString(fmt.Sprint(blue(prefix), " ", translated.Translated))
+		fmt.Fprint(&resultSb40, blue(prefix), " ", translated.Translated)
 	}
+
 	result += resultSb40.String()
 
 	return result, nil

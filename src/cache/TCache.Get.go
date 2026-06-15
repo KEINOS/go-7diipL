@@ -3,7 +3,8 @@ package cache
 // Get はキャッシュから key を探索し、その値を文字列で返します.
 // キャッシュに key がない場合はエラーを返します.
 func (c *TCache) Get(key string) (string, error) {
-	if err := c.OpenDB(); err != nil {
+	err := c.OpenDB()
+	if err != nil {
 		return "", err
 	}
 

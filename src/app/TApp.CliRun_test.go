@@ -13,6 +13,8 @@ import (
 )
 
 func TestCliRun_fail_set_arg_value(t *testing.T) {
+	t.Parallel()
+
 	appTest := app.New("", t.Name())
 	ctxDummy := new(cli.Context)
 
@@ -21,6 +23,7 @@ func TestCliRun_fail_set_arg_value(t *testing.T) {
 	require.Error(t, err, "malformed context should return an error")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestCliRun_fail_prerun(t *testing.T) {
 	dummySTDIN := "Hello, world!"
 	dummyArgs := []string{
@@ -48,6 +51,7 @@ func TestCliRun_fail_prerun(t *testing.T) {
 	assert.Contains(t, out, "PreRun was forced to fail")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestCliRun_fail_prerun_not_piped(t *testing.T) {
 	dummySTDIN := "Hello, world!"
 	dummyArgs := []string{

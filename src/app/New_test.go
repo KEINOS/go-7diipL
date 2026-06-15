@@ -11,6 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestNew(t *testing.T) {
 	requireDeepLAPIKey(t)
 
@@ -42,6 +43,7 @@ func TestNew(t *testing.T) {
 	appTest.Engine.Cache.ClearAll()
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestNew_verbose(t *testing.T) {
 	requireDeepLAPIKey(t)
 
@@ -75,6 +77,7 @@ func TestNew_verbose(t *testing.T) {
 	appTest.Engine.Cache.ClearAll()
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestNew_clear_cache(t *testing.T) {
 	requireDeepLAPIKey(t)
 
@@ -108,6 +111,8 @@ func TestNew_clear_cache(t *testing.T) {
 }
 
 func TestNew_default_settings(t *testing.T) {
+	t.Parallel()
+
 	appTest := app.New("", t.Name())
 
 	// Check default name
@@ -117,6 +122,7 @@ func TestNew_default_settings(t *testing.T) {
 	assert.Empty(t, appTest.Version, "version should be empty by default to auto detect")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestNew_fail_get_info(t *testing.T) {
 	requireDeepLAPIKey(t)
 
@@ -125,7 +131,7 @@ func TestNew_fail_get_info(t *testing.T) {
 	dummyArgs := []string{
 		"en",
 		"es",
-		"--info",
+		flagInfo,
 	}
 
 	funcDeferSTDIN := helperfunc.MockSTDIN(t, dummySTDIN)
@@ -152,6 +158,7 @@ func TestNew_fail_get_info(t *testing.T) {
 	appTest.Engine.Cache.ClearAll()
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestNew_fail_read_stdin(t *testing.T) {
 	const dummySTDIN = "Hello, world!"
 
@@ -185,6 +192,8 @@ func TestNew_fail_read_stdin(t *testing.T) {
 }
 
 func TestNew_instantiation(t *testing.T) {
+	t.Parallel()
+
 	appTest1 := app.New("")
 	appTest2 := app.New("")
 
@@ -228,6 +237,7 @@ func TestNew_no_apikey_set(t *testing.T) {
 	appTest.Engine.Cache.ClearAll()
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestNew_show_info(t *testing.T) {
 	requireDeepLAPIKey(t)
 

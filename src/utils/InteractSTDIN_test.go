@@ -12,6 +12,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestInteractSTDIN_not_terminal(t *testing.T) {
 	const (
 		stopWord = "stop"
@@ -27,6 +28,7 @@ func TestInteractSTDIN_not_terminal(t *testing.T) {
 	require.Error(t, err)
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestInteractSTDIN(t *testing.T) {
 	const (
 		stopWord = "stop"
@@ -61,6 +63,7 @@ func TestInteractSTDIN(t *testing.T) {
 	assert.Contains(t, out, prompt+"out:hoge fuga")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestInteractSTDIN_user_func_error(t *testing.T) {
 	const (
 		stopWord = "stop"

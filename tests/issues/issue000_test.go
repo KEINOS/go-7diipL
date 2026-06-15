@@ -9,6 +9,8 @@ import (
 
 // This is a sample of how to write a test for an issue fix.
 func TestIssue000(t *testing.T) {
+	t.Parallel()
+
 	input := "foo bar buz"
 
 	expect := []string{"foo bar buz"}

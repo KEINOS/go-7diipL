@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestClearAll(t *testing.T) {
 	tmpCache := cache.New(t.Name())
 
@@ -47,6 +48,7 @@ func TestClearAll(t *testing.T) {
 	assert.Empty(t, out, "if cache dir didn't exist then ClearAll() should retrun nothing")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestClearAll_on_opened_DB(t *testing.T) {
 	tmpCache := cache.New(t.Name())
 

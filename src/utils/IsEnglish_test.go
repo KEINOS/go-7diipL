@@ -8,6 +8,8 @@ import (
 )
 
 func TestIsEnglish(t *testing.T) {
+	t.Parallel()
+
 	{
 		sample := `A perennial also-ran, Stallings won his seat when longtime lawmaker David Holmes
 		died 11 days after the filing deadline. Suddenly, Stallings was a shoo-in, not

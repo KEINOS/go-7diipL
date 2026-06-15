@@ -8,6 +8,8 @@ import (
 )
 
 func TestSliceSentences(t *testing.T) {
+	t.Parallel()
+
 	sample := "これはサンプルです。This is a sample. Yet another sample."
 	expect := []string{
 		"これはサンプルです。",
@@ -20,6 +22,8 @@ func TestSliceSentences(t *testing.T) {
 }
 
 func TestSliceSentences_decimal(t *testing.T) {
+	t.Parallel()
+
 	sample := "これはサンプルです。\nThis is a sample with dot such as 3.0. Yet another sample."
 	expect := []string{
 		"これはサンプルです。",
@@ -32,6 +36,8 @@ func TestSliceSentences_decimal(t *testing.T) {
 }
 
 func TestSliceSentences_english(t *testing.T) {
+	t.Parallel()
+
 	{
 		sample := "Hi there. Does this really work?"
 		expect := []string{

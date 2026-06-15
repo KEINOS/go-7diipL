@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestGetSTDIN(t *testing.T) {
 	const expect = "foobar"
 
@@ -24,6 +25,7 @@ func TestGetSTDIN(t *testing.T) {
 	assert.Equal(t, expect, actual)
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestGetSTDIN_mock_stdin(t *testing.T) {
 	userInput := "foo bar buzz"
 
@@ -37,6 +39,7 @@ func TestGetSTDIN_mock_stdin(t *testing.T) {
 	assert.Equal(t, expect, actual)
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestGetSTDIN_forced_error(t *testing.T) {
 	userInput := "foo bar buzz"
 

@@ -8,6 +8,8 @@ import (
 )
 
 func TestDelimitComma(t *testing.T) {
+	t.Parallel()
+
 	input := 1000000
 
 	expect := "1,000,000"

@@ -9,6 +9,8 @@ import (
 )
 
 func TestGetInfoAPI(t *testing.T) {
+	t.Parallel()
+
 	requireDeepLAPIKey(t)
 
 	ngin := deepleng.New()
@@ -28,6 +30,8 @@ func TestGetInfoAPI(t *testing.T) {
 }
 
 func TestGetInfoAPI_no_token_set(t *testing.T) {
+	t.Parallel()
+
 	ngin := deepleng.New()
 
 	defer ngin.Cache.ClearAll()

@@ -8,6 +8,8 @@ import (
 )
 
 func TestNewTranslation(t *testing.T) {
+	t.Parallel()
+
 	obj1 := app.NewTranslation("en", "ja", "sample1")
 	obj2 := app.NewTranslation("en", "ja", "sample2")
 

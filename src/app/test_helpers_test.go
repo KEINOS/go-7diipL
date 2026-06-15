@@ -5,6 +5,11 @@ import (
 	"testing"
 )
 
+const (
+	// flagInfo is the CLI flag used to display API quota information.
+	flagInfo = "--info"
+)
+
 func requireDeepLAPIKey(t *testing.T) {
 	t.Helper()
 

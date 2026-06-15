@@ -8,6 +8,8 @@ import (
 )
 
 func TestIsValidLang(t *testing.T) {
+	t.Parallel()
+
 	// Data Provider
 	testCases := map[string]bool{
 		"en":       true,

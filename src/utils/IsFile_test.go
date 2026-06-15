@@ -9,26 +9,28 @@ import (
 )
 
 func TestIsFile(t *testing.T) {
+	t.Parallel()
+
 	pathDirTest := t.TempDir()
 
 	genDummyDirAndFile(t, pathDirTest) // Defined in PathExists_test.go
 
 	// Data Provider
 	testCases := map[string]bool{
-		"dir":                          false,
-		"link-to-dir":                  false,
-		"file.txt":                     true,
-		".dotfile":                     true,
-		"link-to-file.txt":             true,
-		"unknown-dir":                  false,
-		"unknown-file":                 false,
-		".unknown-dotfile":             false,
-		"unknown-link-to-file.txt":     false,
-		"dir/unknown-dir":              false,
-		"file.txt/unknown-dir":         false,
-		".dotfile/unknown-dir":         false,
-		"link-to-file.txt/unknown-dir": false,
-		"link-to-dir/unknown-dir":      false,
+		pathDir:            false,
+		pathDirSymlink:     false,
+		pathFile:           true,
+		pathFileDot:        true,
+		pathFileSymlink:    true,
+		pathUnknownDir:     false,
+		pathUnknownFile:    false,
+		pathUnknownDot:     false,
+		pathUnknownSymlink: false,
+		pathDirSub:         false,
+		pathFileSub:        false,
+		pathDotSub:         false,
+		pathSymlinkSub:     false,
+		pathDirSymlinkSub:  false,
 	}
 
 	for nameFileTest, expect := range testCases {

@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestMockArgs(t *testing.T) {
 	argsDummy := []string{
 		"foo",

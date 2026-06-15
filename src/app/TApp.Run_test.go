@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestRun_force_fail(t *testing.T) {
 	appTest := app.New("", t.Name())
 

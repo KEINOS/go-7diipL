@@ -9,6 +9,8 @@ import (
 )
 
 func TestGetUniformedInfo(t *testing.T) {
+	t.Parallel()
+
 	requireDeepLAPIKey(t)
 
 	appTest := app.New("", t.Name())
@@ -46,10 +48,12 @@ func TestGetUniformedInfo_error(t *testing.T) {
 	assert.Empty(t, info, "on error info should be empty")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestGetUniformedInfo_error_forced(t *testing.T) {
 	appTest := app.New("", t.Name())
 
-	if err := appTest.SetEngine("deepl"); err != nil {
+	err := appTest.SetEngine("deepl")
+	if err != nil {
 		t.Fatalf("failed to set engine during test")
 	}
 	defer appTest.Engine.Cache.ClearAll()

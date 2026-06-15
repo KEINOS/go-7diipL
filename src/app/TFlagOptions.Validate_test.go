@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestValidate_flag_is_version(t *testing.T) {
 	funcDefer := helperfunc.MockArgs(t, []string{
 		"--version",
@@ -30,11 +31,12 @@ func TestValidate_flag_is_version(t *testing.T) {
 	defer appTest.Engine.Cache.ClearAll()
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestValidate_flag_is_info_only(t *testing.T) {
 	requireDeepLAPIKey(t)
 
 	funcDefer := helperfunc.MockArgs(t, []string{
-		"--info",
+		flagInfo,
 	})
 	defer funcDefer()
 
@@ -52,6 +54,7 @@ func TestValidate_flag_is_info_only(t *testing.T) {
 	defer appTest.Engine.Cache.ClearAll()
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestValidate_all_args_missing(t *testing.T) {
 	const dummySTDIN = "Hello, world"
 
@@ -74,6 +77,7 @@ func TestValidate_all_args_missing(t *testing.T) {
 	assert.Contains(t, out, "引数が足りません。最低でも翻訳元と翻訳先の言語を指定してください")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestValidate_missing_2nd_arg(t *testing.T) {
 	const dummySTDIN = "Hello, world"
 
@@ -96,6 +100,7 @@ func TestValidate_missing_2nd_arg(t *testing.T) {
 	assert.Contains(t, out, "引数が足りません。翻訳先の言語を指定してください")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestValidate_bad_lang_type(t *testing.T) {
 	const dummySTDIN = "Hello, world"
 

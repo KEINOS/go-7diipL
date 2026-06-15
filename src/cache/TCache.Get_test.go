@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestGet_fail_to_openDB(t *testing.T) {
 	tmpCache := new(cache.TCache)
 
@@ -17,6 +18,7 @@ func TestGet_fail_to_openDB(t *testing.T) {
 	require.Error(t, err, "if DB fails to open it should return an error")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestGet_not_cached(t *testing.T) {
 	tmpCache := cache.New(t.Name())
 

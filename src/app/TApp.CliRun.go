@@ -7,12 +7,14 @@ import (
 // CliRun は app.Run() の本体です。cli.Run に登録して呼び出されるメソッドです.
 func (a *TApp) CliRun(ctx *cli.Context) error {
 	// フラグ・オプションの値をセット
-	if err := a.SetArgValue(ctx); err != nil {
+	err := a.SetArgValue(ctx)
+	if err != nil {
 		return err
 	}
 
 	// フラグ・オプションに対する事前処理（デバッグ・モード設定など）
-	if err := a.PreRun(); err != nil {
+	err = a.PreRun()
+	if err != nil {
 		return err
 	}
 

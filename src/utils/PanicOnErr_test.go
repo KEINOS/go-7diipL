@@ -9,6 +9,8 @@ import (
 )
 
 func TestPanicOnErr(t *testing.T) {
+	t.Parallel()
+
 	msg := "foobar"
 	err := errors.New(msg)
 

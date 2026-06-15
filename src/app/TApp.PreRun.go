@@ -20,7 +20,8 @@ func (a *TApp) PreRun() error {
 	a.Argv.UsageApp = GetMsgHelpUsage(a.Name, utils.GetNameExe())
 
 	// 翻訳エンジンのセット
-	if err := a.SetEngine(a.Argv.NameEngine); err != nil {
+	err := a.SetEngine(a.Argv.NameEngine)
+	if err != nil {
 		return errors.Wrap(err, "failed to set translation engine")
 	}
 

@@ -8,6 +8,8 @@ import (
 )
 
 func TestGetMsgHelpUsage(t *testing.T) {
+	t.Parallel()
+
 	nameAppDummy := "foo"
 	nameExeDummy := "bar"
 
@@ -18,6 +20,8 @@ func TestGetMsgHelpUsage(t *testing.T) {
 }
 
 func TestGetMsgHelpUsage_missing_app_name(t *testing.T) {
+	t.Parallel()
+
 	nameAppDummy := ""
 	nameExeDummy := "bar"
 

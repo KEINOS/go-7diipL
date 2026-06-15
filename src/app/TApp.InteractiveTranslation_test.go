@@ -11,6 +11,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestInteractiveTranslation(t *testing.T) {
 	const (
 		stopWord  = "stop"
@@ -49,6 +50,7 @@ func TestInteractiveTranslation(t *testing.T) {
 	assert.Contains(t, out, "hoge fuga\n")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestInteractiveTranslation_verbose(t *testing.T) {
 	const (
 		stopWord  = "stop"
@@ -92,6 +94,7 @@ func TestInteractiveTranslation_verbose(t *testing.T) {
 	assert.Contains(t, out, "hoge fuga")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestInteractiveTranslation_fail(t *testing.T) {
 	const (
 		stopWord  = "stop"

@@ -1,3 +1,4 @@
+// Package utils provides shared utility helpers and constants.
 package utils
 
 const (

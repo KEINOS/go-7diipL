@@ -10,6 +10,8 @@ import (
 )
 
 func TestNewEngine(t *testing.T) {
+	t.Parallel()
+
 	expect := deepleng.New(t.Name())
 
 	defer expect.Cache.ClearAll() // 終了後に削除

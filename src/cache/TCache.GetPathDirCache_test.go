@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestGetPathDirCache(t *testing.T) {
 	c := cache.New(t.Name())
 

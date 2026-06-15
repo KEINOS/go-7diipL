@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestMain_exits_status1_on_fail(t *testing.T) {
 	app.ForceFailRun = true
 	defer func() {

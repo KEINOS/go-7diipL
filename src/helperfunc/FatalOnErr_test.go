@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestFatalOnErr(t *testing.T) {
 	helperfunc.IsErrorDummy = true
 	defer func() {
@@ -29,6 +30,7 @@ func TestFatalOnErr(t *testing.T) {
 	assert.Equal(t, expect, actual)
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestFatalOnErr_additional_comment(t *testing.T) {
 	helperfunc.IsErrorDummy = true
 	defer func() {
@@ -55,6 +57,7 @@ func TestFatalOnErr_additional_comment(t *testing.T) {
 	assert.Equal(t, expect, actual)
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestFatalOnErr_no_error(t *testing.T) {
 	helperfunc.IsErrorDummy = true
 	defer func() {

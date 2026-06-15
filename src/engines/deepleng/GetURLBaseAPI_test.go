@@ -9,6 +9,8 @@ import (
 )
 
 func TestGetURLBaseAPI(t *testing.T) {
+	t.Parallel()
+
 	eng := engine.New(t.Name())
 
 	defer eng.Cache.ClearAll()

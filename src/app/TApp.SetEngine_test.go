@@ -9,6 +9,8 @@ import (
 )
 
 func TestSetEngine(t *testing.T) {
+	t.Parallel()
+
 	nameEngine := "deepl"
 
 	appTest := app.New("", t.Name())

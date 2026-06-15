@@ -9,6 +9,8 @@ import (
 )
 
 func TestPrintMsgWait(t *testing.T) {
+	t.Parallel()
+
 	out := capturer.CaptureStdout(func() {
 		setoff := utils.PrintMsgWait("please wait ...")
 		setoff()

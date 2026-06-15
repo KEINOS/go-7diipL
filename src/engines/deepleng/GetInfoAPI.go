@@ -19,7 +19,8 @@ func GetInfoAPI(prop *engine.Properties) (engine.AccountInfo, error) {
 		return info, errors.New("API key for DeepL not set")
 	}
 
-	if client, err := deepl.New(GetURLBaseAPI(prop), nil); err == nil {
+	client, err := deepl.New(GetURLBaseAPI(prop), nil)
+	if err == nil {
 		accountStatus, err := client.GetAccountStatus(context.Background())
 		if err == nil {
 			// 利用可能の残文字数を取得

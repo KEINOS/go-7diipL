@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestCloseDB(t *testing.T) {
 	tmpCache := cache.New(t.Name())
 
@@ -23,6 +24,7 @@ func TestCloseDB(t *testing.T) {
 	}, "closing an opened DB should not panic")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestCloseDB_debug_mode(t *testing.T) {
 	tmpCache := cache.New(t.Name())
 

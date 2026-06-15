@@ -10,6 +10,10 @@ linters:
         # Deprecated linters
         - wsl
         - gomodguard
+        # Disabled by project design
+        - depguard
+        - gochecknoglobals
+        - gosmopolitan
     settings:
         paralleltest:
             ignore-missing: false

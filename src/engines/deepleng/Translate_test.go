@@ -9,6 +9,8 @@ import (
 )
 
 func TestTranslate_no_env_set(t *testing.T) {
+	t.Parallel()
+
 	e := engine.New(t.Name())
 	defer e.Cache.ClearAll()
 

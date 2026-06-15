@@ -12,12 +12,16 @@ import (
 const helloQiita = "Hello Qiita!"
 
 func TestHash_unknown_algo(t *testing.T) {
+	t.Parallel()
+
 	_, _, err := utils.Hash("unknown", "dummy input")
 
 	require.Error(t, err, "unknown algorithm should return an error")
 }
 
 func TestHash_Blake3_256(t *testing.T) {
+	t.Parallel()
+
 	{
 		input := ""
 		expect := "af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262"
@@ -39,6 +43,8 @@ func TestHash_Blake3_256(t *testing.T) {
 }
 
 func TestHash_Blake3_512(t *testing.T) {
+	t.Parallel()
+
 	{
 		input := ""
 		expect := "af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262" +
@@ -62,6 +68,8 @@ func TestHash_Blake3_512(t *testing.T) {
 }
 
 func TestHash_Fnv1_32(t *testing.T) {
+	t.Parallel()
+
 	input := helloQiita
 	expect := "b04649f6"
 	actual, actualByte, err := utils.Hash("fnv1_32", input)
@@ -72,6 +80,8 @@ func TestHash_Fnv1_32(t *testing.T) {
 }
 
 func TestHash_Fnv1_64(t *testing.T) {
+	t.Parallel()
+
 	input := helloQiita
 	expect := "97bfaffd885daad6"
 	actual, actualByte, err := utils.Hash("fnv1_64", input)
@@ -82,6 +92,8 @@ func TestHash_Fnv1_64(t *testing.T) {
 }
 
 func TestHash_MD5(t *testing.T) {
+	t.Parallel()
+
 	input := helloQiita
 	expect := "7c414ef7535afff21e05a36b1cfc9000"
 	actual, actualByte, err := utils.Hash("md5", input)
@@ -92,6 +104,8 @@ func TestHash_MD5(t *testing.T) {
 }
 
 func TestHash_SHA2_256(t *testing.T) {
+	t.Parallel()
+
 	input := helloQiita
 	expect := "e863d36c24ada694fa77454b33e8f9b9545d372aae251e8779fc25df16943fed"
 	actual, actualByte, err := utils.Hash("sha2_256", input)
@@ -102,6 +116,8 @@ func TestHash_SHA2_256(t *testing.T) {
 }
 
 func TestHash_SHA2_512(t *testing.T) {
+	t.Parallel()
+
 	input := helloQiita
 	expect := "cac9036c1dd3652fc550e99a4ec2b066d69d6a40a369bc85e3078960e6f26012" +
 		"4138f5d0f4e9a6e047dfb833c9dd9b3376d02d49be37de26dd6234d4e79cc09e"
@@ -113,6 +129,8 @@ func TestHash_SHA2_512(t *testing.T) {
 }
 
 func TestHash_SHA3_256(t *testing.T) {
+	t.Parallel()
+
 	input := helloQiita
 	expect := "cedaea2333478d77bc9ed3e33303f45585af19174a451ce93029fedcdd4d1ecb"
 	actual, actualByte, err := utils.Hash("sha3_256", input)
@@ -123,6 +141,8 @@ func TestHash_SHA3_256(t *testing.T) {
 }
 
 func TestHash_SHA3_512(t *testing.T) {
+	t.Parallel()
+
 	input := helloQiita
 	expect := "9d1aaed079bac1946a5fbafb4285ec5bdcf0053a9e00559046884a148f28fcb9" +
 		"02441b49cb3a82775834a2444dd183eda36cee900f5662f82353fae7e7111740"

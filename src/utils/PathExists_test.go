@@ -9,77 +9,92 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	pathDir            = "dir"
+	pathDirSymlink     = "link-to-dir"
+	pathFile           = "file.txt"
+	pathFileDot        = ".dotfile"
+	pathFileSymlink    = "link-to-file.txt"
+	pathUnknownDir     = "unknown-dir"
+	pathUnknownFile    = "unknown-file"
+	pathUnknownDot     = ".unknown-dotfile"
+	pathUnknownSymlink = "unknown-link-to-file.txt"
+	pathDirSub         = "dir/unknown-dir"
+	pathFileSub        = "file.txt/unknown-dir"
+	pathDotSub         = ".dotfile/unknown-dir"
+	pathSymlinkSub     = "link-to-file.txt/unknown-dir"
+	pathDirSymlinkSub  = "link-to-dir/unknown-dir"
+)
+
 func genDummyDirAndFile(t *testing.T, pathDirTemp string) {
 	t.Helper()
 
 	_ = os.RemoveAll(pathDirTemp)
 
 	// create "dir"
-	nameDir := "dir"
-	pathDir := filepath.Join(pathDirTemp, nameDir)
+	pathDirAbs := filepath.Join(pathDirTemp, pathDir)
 
-	err := os.MkdirAll(pathDir, 0o777)
+	err := os.MkdirAll(filepath.Clean(pathDirAbs), 0o750)
 	if err != nil {
 		t.Fatalf("Failed to create dir.\nMsg Error: %v", err)
 	}
 
 	// create "link-to-dir"
-	nameDirSymlink := "link-to-dir"
-	pathDirSymlink := filepath.Join(pathDirTemp, nameDirSymlink)
-	pathDirTarget := pathDir
+	pathDirSymlinkAbs := filepath.Join(pathDirTemp, pathDirSymlink)
 
-	err = os.Symlink(pathDirTarget, pathDirSymlink)
+	err = os.Symlink(pathDirAbs, pathDirSymlinkAbs)
 	if err != nil {
 		t.Fatalf("Failed to create symbolic link of a directory.\nMsg Error: %v", err)
 	}
 
 	// create "file.txt"
-	nameFile := "file.txt"
-	pathFile := filepath.Join(pathDirTemp, nameFile)
+	pathFileAbs := filepath.Join(pathDirTemp, pathFile)
 
-	if _, err := os.Create(pathFile); err != nil {
+	_, err = os.Create(filepath.Clean(pathFileAbs))
+	if err != nil {
 		t.Fatalf("Failed to create file.\nMsg Error: %v", err)
 	}
 
 	// create ".dotfile"
-	nameFileDot := ".dotfile"
+	pathFileDotAbs := filepath.Join(pathDirTemp, pathFileDot)
 
-	if _, err := os.Create(filepath.Join(pathDirTemp, nameFileDot)); err != nil {
+	_, err = os.Create(filepath.Clean(pathFileDotAbs))
+	if err != nil {
 		t.Fatalf("Failed to create dot file.\nMsg Error: %v", err)
 	}
 
 	// create "link-to-file.txt"
-	nameFileSymlink := "link-to-file.txt"
-	pathFileSymlink := filepath.Join(pathDirTemp, nameFileSymlink)
-	pathFileTarget := pathFile
+	pathFileSymlinkAbs := filepath.Join(pathDirTemp, pathFileSymlink)
 
-	err = os.Symlink(pathFileTarget, pathFileSymlink)
+	err = os.Symlink(pathFileAbs, pathFileSymlinkAbs)
 	if err != nil {
-		t.Fatalf("Failed to create file.\nMsg Error: %v", err)
+		t.Fatalf("Failed to create symbolic link of a file.\nMsg Error: %v", err)
 	}
 }
 
 func TestPathExists(t *testing.T) {
+	t.Parallel()
+
 	pathDirTest := t.TempDir()
 
 	genDummyDirAndFile(t, pathDirTest)
 
 	// Data Provider
 	testCases := map[string]bool{
-		"dir":                          true,
-		"link-to-dir":                  true,
-		"file.txt":                     true,
-		".dotfile":                     true,
-		"link-to-file.txt":             true,
-		"unknown-dir":                  false,
-		"unknown-file":                 false,
-		".unknown-dotfile":             false,
-		"unknown-link-to-file.txt":     false,
-		"dir/unknown-dir":              false,
-		"file.txt/unknown-dir":         false,
-		".dotfile/unknown-dir":         false,
-		"link-to-file.txt/unknown-dir": false,
-		"link-to-dir/unknown-dir":      false,
+		pathDir:            true,
+		pathDirSymlink:     true,
+		pathFile:           true,
+		pathFileDot:        true,
+		pathFileSymlink:    true,
+		pathUnknownDir:     false,
+		pathUnknownFile:    false,
+		pathUnknownDot:     false,
+		pathUnknownSymlink: false,
+		pathDirSub:         false,
+		pathFileSub:        false,
+		pathDotSub:         false,
+		pathSymlinkSub:     false,
+		pathDirSymlinkSub:  false,
 	}
 
 	for nameFileTest, expect := range testCases {

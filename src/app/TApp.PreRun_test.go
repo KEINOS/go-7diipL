@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestPreRun(t *testing.T) {
 	const nameEngine = "deepl"
 
@@ -35,6 +36,7 @@ func TestPreRun(t *testing.T) {
 	assert.Contains(t, appTest.Argv.UsageApp, "app コマンド", "parsed template should contain the binary name w/out ext")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestPreRun_bad_engine_name(t *testing.T) {
 	argv := new(app.TFlagOptions)
 
@@ -49,6 +51,7 @@ func TestPreRun_bad_engine_name(t *testing.T) {
 	require.Error(t, err, "unknown engine name should return an error")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestPreRun_force_fail(t *testing.T) {
 	const nameEngine = "deepl"
 
@@ -66,6 +69,7 @@ func TestPreRun_force_fail(t *testing.T) {
 	require.Error(t, err, "forced error should return an error")
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestPreRun_force_fail_not_piped(t *testing.T) {
 	const nameEngine = "deepl"
 

@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestGetVersion(t *testing.T) {
 	appTest := app.New("", t.Name())
 
@@ -36,6 +37,7 @@ func TestGetVersion(t *testing.T) {
 	}
 }
 
+//nolint:paralleltest // due to the monkey patching of global variable(s)
 func TestGetVersion_via_build_info(t *testing.T) {
 	// Backup and defer restore
 	oldDebugReadBuildInfo := app.DebugReadBuildInfo

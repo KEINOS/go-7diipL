@@ -8,6 +8,8 @@ import (
 )
 
 func TestIsAPIKeyFree(t *testing.T) {
+	t.Parallel()
+
 	{
 		sample := "foobarbuz:fx"
 		result := deepleng.IsAPIKeyFree(sample)

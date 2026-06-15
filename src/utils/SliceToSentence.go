@@ -63,12 +63,12 @@ func SliceToSentenceChore(inputText string) []string {
 
 // SliceToSentenceEng は英語の文字列として文の区切りごとにスライスするのに使われます.
 func SliceToSentenceEng(inputTextEn string) []string {
-	result := []string{}
-
 	tokenizer, err := english.NewSentenceTokenizer(nil)
 	PanicOnErr(err)
 
 	sentences := tokenizer.Tokenize(inputTextEn)
+
+	result := make([]string, 0, len(sentences))
 	for _, s := range sentences {
 		// タブやスペースインデントの連続を削除（キャッシュ時の精度向上のため）
 		result = append(result, strings.Join(strings.Fields(s.Text), " "))
