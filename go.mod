@@ -13,7 +13,7 @@ require (
 	github.com/neurosnap/sentences v1.1.2
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/term v0.44.0
+	golang.org/x/term v0.45.0
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da
 	lukechampine.com/blake3 v1.4.1
 )
@@ -40,7 +40,7 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/crypto v0.53.0 // indirect
 	golang.org/x/net v0.56.0 // indirect
-	golang.org/x/sys v0.46.0 // indirect
+	golang.org/x/sys v0.47.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
